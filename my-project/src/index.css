@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* styles.css */
+.checkbox-red {
+    accent-color: red;
+  }
+  
+  .checkbox-green {
+    accent-color: green;
+  }
+  

@@ -1,0 +1,25 @@
+/* styles.css */
+.checkbox-red {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid red;
+    background-color: red;
+  }
+  
+  .checkbox-red:checked {
+    background-color: red;
+  }
+  
+  .checkbox-green {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid green;
+    background-color: green;
+  }
+  
+  .checkbox-green:checked {
+    background-color: green;
+  }
+  
