@@ -8,10 +8,10 @@ const AttendancePage = () => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
-    // Initialize student data
+    
     setStudents(studentData);
     
-    // Load attendance data for the current month and year from localStorage
+   
     loadAttendanceData();
   }, [currentMonth, currentYear]);
 
@@ -28,7 +28,7 @@ const AttendancePage = () => {
       [`${studentId}-${day}`]: !attendance[`${studentId}-${day}`]
     };
     setAttendance(newAttendance);
-    // Save to localStorage for the current month and year
+    
     localStorage.setItem(`attendance-${key}`, JSON.stringify(newAttendance));
   };
 
@@ -94,6 +94,8 @@ const AttendancePage = () => {
 };
 
 export default AttendancePage;
+
+
 
 
 

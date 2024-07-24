@@ -6,17 +6,17 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   const login = (email, password) => {
-    // Add login logic here
+    
     setUser({ email });
   };
 
   const signup = (email, password) => {
-    // Add signup logic here
+ 
     setUser({ email });
   };
 
   const logout = () => {
-    // Add logout logic here
+  
     setUser(null);
   };
 

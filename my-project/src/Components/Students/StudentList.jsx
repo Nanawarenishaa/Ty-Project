@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../Common/SearchBar';
 import ViewRecordButton from '../Buttons/ViewRecordButton';
-import { students as studentData } from '../../Data/students'; // Adjust the path as needed
+import { students as studentData } from '../../Data/students';
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
 
   useEffect(() => {
-    // Load the student data from the imported file
+    
     setStudents(studentData);
     setFilteredStudents(studentData);
   }, []);
