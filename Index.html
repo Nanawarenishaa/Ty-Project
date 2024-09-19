@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Academic Record System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">College System</div>
+            <ul class="nav-links">
+                <li><a href="#homeSection" id="homeLink">Home</a></li>
+                <li><a href="#fillRecordsSection" id="fillRecordsLink">Fill Records</a></li>
+                <li><a href="#studentRecordsSection" id="studentRecordsLink">Student Records</a></li>
+                <li><a href="#attendanceSection" id="attendanceLink">Attendance</a></li>
+                <li><a href="#" class="login-btn">Login</a></li>
+                <li><a href="#" class="signup-btn">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="homeSection">
+            <h2>Welcome to the College Academic Record System</h2>
+            <p>This is the homepage. Navigate using the menu above.</p>
+        </section>
+
+        <!-- Fill Records Section -->
+        <section id="fillRecordsSection" style="display: none;">
+            <h2>Fill Student Records</h2>
+            <form id="studentForm">
+                <div class="form-group">
+                    <label for="studentName">Student Name:</label>
+                    <input type="text" id="studentName" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentAge">Age:</label>
+                    <input type="number" id="studentAge" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentClass">Class:</label>
+                    <input type="text" id="studentClass" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentRoll">Roll Number:</label>
+                    <input type="text" id="studentRoll" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentSubject">Subject:</label>
+                    <input type="text" id="studentSubject" required>
+                </div>
+                <button type="submit" class="submit-btn">Submit</button>
+                <p class="success-message" id="successMessage" style="display:none;">Record saved successfully!</p>
+            </form>
+        </section>
+
+        <!-- Student Records Section -->
+        <section id="studentRecordsSection" style="display: none;">
+            <h2>Student Records</h2>
+            <input type="text" id="searchBar" placeholder="Search by student name" class="search-bar">
+            <ul id="studentList" class="student-list"></ul>
+        </section>
+
+        <!-- Attendance Section -->
+        <section id="attendanceSection" style="display: none;">
+            <h2>Attendance Records</h2>
+            <input type="text" id="attendanceSearchBar" placeholder="Search by name or date" class="search-bar">
+            <ul id="attendanceList" class="attendance-list"></ul>
+            <button id="addAttendanceBtn" class="add-attendance-btn">+</button>
+            <div id="attendanceModal" class="modal hidden">
+                <div class="modal-content">
+                    <span id="closeModal" class="close-btn">&times;</span>
+                    <h2>Add Attendance</h2>
+                    <form id="attendanceForm">
+                        <div class="form-group">
+                            <label for="attendanceName">Attendance Name:</label>
+                            <input type="text" id="attendanceName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="attendanceDate">Date:</label>
+                            <input type="date" id="attendanceDate" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Save</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
