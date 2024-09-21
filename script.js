@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const studentRecordsSection = document.getElementById('studentRecordsSection');  
     const attendanceSection = document.getElementById('attendanceSection');  
     const attendanceTableSection = document.getElementById('attendanceTableSection');  
-    
+    const loginSection = document.getElementById('loginSection');  
+  const signupSection = document.getElementById('signupSection');  
     // Initialize currentDate  
     let currentDate = new Date(); // This variable will track the current date for attendance  
     
@@ -28,6 +29,13 @@ document.addEventListener('DOMContentLoaded', function () {
      showSection(attendanceSection);  
      updateAttendanceList();  
     });  
+    document.getElementById('loginLink').addEventListener('click', function () {  
+        showSection(loginSection);  
+       });  
+       document.getElementById('signupLink').addEventListener('click', function () {  
+        showSection(signupSection);  
+       });  
+       
     
     // Function to show only the selected section  
     function showSection(sectionToShow) {  
@@ -36,6 +44,8 @@ document.addEventListener('DOMContentLoaded', function () {
      studentRecordsSection.style.display = 'none';  
      attendanceSection.style.display = 'none';  
      attendanceTableSection.style.display = 'none';  
+     loginSection.style.display = 'none';  
+     signupSection.style.display = 'none';  
     
      // Show the selected section  
      sectionToShow.style.display = 'block';  
@@ -296,6 +306,30 @@ document.addEventListener('DOMContentLoaded', function () {
       // Call this function to set the initial display  
       updateMonthYearDisplay();  
       const studentRecords = getStudentRecords();  
-      createAttendanceTable(studentRecords); // Pass the studentRecords array as an argument  
-      });
+      createAttendanceTable(studentRecords); // Pass the studentRecords array as an argument 
+      
+      document.getElementById('login-form').addEventListener('submit', function(event) {  
+        event.preventDefault();  
+        const username = document.getElementById('username').value;  
+        const password = document.getElementById('password').value;  
+       
+        // TO DO: Implement login logic here  
+        console.log(`Login attempt with username: ${username} and password: ${password}`);  
+       });  
+       
+       // Signup functionality  
+       document.getElementById('signup-form').addEventListener('submit', function(event) {  
+        event.preventDefault();  
+        const username = document.getElementById('username').value;  
+        const email = document.getElementById('email').value;  
+        const password = document.getElementById('password').value;  
+        const confirmPassword = document.getElementById('confirm-password').value;  
+       
+        // TO DO: Implement signup logic here  
+        console.log(`Signup attempt with username: ${username}, email: ${email}, password: ${password}, and confirm password: ${confirmPassword}`);  
+       });  
+     });
+    
+     
+    
       
