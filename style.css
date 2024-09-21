@@ -285,20 +285,56 @@ button {
 .submit-btn:hover {
   background-color: #2f9e55;
 }
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+
+
+#attendanceTable {  
+  border-collapse: collapse;  
+  width: 100%;  
+  margin-top: 20px;  
+}  
+  
+#attendanceTable th, #attendanceTable td {  
+  border: 1px solid #ddd;  
+  padding: 8px;  
+  text-align: left;  
+}  
+  
+#attendanceTable th {  
+  background-color: #f0f0f0;  
+  border-bottom: 2px solid #ccc;  
+}  
+  
+#attendanceTable td {  
+  background-color: #fff;  
+  padding: 0px 10px;
+}  
+  
+#attendanceTable tr:nth-child(even) {  
+  background-color: #f9f9f9;  
+}  
+  
+#attendanceTable tr:hover {  
+  background-color: #f2f2f2;  
+}  
+  
+.attendance-checkbox {  
+  margin: 0;  
+  padding: 0;  
+  width: 20px;  
+  height: 20px;  
+  border: 1px solid #000000;  
+  border-radius: 4px;  
+  cursor: pointer;  
+}  
+  
+.attendance-checkbox:checked {
+  background-color: #4CAF50 !important;  
+  border-color: #4CAF50 !important;  
+  accent-color: #4CAF50 !important;  
 }
 
-table th, table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
 
-table th {
-  background-color: #f2f2f2;
-}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
