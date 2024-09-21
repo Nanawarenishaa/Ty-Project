@@ -244,24 +244,19 @@ window.editAttendance = function (name) {
     };
 
     // Populate Attendance Table Function
-    function populateAttendanceTable() {
-        const attendanceTableBody = document.querySelector('#attendanceTable tbody');
-        attendanceTableBody.innerHTML = ''; // Clear previous content
-        const students = getStudentRecords(); // Get students for attendance
-
-        students.forEach(student => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${student.name}</td>
-                ${Array.from({ length: 31 }, (_, i) => `
-                    <td>
-                        <input type="checkbox" class="attendance-checkbox" data-day="${i + 1}">
-                    </td>
-                `).join('')}
-            `;
-            attendanceTableBody.appendChild(row);
-        });
-    }
+    function createAttendanceTable(studentName) {  
+        const attendanceTableBody = document.querySelector('#attendanceTable tbody');  
+        const row = document.createElement('tr');  
+        row.innerHTML = `  
+         <td>${studentName}</td>  
+         ${Array.from({ length: 31 }, (_, i) => `  
+          <td>  
+            <input type="checkbox" class="attendance-checkbox" data-day="${i + 1}">  
+          </td>  
+         `).join('')}  
+        `;  
+        attendanceTableBody.appendChild(row);  
+      }
 
     function updateMonthYearDisplay() {
         const monthYearDisplay = document.getElementById('currentMonthYear');
@@ -271,16 +266,16 @@ window.editAttendance = function (name) {
     document.getElementById('prevMonthBtn').addEventListener('click', function () {
         currentDate.setMonth(currentDate.getMonth() - 1);
         updateMonthYearDisplay();
-        populateAttendanceTable(); // Refresh the attendance table
+        createAttendanceTable(); // Refresh the attendance table
     });
 
     document.getElementById('nextMonthBtn').addEventListener('click', function () {
         currentDate.setMonth(currentDate.getMonth() + 1);
         updateMonthYearDisplay();
-        populateAttendanceTable(); // Refresh the attendance table
+        createAttendanceTable(); // Refresh the attendance table
     });
 
     // Call this function to set the initial display
     updateMonthYearDisplay();
-    populateAttendanceTable(); // Call this on load to populate the initial table
+    createAttendanceTable(); // Call this on load to populate the initial table
 });
