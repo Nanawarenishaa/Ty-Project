@@ -209,51 +209,44 @@ document.addEventListener('DOMContentLoaded', function () {
       document.getElementById('saveAttendanceBtn').addEventListener('click', function () {  
         const attendanceTableBody = document.querySelector('#attendanceTable tbody');  
         const rows = attendanceTableBody.querySelectorAll('tr');  
-        
+        const attendanceNameInput = document.getElementById('attendanceName').value;  
+        const attendanceDateInput = document.getElementById('attendanceDate').value;  
         const recordsToSave = [];  
-        
-        rows.forEach(row => {  
-         const studentName = row.cells[0].textContent;  
-         const checkboxes = row.querySelectorAll('.attendance-checkbox');  
-         checkboxes.forEach(checkbox => {  
-          if (checkbox.checked) {  
-            const day = checkbox.getAttribute('data-day');  
-            const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day).toLocaleDateString();  
-            recordsToSave.push({ name: studentName, date: date });  
-          }  
-         });  
-        });  
-        
+       
+        recordsToSave.push({ name: attendanceNameInput, date: attendanceDateInput });  
+  
+
+       
         // Save records to localStorage  
         attendanceRecords = attendanceRecords.concat(recordsToSave);  
         localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));  
-        
+       
         updateAttendanceList(); // Refresh the attendance list  
         showSection(attendanceSection); // Go back to attendance section  
-      });  
-        
-      // View Attendance Function  
-      window.viewAttendance = function (name, date) {  
+       });  
+       
+       // View Attendance Function  
+       window.viewAttendance = function (attendanceName, attendanceDate) {  
         showSection(attendanceTableSection);  
-      };  
-        
-      // Edit Attendance Function  
-      window.editAttendance = function (name) {  
-        const newName = prompt('Edit Attendance Name:', name);  
+       };  
+       
+       // Edit Attendance Function  
+       window.editAttendance = function (attendanceName) {  
+        const newName = prompt('Edit Attendance Name:', attendanceName);  
         if (newName) {  
-         attendanceRecords = attendanceRecords.map(record =>  
-          record.name === name ? { ...record, name: newName } : record  
-         );  
-         localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));  
-         updateAttendanceList(); // Refresh the attendance list  
+         attendanceRecords = attendanceRecords.map(record =>  
+           record.name === attendanceName ? { ...record, name: newName } : record  
+         );  
+         localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));  
+         updateAttendanceList(); // Refresh the attendance list  
         }  
-      };  
-        
-      window.deleteAttendance = function (name, date) {  
-        attendanceRecords = attendanceRecords.filter(record => record.name !== name || record.date !== date);  
+       }; 
+       window.deleteAttendance = function (attendanceName, attendanceDate) {  
+        attendanceRecords = attendanceRecords.filter(record => record.name !== attendanceName || record.date !== attendanceDate);  
         localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));  
         updateAttendanceList(); // Refresh the attendance list  
-      };
+       };  
+    
       
       function createAttendanceTable(studentRecords) {  
         const attendanceTableBody = document.querySelector('#attendanceTable tbody');  
@@ -313,8 +306,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const username = document.getElementById('username').value;  
         const password = document.getElementById('password').value;  
        
-        // TO DO: Implement login logic here  
-        console.log(`Login attempt with username: ${username} and password: ${password}`);  
+        // Check if the username and password are valid  
+        const storedUsers = JSON.parse(localStorage.getItem('users')) || [];  
+        const user = storedUsers.find(user => user.username === username && user.password === password);  
+       
+        if (user) {  
+         // If the username and password are valid, log the user in  
+         localStorage.setItem('loggedInUser', JSON.stringify(user));  
+         window.location.href = 'index.html';  
+        } else {  
+         alert('Invalid username or password');  
+        }  
        });  
        
        // Signup functionality  
@@ -325,10 +327,38 @@ document.addEventListener('DOMContentLoaded', function () {
         const password = document.getElementById('password').value;  
         const confirmPassword = document.getElementById('confirm-password').value;  
        
-        // TO DO: Implement signup logic here  
-        console.log(`Signup attempt with username: ${username}, email: ${email}, password: ${password}, and confirm password: ${confirmPassword}`);  
+        // Check if the password and confirm password match  
+        if (password !== confirmPassword) {  
+         alert('Passwords do not match');  
+         return;  
+        }  
+       
+        // Check if the username is already taken  
+        const storedUsers = JSON.parse(localStorage.getItem('users')) || [];  
+        const user = storedUsers.find(user => user.username === username);  
+       
+        if (user) {  
+         alert('Username is already taken');  
+         return;  
+        }  
+       
+        // Create a new user object  
+        const newUser = {  
+         username: username,  
+         email: email,  
+         password: password  
+        };  
+       
+        // Add the new user to the stored users  
+        storedUsers.push(newUser);  
+        localStorage.setItem('users', JSON.stringify(storedUsers));  
+       
+        // Log the user in  
+        localStorage.setItem('loggedInUser', JSON.stringify(newUser));  
+        window.location.href = 'index.html';  
        });  
      });
+   
     
      
     
