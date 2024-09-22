@@ -25,7 +25,7 @@
         <!-- Home Section -->
         <section id="homeSection">
             <h2>Welcome to the College Academic Record System</h2>
-            <p>This is the homepage. Navigate using the menu above.</p>
+            <p>This is the homepage. </p>
         </section>
 
         <!-- Fill Records Section -->
@@ -34,24 +34,42 @@
             <form id="studentForm">
                 <div class="form-group">
                     <label for="studentName">Student Name:</label>
-                    <input type="text" id="studentName" required>
+                    <input type="text" id="studentName">
                 </div>
                 <div class="form-group">
                     <label for="studentAge">Age:</label>
-                    <input type="number" id="studentAge" required>
+                    <input type="number" id="studentAge" >
                 </div>
                 <div class="form-group">
                     <label for="studentClass">Class:</label>
-                    <input type="text" id="studentClass" required>
+                    <input type="text" id="studentClass" >
                 </div>
                 <div class="form-group">
                     <label for="studentRoll">Roll Number:</label>
-                    <input type="text" id="studentRoll" required>
+                    <input type="text" id="studentRoll" >
                 </div>
                 <div class="form-group">
                     <label for="studentSubject">Subject:</label>
-                    <input type="text" id="studentSubject" required>
+                    <input type="text" id="studentSubject">
                 </div>
+                <div class="form-group">
+                    <label for="studentAddress">Address:</label>
+                    <input type="text" id="studentAddress" name="studentAddress"><br><br>
+                </div>
+                <div class="form-group">
+                <label for="studentPhone">Phone Number:</label>
+                <input type="tel" id="studentPhone" name="studentPhone" ><br><br>
+            </div>
+            <div class="form-group">
+                <label for="studentEmail">Email:</label>
+                <input type="email" id="studentEmail" name="studentEmail" ><br><br>
+            </div>
+                <!-- Image field -->
+                <div class="form-group">
+                <label for="studentImage">Student Image:</label>
+                <input type="file" id="studentImage" name="studentImage" accept="image/*"><br><br>
+                </div>
+
                 <button type="submit" class="submit-btn">Submit</button>
                 <p class="success-message" id="successMessage" style="display:none;">Record saved successfully!</p>
             </form>
@@ -130,6 +148,31 @@
              <button type="submit">Signup</button>  
             </form>  
         </section>  
+             <!-- student profile page -->
+             <section id="studentProfileSection">  
+               <header>  
+                   <h1>Student Profile</h1>  
+                  </header>  
+            <div class="student-profile-container">  
+             <div class="student-image-container">  
+               <img src="student-image.jpg" alt="Student Image">  
+             </div>  
+             <div class="student-info-container">  
+               <h2>Student Information</h2>  
+               <p>Name: <span id="StudentName"></span></p>
+               <p>Age: <span id="StudentAge"></span></p>
+               <p>Class: <span id="StudentClass"></span></p>
+               <p>Roll Number: <span id="StudentRoll"></span></p>
+               <p>Subject: <span id="StudentSubject"></span></p>
+               <p>Address: <span id="StudentAddress"></span></p>
+               <p>Phone: <span id="StudentPhone"></span></p>
+               <p>Email: <span id="StudentEmail"></span></p>
+               <p>Student Image:</p>
+               <img id="StudentImage" style="display: none;" alt="Student Image">
+             </div>  
+            </div>  
+            <button class="back-btn" id="BtnBack" onclick="goBack()">Back</button>  
+             </section>  
     </main>
 
     <script src="script.js"></script>
