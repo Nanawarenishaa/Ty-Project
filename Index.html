@@ -20,13 +20,17 @@
             </ul>
         </nav>
     </header>
+     <!-- Hero Section -->
+  <section class="hero" id="homeSection">
+    <div class="hero-content">
+      <h1>Welcome to the College Management System</h1>
+      <p>Manage student records and attendance effortlessly.</p>
+      <button class="heroButton">Get Started</button>
 
+    </div>
+  </section>
     <main>
-        <!-- Home Section -->
-        <section id="homeSection">
-            <h2>Welcome to the College Academic Record System</h2>
-            <p>This is the homepage. </p>
-        </section>
+       
 
         <!-- Fill Records Section -->
         <section id="fillRecordsSection" style="display: none;">
@@ -155,7 +159,9 @@
                   </header>  
             <div class="student-profile-container">  
              <div class="student-image-container">  
-               <img src="student-image.jpg" alt="Student Image">  
+                <img src="images/student.jpg" alt="Student Profile Picture" id="StudentImage" >
+              
+
              </div>  
              <div class="student-info-container">  
                <h2>Student Information</h2>  
@@ -167,13 +173,21 @@
                <p>Address: <span id="StudentAddress"></span></p>
                <p>Phone: <span id="StudentPhone"></span></p>
                <p>Email: <span id="StudentEmail"></span></p>
-               <p>Student Image:</p>
-               <img id="StudentImage" style="display: none;" alt="Student Image">
+               
              </div>  
             </div>  
             <button class="back-btn" id="BtnBack" onclick="goBack()">Back</button>  
              </section>  
     </main>
+      <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2024 College Management System | Contact: admin@college.com</p>
+    <div class="social-links">
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+    </div>
+  </footer>
 
     <script src="script.js"></script>
 </body>
