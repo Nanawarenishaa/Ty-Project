@@ -1,6 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', function () {  
-  // Get section elements  
+  // Get section elements
   const homeSection = document.getElementById('homeSection');  
   const fillRecordsSection = document.getElementById('fillRecordsSection');  
   const studentRecordsSection = document.getElementById('studentRecordsSection');  
@@ -10,6 +10,21 @@ document.addEventListener('DOMContentLoaded', function () {
   const signupSection = document.getElementById('signupSection');  
   const studentProfileSection = document.getElementById('studentProfileSection');  
   
+  const getStartedBtn = document.querySelector('.heroButton');
+    
+  if (getStartedBtn) {
+      getStartedBtn.addEventListener('click', function() {
+          hideAllSections();
+          const fillRecordsSection = document.getElementById('fillRecordsSection');
+          if (fillRecordsSection) {
+              fillRecordsSection.style.display = 'block'; // Show Fill Records section
+          } else {
+              console.error('fillRecordsSection not found');
+          }
+      });
+  } else {
+      console.error('Get Started button (.heroButton) not found');
+  }
   // Initialize currentDate  
   let currentDate = new Date(); // This variable will track the current date for attendance  
   
@@ -38,10 +53,11 @@ document.addEventListener('DOMContentLoaded', function () {
    showSection(signupSection);  
   });  
 
-  
+
   // Function to show only the selected section  
   function showSection(sectionToShow) {  
-   homeSection.style.display = 'none';  
+    
+    homeSection.style.display = 'none';
    fillRecordsSection.style.display = 'none';  
    studentRecordsSection.style.display = 'none';  
    attendanceSection.style.display = 'none';  
@@ -53,6 +69,12 @@ document.addEventListener('DOMContentLoaded', function () {
    sectionToShow.style.display = 'block';  
   }  
   
+  function hideAllSections() {
+      const sections = document.querySelectorAll('section');
+      sections.forEach(section => {
+          section.style.display = 'none';
+      });
+  }
   // Add Attendance button functionality  
   document.getElementById('addAttendanceBtn').addEventListener('click', function () {  
    showSection(attendanceTableSection); // Show attendance table section  
@@ -64,6 +86,19 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('backBtn').addEventListener('click', function () {  
    showSection(attendanceSection); // Go back to the attendance records section  
   });  
+
+
+   // Handle "Get Started" button click in hero section
+  
+// Add smooth scrolling behavior
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
   
   const studentForm = document.getElementById('studentForm');  
   const successMessage = document.getElementById('successMessage');  
@@ -154,15 +189,17 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('StudentSubject').textContent = student.subject;
         document.getElementById('StudentAddress').textContent = student.address; // Corrected
         document.getElementById('StudentPhone').textContent = student.phone; // Corrected
-        document.getElementById('StudentEmail').textContent = student.email; // Corrected
+        document.getElementById('StudentImage').src = student.image;
+        document.getElementById('StudentImage').style.display = 'block';
 
         const studentImage = document.getElementById('StudentImage');
         if (student.image) {
-            studentImage.src = student.image; // Ensure the correct variable name is used
-            studentImage.style.display = 'block'; // Show the image
-        } else {
-            studentImage.style.display = 'none'; // Hide if no image
-        }
+          studentImage.src = student.image;
+          studentImage.style.display = 'block';
+      } else {
+          studentImage.style.display = 'none';
+      }
+      
 
         // Show student profile section and hide others
         showSection(studentProfileSection);
@@ -217,19 +254,18 @@ document.getElementById('BtnBack').addEventListener('click', goBack);
       : students;  
      displayStudentList(filteredStudents);  
     });  
-    
+    studentForm.reset();
+document.getElementById('studentImage').value = ''; // Reset image input
+
 
     // Get student records from localStorage
-    function getStudentRecords() {  
-        const students = [];  
-        for (let i = 0; i < localStorage.length; i++) {  
-         const key = localStorage.key(i);  
-         if (key.startsWith('student-')) {  
-          students.push(JSON.parse(localStorage.getItem(key)));  
-         }  
-        }  
-        return students;  
-      }  
+    function getStudentRecords() {
+      const students = Object.keys(localStorage)
+          .filter(key => key.startsWith('student-'))
+          .map(key => JSON.parse(localStorage.getItem(key)));
+      return students;
+  }
+   
         
       // Attendance handling  
       let attendanceRecords = JSON.parse(localStorage.getItem('attendanceRecords')) || [];  
@@ -380,7 +416,10 @@ document.getElementById('BtnBack').addEventListener('click', goBack);
          alert('Passwords do not match');  
          return;  
         }  
-       
+        if (!validateEmail(email)) {
+          alert('Invalid email address.');
+          return;
+      }
         // Check if the username is already taken  
         const storedUsers = JSON.parse(localStorage.getItem('users')) || [];  
         const user = storedUsers.find(user => user.username === username);  
@@ -398,14 +437,22 @@ document.getElementById('BtnBack').addEventListener('click', goBack);
         };  
        
         // Add the new user to the stored users  
-        storedUsers.push(newUser);  
-        localStorage.setItem('users', JSON.stringify(storedUsers));  
-       
-        // Log the user in  
-        localStorage.setItem('loggedInUser', JSON.stringify(newUser));  
-        window.location.href = 'index.html';  
-       });  
-     });
+        storedUsers.push(newUser);
+        localStorage.setItem('users', JSON.stringify(storedUsers));
+
+        // Display success message and reset the form
+        alert('Signup successful! You can now log in.');
+        document.getElementById('signup-form').reset();
+        window.location.href = 'login.html'; // Redirect to login page after signup
+    });
+
+    // Email validation function (moved outside the signup event listener)
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+}); 
+     
    
     
      
