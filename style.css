@@ -16,7 +16,7 @@ body {
   justify-content: space-between;  
   align-items: center;  
   padding: 1rem 2rem;  
-  background-color: #402b9e;  
+  background-color: #002244;  
 }  
   
 .logo {  
@@ -43,10 +43,76 @@ body {
 }  
   
 .nav-links a:hover, .nav-links a.active {  
-  background-color: rgb(100, 86, 180);  
+  background-color: #1a426b;  
   border-radius: 4px;  
 }  
   
+.hero {
+  background-image: url('./collegeBackground.png'); 
+  background-repeat: no-repeat;
+  background-position:center;
+  background-size: cover;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.89);
+  padding: 0 20px; 
+}
+
+.hero-content {
+  max-width: 900px;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+  margin-left: 15rem;
+
+}
+.hero h1{
+  font-size: 3rem;
+}
+.hero p {
+  margin: 1rem 0;
+  font-size: 2rem;
+}
+
+.hero button {
+  padding: 1rem 2rem;
+  background-color: #07486d; /* accent color */
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.hero button:hover{
+  background-color: #002244;
+}
+
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #002244; 
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  z-index: 1000; 
+}
+
+
+footer p {
+  margin: 0;
+}
+
+.social-links a {
+  color: #ffcc00; /* accent color */
+  margin: 0 10px;
+  text-decoration: none;
+}
 /* Button Styles */  
 button {  
   padding: 8px 15px;  
@@ -227,7 +293,7 @@ button {
   width: 50px;  
   height: 50px;  
   border-radius: 50%;  
-  background-color: #4c56af;  
+  background-color: #2b348b;  
   color: white;  
   font-size: 30px;  
   border: none;  
@@ -235,7 +301,7 @@ button {
 }  
   
 .add-attendance-btn:hover {  
-  background-color: #455aa0;  
+  background-color: #201e8b;  
 }  
   
 /* Add Attendance Modal Styles */  
@@ -281,7 +347,7 @@ button {
 }  
   
 .submit-btn:hover {  
-  background-color: #555eaf;  
+  background-color: #323ead;  
 }  
   
 /* Attendance Table Styles */  
@@ -376,33 +442,56 @@ button {
 }  
   
 #loginSection button:hover, #signupSection button:hover {  
-  background-color: #555eaf;  
+  background-color: #3945aa;  
 }  
 /* student-profile page */
+#studentProfileSection {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+#studentProfileSection h1{
+  margin: auto;
+  width: fit-content;
+   margin-top: 2rem;
+
+}
 .student-profile-container {
+  width: 70%;
+  min-height: 60vh;
 display: flex;
 flex-direction: row;
-justify-content: space-between;
+gap: 4rem;
 align-items: center;
-padding: 2rem;
-}
+padding: 0 2rem ;
+margin: 0 4rem;
 
+}
 .student-image-container {
-width: 20%;
-height: 20%;
-border-radius: 50%;
-overflow: hidden;
-margin-right: 2rem;
+  width: 250px; /* Fixed width */
+  height: 250px; /* Fixed height */
+  border-radius: 50%; /* Keep it circular */
+  overflow: hidden;
+  margin-right: 2rem;
+  border: 1px solid rgb(49, 45, 45);
+
 }
 
 .student-image-container img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-}
+  width: 100%; /* Make the image fit the container */
+  height: 100%; /* Maintain the aspect ratio */
+  object-fit: cover; 
 
-.student-info-container {
-width: 80%;
+  
+}
+.student-info-container{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
 }
 
 .student-info-container h2 {
@@ -410,15 +499,18 @@ margin-bottom: 1rem;
 }
 
 .student-info-container p {
-margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+
 }
 .back-btn {
-  background-color: #4c63af;
+  background-color: #4c56af;
   color: #fff;
-  padding: 1rem 2rem;
+  padding: 13px 2rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin: 1rem 4rem;
   }
   
   .back-btn:hover {
