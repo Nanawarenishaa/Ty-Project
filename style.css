@@ -52,7 +52,7 @@ body {
   background-repeat: no-repeat;
   background-position:center;
   background-size: cover;
-  height: 90vh;
+  height: 85vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,10 +93,9 @@ body {
 
 
 footer {
-
   bottom: 0;
   width: 100%;
-  margin-top: 1rem;
+
   background-color: #002244; 
   color: white;
   padding: 1rem;
