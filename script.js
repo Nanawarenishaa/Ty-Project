@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const loginSection = document.getElementById('loginSection');  
   const signupSection = document.getElementById('signupSection');  
   const studentProfileSection = document.getElementById('studentProfileSection');  
+  const loggedInSection = document.getElementById('loggedInSection');  
   
   const getStartedBtn = document.querySelector('.heroButton');
     
@@ -52,6 +53,9 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('signupLink').addEventListener('click', function () {  
    showSection(signupSection);  
   });  
+  document.getElementById('logOutLink').addEventListener('click', function () {  
+    showSection(loggedInSection);  
+   });
 
 
   // Function to show only the selected section  
@@ -64,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
    attendanceTableSection.style.display = 'none';  
    loginSection.style.display = 'none';  
    signupSection.style.display = 'none';  
+   loggedInSection.style.display = 'none';  
    studentProfileSection.style.display = 'none';  
    // Show the selected section  
    sectionToShow.style.display = 'block';  
@@ -385,23 +390,23 @@ document.getElementById('studentImage').value = ''; // Reset image input
       const studentRecords = getStudentRecords();  
       createAttendanceTable(studentRecords); // Pass the studentRecords array as an argument 
       
-      document.getElementById('login-form').addEventListener('submit', function(event) {  
-        event.preventDefault();  
-        const username = document.getElementById('username').value;  
-        const password = document.getElementById('password').value;  
-       
-        // Check if the username and password are valid  
-        const storedUsers = JSON.parse(localStorage.getItem('users')) || [];  
-        const user = storedUsers.find(user => user.username === username && user.password === password);  
-       
-        if (user) {  
-         // If the username and password are valid, log the user in  
-         localStorage.setItem('loggedInUser', JSON.stringify(user));  
-         window.location.href = 'index.html';  
-        } else {  
-         alert('Invalid username or password');  
-        }  
-       });  
+      document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+    
+        const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+        const user = storedUsers.find(user => user.username === username && user.password === password);
+    
+        if (user) {
+            // Log the user in and redirect to the homepage
+            localStorage.setItem('loggedInUser', JSON.stringify(user));
+            window.location.href = 'index.html'; // Redirect to the main dashboard
+        } else {
+            alert('Invalid username or password');
+        }
+    });
+    
        
        // Signup functionality  
        document.getElementById('signup-form').addEventListener('submit', function(event) {  
@@ -443,8 +448,19 @@ document.getElementById('studentImage').value = ''; // Reset image input
         // Display success message and reset the form
         alert('Signup successful! You can now log in.');
         document.getElementById('signup-form').reset();
-        window.location.href = 'login.html'; // Redirect to login page after signup
+        window.location.href = 'loginLink'; // Redirect to login page after signup
+
     });
+    
+document.addEventListener('DOMContentLoaded', function() {
+  const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+  if (!loggedInUser) {
+    window.location.href = 'loginLink'; // Redirect to login page after signup
+
+  }
+});
+
+
 
     // Email validation function (moved outside the signup event listener)
     function validateEmail(email) {
@@ -452,7 +468,62 @@ document.getElementById('studentImage').value = ''; // Reset image input
         return re.test(email);
     }
 }); 
-     
+document.addEventListener('DOMContentLoaded', function () {
+  const loginForm = document.getElementById('loginForm');
+  const errorMessage = document.getElementById('errorMessage');
+  const loginSection = document.getElementById('loginSection');
+  const loggedInSection = document.getElementById('loggedInSection');
+  const userNameDisplay = document.getElementById('userName');
+  const logOutBtn = document.getElementById('logOutBtn');
+
+  // Check if the user is already logged in
+  const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+  
+  if (loggedInUser) {
+      loginSection.style.display = 'none';
+      loggedInSection.style.display = 'block';
+      userNameDisplay.textContent = loggedInUser.username;
+  } else {
+      loginSection.style.display = 'block';
+      loggedInSection.style.display = 'none';
+  }
+
+  // Handle login form submission
+  loginForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Validate input
+      if (!username || !password) {
+          errorMessage.textContent = "Please fill out both fields.";
+          errorMessage.classList.remove('hidden');
+          return;
+      }
+
+      // Simulate successful login (In real apps, this would be an API call)
+      const user = { username, password };  // Example user data
+      localStorage.setItem('loggedInUser', JSON.stringify(user));
+
+      // Hide login form and show logged-in state
+      loginSection.style.display = 'none';
+      loggedInSection.style.display = 'block';
+      userNameDisplay.textContent = username;
+  });
+
+  // Handle logout button click
+  if (logOutBtn) {
+      logOutBtn.addEventListener('click', function () {
+          // Remove the logged-in user data from localStorage
+          localStorage.removeItem('loggedInUser');
+
+          // Hide logged-in section and show login form
+          loginSection.style.display = 'block';
+          loggedInSection.style.display = 'none';
+      });
+  }
+});
    
     
      
