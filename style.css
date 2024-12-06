@@ -445,28 +445,27 @@ button {
   background-color: #3945aa;  
 }  
 /* Logout Page Container */
-#logOutSection {
-  text-align: center;
-  background-color: #fff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 400px;
+#loggedInSection {
+  width: 450px;  
+  margin: 50px auto;  
+  padding: 20px;  
+  border: 1px solid #ccc;  
+  border-radius: 10px;  
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#logOutSection h1 {
+#loggedInSection h1 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
-#logOutSection p {
+#loggedInSection p {
   margin-bottom: 2rem;
   font-size: 1rem;
   color: #555;
 }
 
-#logOutSection button {
+#loggedInSection button {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   border: none;
@@ -477,7 +476,7 @@ button {
   transition: background-color 0.3s ease;
 }
 
-#logOutSection button:hover {
+#loggedInSection button:hover {
   background-color: #3945aa;
 }
 /* student-profile page */
