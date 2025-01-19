@@ -1,0 +1,738 @@
+* {  
+  margin: 0;  
+  padding: 0;  
+  box-sizing: border-box;  
+}  
+  
+body {  
+  font-family: Arial, sans-serif;  
+  background-color: #f0f4f7;  
+  color: #333;  
+}  
+  
+/* Navbar Styles */  
+.navbar {  
+  display: flex;  
+  justify-content: space-between;  
+  align-items: center;  
+  padding: 1rem 2rem;  
+  background-color: #002244;  
+}  
+  
+.logo {  
+  font-size: 1.5rem;  
+  color: #fff;  
+  font-weight: bold;  
+}  
+  
+.nav-links {  
+  list-style: none;  
+  display: flex;  
+}  
+  
+.nav-links li {  
+  margin: 0 1rem;  
+}  
+  
+.nav-links a {  
+  color: #fff;  
+  text-decoration: none;  
+  font-size: 12px;  
+  padding: 0.5rem 1rem;  
+  transition: background-color 0.3s;  
+}  
+  
+.nav-links a:hover, .nav-links a.active {  
+  background-color: #1a426b;  
+  border-radius: 4px;  
+}  
+  
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;  
+  background-image: url('./collegeBackground.png'); 
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+}
+
+.hero-content {
+  max-width: 900px;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+   background-color: aquamarine;
+}
+.hero h1{
+  font-size: 3rem;
+}
+.hero p {
+  margin: 1rem 0;
+  font-size: 2rem;
+}
+
+.hero button {
+  padding: 1rem 2rem;
+  background-color: #07486d; /* accent color */
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.hero button:hover{
+  background-color: #002244;
+}
+
+
+footer {
+  bottom: 0;
+  width: 100%;
+
+  background-color: #002244; 
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  z-index: 1000; 
+}
+
+
+footer p {
+  margin: 0;
+}
+
+.social-links a {
+  color: #ffcc00; /* accent color */
+  margin: 0 10px;
+  text-decoration: none;
+}
+/* Button Styles */  
+button {  
+  padding: 8px 15px;  
+  margin: 5px 10px;  
+  font-size: 14px;  
+  border: none;  
+  border-radius: 5px;  
+  cursor: pointer;  
+  transition: background-color 0.3s ease, transform 0.2s ease;  
+}  
+  
+/* View Button */  
+.view-btn {  
+  background-color: #4c63af;  
+  color: white;  
+  margin: 5px 10px;  
+}  
+  
+.view-btn:hover {  
+  background-color: #454ba0;  
+  transform: scale(1.05);  
+}  
+  
+/* Edit Button */  
+.edit-btn {  
+  background-color: #4fb48e;  
+  color: white;  
+  margin: 5px 10px;  
+}  
+  
+.edit-btn:hover {  
+  background-color: rgb(85, 202, 157);  
+  transform: scale(1.05);  
+}  
+  
+/* Delete Button */  
+.delete-btn {  
+  background-color: #e92517;  
+  color: white;  
+  margin: 5px 10px;  
+}  
+  
+.delete-btn:hover {  
+  background-color: #f12424;  
+  transform: scale(1.05);  
+}  
+  
+/* Form Section */  
+#studentForm,#teacherForm {  
+  width: 600px;  
+  margin: 2rem auto;  
+  padding: 2rem;  
+  background-color: #fff;  
+  border-radius: 8px;  
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
+}  
+
+#fillRecordsSection h2 {  
+  text-align: center;  
+  margin-bottom: 1.5rem;  
+  margin-top: 2rem;  
+  color: rgba(0, 0, 0, 0.808);  
+}  
+.Record_container { 
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+    border: 1px solid black;
+    font-size: 1rem;
+    
+  }
+  .Record_container span{
+    padding: 1rem;
+    
+}
+.Record_container .form_span {
+  border-left: 1px solid black;
+
+}
+  
+.form-group {  
+  margin-bottom: 1rem;  
+}  
+  
+.form-group label {  
+  display: block;  
+  margin-bottom: 0.5rem;  
+  color: #333;  
+}  
+  
+.form-group input {  
+  width: 100%;  
+  padding: 0.5rem;  
+  border: 1px solid #ccc;  
+  border-radius: 4px;  
+}  
+  
+.submit-btn {  
+  background-color: #4c63af;  
+  color: white;  
+  margin: 5px 10px; 
+  width: 100%;  
+}  
+  
+.submit-btn:hover {  
+  background-color: #454ba0;  
+  transform: scale(1.05);
+}  
+  
+.success-message {  
+  color: 4c56af(0, 55, 128);  
+  margin-top: 1rem;  
+  text-align: center;  
+}  
+  
+/* Student Records Section */  
+.student-records, .student-records {  
+  max-width: 800px;  
+  margin: 2rem auto;  
+  padding: 2rem;  
+  background-color: #fff;  
+  border-radius: 8px;  
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
+}  
+  
+.student-records,.teacher-records h2 {  
+  text-align: center;  
+  margin-bottom: 1.5rem;  
+  color: #004d99;  
+}  
+  
+.search-bar {  
+  width: 100%;  
+  padding: 0.75rem;  
+  margin-bottom: 1rem;  
+  border: 1px solid #ccc;  
+  border-radius: 4px;  
+}  
+  
+.student-list,.teacher-list {  
+  list-style: none;  
+  padding: 0;  
+}  
+  
+.student-list,.teacher-list li {  
+  display: flex;  
+  justify-content: space-between;  
+  align-items: center;  
+  padding: 1rem;  
+  margin-bottom: 0.75rem;  
+  background-color: #f9f9f9;  
+  border-radius: 4px;  
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);  
+}  
+  
+.student-list li .student-name {  
+  font-size: 1.25rem;  
+  color: #333;  
+}  
+  
+.student-list button {  
+  padding: 0.5rem 0.75rem;  
+  margin-left: 0.5rem;  
+  border: none;  
+  border-radius: 4px;  
+  cursor: pointer;  
+  color: #fff;  
+}  
+  
+/* Attendance Section Styles */  
+.attendance-list {  
+  list-style-type: none;  
+  padding: 0;  
+  margin-top: 20px;  
+}  
+  
+.attendance-list li {  
+  display: flex;  
+  justify-content: space-between;  
+  padding: 10px;  
+  background-color: #f1f1f1;  
+  margin-bottom: 10px;  
+  border-radius: 5px;  
+}  
+  
+.attendance-list .action-buttons button {  
+  margin-left: 10px;  
+}  
+  
+.add-attendance-btn {  
+  position: fixed;  
+  bottom: 20px;  
+  right: 20px;  
+  width: 50px;  
+  height: 50px;  
+  border-radius: 50%;  
+  background-color: #2b348b;  
+  color: white;  
+  font-size: 30px;  
+  border: none;  
+  cursor: pointer;  
+}  
+  
+.add-attendance-btn:hover {  
+  background-color: #201e8b;  
+}  
+  
+/* Add Attendance Modal Styles */  
+.modal {  
+  position: fixed;  
+  top: 0;  
+  left: 0;  
+  width: 100%;  
+  height: 100%;  
+  background: rgba(0, 0, 0, 0.5);  
+  display: flex;  
+  justify-content: center;  
+  align-items: center;  
+}  
+  
+.modal-content {  
+  background: #fff;  
+  padding: 20px;  
+  border-radius: 4px;  
+  width: 400px;  
+  position: relative;  
+}  
+  
+.close-btn {  
+  position: absolute;  
+  top: 10px;  
+  right: 10px;  
+  font-size: 20px;  
+  cursor: pointer;  
+}  
+  
+.hidden {  
+  display: none;  
+}  
+  
+.submit-btn {  
+  background-color: #4c56af;  
+  color: white;  
+  padding: 10px;  
+  border: none;  
+  border-radius: 4px;  
+  cursor: pointer;  
+}  
+  
+.submit-btn:hover {  
+  background-color: #323ead;  
+}  
+  
+/* Attendance Table Styles */  
+#attendanceTable {  
+  border-collapse: collapse;  
+  width: 100%;  
+  margin-top: 20px;  
+}  
+  
+#attendanceTable th, #attendanceTable td {  
+  border: 1px solid #ddd;  
+  padding: 8px;  
+  text-align: left;  
+}  
+  
+#attendanceTable th {  
+  background-color: #f0f0f0;  
+  border-bottom: 2px solid #ccc;  
+}  
+  
+#attendanceTable td {  
+  background-color: #fff;  
+  padding: 0px 10px;  
+}  
+  
+#attendanceTable tr:nth-child(even) {  
+  background-color: #f9f9f9;  
+}  
+  
+#attendanceTable tr:hover {  
+  background-color: #f2f2f2;  
+}  
+  
+.attendance-checkbox {  
+  margin: 0;  
+  padding: 0;  
+  width: 20px;  
+  height: 20px;  
+  border: 1px solid #000000;  
+  border-radius: 4px;  
+  cursor: pointer;  
+}  
+  
+.attendance-checkbox:checked {  
+  background-color: #4CAF50 !important;  
+  border-color: #4CAF50 !important;  
+  accent-color: #4CAF50 !important;  
+}  
+  
+/* Login and Signup Styles */  
+#loginSection, #signupSection {  
+  width: 450px;  
+  margin: 50px auto;  
+  padding: 20px;  
+  border: 1px solid #ccc;  
+  border-radius: 10px;  
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
+}  
+  
+#loginSection h2, #signupSection h2 {  
+  text-align: center;  
+  margin-bottom: 20px;  
+}  
+  
+#loginSection form, #signupSection form {  
+  margin-top: 20px;  
+}  
+  
+#loginSection label, #signupSection label {  
+  display: block;  
+  margin-bottom: 10px;  
+}  
+  
+#loginSection input, #signupSection input {  
+  width: 100%;  
+  height: 40px;  
+  margin-bottom: 20px;  
+  padding: 10px;  
+  border: 1px solid #ccc;  
+  border-radius: 10px;  
+}  
+  
+#loginSection button, #signupSection button {  
+  width: 100%;  
+  height: 40px;  
+  background-color: #4c56af;  
+  color: #fff;  
+  padding: 10px;  
+  border: none;  
+  border-radius: 10px;  
+  cursor: pointer;  
+}  
+  
+#loginSection button:hover, #signupSection button:hover {  
+  background-color: #3945aa;  
+}  
+/* Logout Page Container */
+#loggedInSection {
+  width: 450px;  
+  margin: 50px auto;  
+  padding: 20px;  
+  border: 1px solid #ccc;  
+  border-radius: 10px;  
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#loggedInSection h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+#loggedInSection p {
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+#loggedInSection button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #4c63af;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+#loggedInSection button:hover {
+  background-color: #3945aa;
+}
+/* student-profile page */
+#studentProfileSection {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+#studentProfileSection h1{
+  margin: auto;
+  width: fit-content;
+   margin-top: 2rem;
+
+}
+.student-profile-container {
+  width: 70%;
+  min-height: 60vh;
+display: flex;
+flex-direction: row;
+gap: 4rem;
+align-items: center;
+padding: 0 2rem ;
+margin: 0 4rem;
+
+}
+.student-image-container {
+  width: 250px; /* Fixed width */
+  height: 250px; /* Fixed height */
+  border-radius: 50%; /* Keep it circular */
+  overflow: hidden;
+  margin-right: 2rem;
+  border: 1px solid rgb(49, 45, 45);
+
+}
+
+.student-image-container img {
+  width: 100%; /* Make the image fit the container */
+  height: 100%; /* Maintain the aspect ratio */
+  object-fit: cover; 
+
+  
+}
+.student-info-container{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+}
+
+.student-info-container h2 {
+margin-bottom: 1rem;
+}
+
+.student-info-container p {
+  font-size: 1rem;
+  font-weight: 500;
+
+}
+.back-btn {
+  background-color: #4c56af;
+  color: #fff;
+  padding: 13px 2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 1rem 4rem;
+  }
+  
+  .back-btn:hover {
+  background-color: #455aa0;
+  }
+
+
+/* Responsive Design */  
+@media (max-width: 1200px) {  
+  #studentForm {  
+   width: 80%;  
+  }  
+  .student-records {  
+   max-width: 700px;  
+  }  
+  #attendanceTable {  
+   width: 90%;  
+  }  
+}  
+  
+@media (max-width: 992px) {  
+  #studentForm {  
+   width: 70%;  
+  }  
+  .student-records {  
+   max-width: 600px;  
+  }  
+  #attendanceTable {  
+   width: 80%;  
+  }  
+  .nav-links {  
+   flex-direction: column;  
+   width: 100%;  
+  }  
+  .nav-links li {  
+   margin: 0.5rem 0;  
+  }  
+  .nav-links a {  
+   font-size: 1.2rem;  
+   padding: 1rem;  
+   width: 100%;  
+   text-align: left;  
+  }  
+}  
+  
+@media (max-width: 768px) {  
+  #studentForm {  
+   width: 60%;  
+  }  
+  .student-records {  
+   max-width: 500px;  
+  }  
+  #attendanceTable {  
+   width: 70%;  
+  }  
+  .navbar {  
+   flex-direction: column;  
+   align-items: flex-start;  
+  }  
+  .nav-links {  
+   flex-direction: column;  
+   width: 100%;  
+  }  
+  .nav-links li {  
+   margin: 0.5rem 0;  
+  }  
+  .nav-links a {  
+   font-size: 1.2rem;  
+   padding: 1rem;  
+   width: 100%;  
+   text-align: left;  
+  }
+  .student-profile-container {
+    flex-direction: column;
+    align-items: center;
+    }
+    
+    .student-image-container {
+    width: 50%;
+    height: 50%;
+    margin-bottom: 2rem;
+    }
+    
+    .student-info-container {
+    width: 100%;
+    }  
+}  
+  
+@media (max-width: 576px) {  
+  #studentForm {  
+   width: 50%;  
+  }  
+  .student-records {  
+   max-width: 400px;  
+  }  
+  #attendanceTable {  
+   width: 60%;  
+  }  
+  .navbar {  
+   flex-direction: column;  
+   align-items: flex-start;  
+  }  
+  .nav-links {  
+   flex-direction: column;  
+   width: 100%;  
+  }  
+  .nav-links li {  
+   margin: 0.5rem 0;  
+  }  
+  .nav-links a {  
+   font-size: 1.2rem;  
+   padding: 1rem;  
+   width: 100%;  
+   text-align: left;  
+  }  
+}  
+  
+@media (max-width: 480px) {  
+  #studentForm {  
+   width: 40%;  
+  }  
+  .student-records {  
+   max-width: 300px;  
+  }  
+  #attendanceTable {  
+   width: 50%;  
+  }  
+  .navbar {  
+   flex-direction: column;  
+   align-items: flex-start;  
+  }  
+  .nav-links {  
+   flex-direction: column;  
+   width: 100%;  
+  }  
+  .nav-links li {  
+   margin: 0.5rem 0;  
+  }  
+  .nav-links a {  
+   font-size: 1.2rem;  
+   padding: 1rem;  
+   width: 100%;  
+   text-align: left;  
+  }  
+}  
+  
+@media (max-width: 320px) {  
+  #studentForm {  
+   width: 30%;  
+  }  
+  .student-records {  
+   max-width: 200px;  
+  }  
+  #attendanceTable {  
+   width: 40%;  
+  }  
+  .navbar {  
+   flex-direction: column;  
+   align-items: flex-start;  
+  }  
+  .nav-links {  
+   flex-direction: column;  
+   width: 100%;  
+  }  
+  .nav-links li {  
+   margin: 0.5rem 0;  
+  }  
+  .nav-links a {  
+   font-size: 1.2rem;  
+   padding: 1rem;  
+   width: 100%;  
+   text-align: left;  
+  }  
+}
+
+  
+  

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Academic Record System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">College System</div>
+            <ul class="nav-links">
+                <li><a href="#" id="homeLink">Home</a></li>  
+    <li><a href="#" id="fillRecordsLink">Fill Records</a></li>  
+    <li><a href="#" id="studentRecordsLink">Student Records</a></li>  
+    <li><a href="#" id="teacherRecordsLink">Teacher records</a></li>
+    <li><a href="#" id="attendanceLink">Attendance</a></li>  
+    <li><a href="#" id="loginLink">Login</a></li>  
+    <li><a href="#" id="signupLink">Signup</a></li>  
+    <li><a href="#" id="logOutLink">LogOut</a></li>  
+            </ul>
+        </nav>
+    </header>
+     <!-- Hero Section -->
+  <section class="hero" id="homeSection">
+    <div class="hero-content">
+      <h1>Welcome to the College Management System</h1>
+      <p>Manage student records and attendance effortlessly.</p>
+      <button class="heroButton">Get Started</button>
+
+    </div>
+  </section>
+    <main>
+       
+
+        <!-- Fill Records Section -->
+        <section id="fillRecordsSection" style="display: none;">
+            <div class="Record_container">
+              <span>Student form</span>
+              <span class="form_span">Teacher form</span>
+            </div>
+            <h2>Fill Records</h2>
+            <form id="studentForm">
+                <div class="form-group">
+                    <label for="studentName">Student Name:</label>
+                    <input type="text" id="studentName">
+                </div>
+                <div class="form-group">
+                    <label for="studentAge">Age:</label>
+                    <input type="number" id="studentAge" >
+                </div>
+                <div class="form-group">
+                    <label for="studentClass">Class:</label>
+                    <input type="text" id="studentClass" >
+                </div>
+                <div class="form-group">
+                    <label for="studentRoll">Roll Number:</label>
+                    <input type="text" id="studentRoll" >
+                </div>
+                <div class="form-group">
+                    <label for="studentSubject">Subject:</label>
+                    <input type="text" id="studentSubject">
+                </div>
+                <div class="form-group">
+                    <label for="studentAddress">Address:</label>
+                    <input type="text" id="studentAddress" name="studentAddress"><br><br>
+                </div>
+                <div class="form-group">
+                <label for="studentPhone">Phone Number:</label>
+                <input type="tel" id="studentPhone" name="studentPhone" ><br><br>
+            </div>
+            <div class="form-group">
+                <label for="studentEmail">Email:</label>
+                <input type="email" id="studentEmail" name="studentEmail" ><br><br>
+            </div>
+                <!-- Image field -->
+                <div class="form-group">
+                <label for="studentImage">Student Image:</label>
+                <input type="file" id="studentImage" name="studentImage" accept="image/*"><br><br>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit</button>
+                <p class="success-message" id="successMessage" style="display:none;">Record saved successfully!</p>
+            </form>
+            <form id="teacherForm">
+                <div class="form-group">
+                    <label for="teacherName">Teacher Name:</label>
+                    <input type="text" id="teacherName">
+                </div>
+                <div class="form-group">
+                    <label for="teacherAge">Age:</label>
+                    <input type="number" id="teacherAge" >
+                </div>
+                <div class="form-group">
+                    <label for="teacherClass">Class:</label>
+                    <input type="text" id="teacherClass" >
+                </div>
+                <div class="form-group">
+                    <label for="teacherRoll">Roll Number:</label>
+                    <input type="text" id="teacherRoll" >
+                </div>
+                <div class="form-group">
+                    <label for="teacherSubject">Subject:</label>
+                    <input type="text" id="teacherSubject">
+                </div>
+                <div class="form-group">
+                    <label for="teacherAddress">Address:</label>
+                    <input type="text" id="teacherAddress" name="teacherAddress"><br><br>
+                </div>
+                <div class="form-group">
+                <label for="teacherPhone">Phone Number:</label>
+                <input type="tel" id="studentPhone" name="teacherPhone" ><br><br>
+            </div>
+            <div class="form-group">
+                <label for="teacherEmail">Email:</label>
+                <input type="email" id="studentEmail" name="teacherEmail" ><br><br>
+            </div>
+                <!-- Image field -->
+                <div class="form-group">
+                <label for="teacherImage">Teacher Image:</label>
+                <input type="file" id="teacherImage" name="teacherImage" accept="image/*"><br><br>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit</button>
+                <p class="success-message" id="successMessage" style="display:none;">Record saved successfully!</p>
+            </form>
+        </section>
+
+        <!-- Student Records Section -->
+        <section id="studentRecordsSection" style="display: none;">
+            <h2>Student Records</h2>
+            <input type="text" id="searchBar" placeholder="Search by student name" class="search-bar">
+            <ul id="studentList" class="student-list"></ul>
+        </section>
+          <!-- teacher Records Section -->
+          <section id="teacherRecordsSection" style="display: none;">
+            <h2>Teacher Records</h2>
+            <input type="text" id="searchBar" placeholder="Search by teacher name" class="search-bar">
+            <ul id="teacher" class="teacher-list"></ul>
+        </section>
+
+
+        <!-- Attendance Section -->
+        <section id="attendanceSection" style="display: none;">
+            <h2>Attendance Records</h2>
+            <input type="text" id="attendanceSearchBar" placeholder="Search by name or date" class="search-bar">
+            <ul id="attendanceList" class="attendance-list"></ul>
+            <button id="addAttendanceBtn" class="add-attendance-btn">+</button>
+        </section>
+
+        <!-- Attendance Table Section -->
+        <section id="attendanceTableSection" style="display: none;">
+            <header>
+                <h2>Attendance Table</h2>
+            </header>
+
+            <div class="form-group">
+                <label for="attendanceName">Attendance Name:</label>
+                <input type="text" id="attendanceName" required>
+            </div>
+            <div class="form-group">
+                <label for="attendanceDate">Date:</label>
+                <input type="date" id="attendanceDate" required>
+            </div>
+           
+                <div class="month-year-display">
+                    <button id="prevMonthBtn">Previous</button>
+                    <span id="currentMonthYear"></span>
+                    <button id="nextMonthBtn">Next</button>
+                </div>
+           
+            <table id="attendanceTable">
+                <thead>
+                    <tr></tr>
+                </thead>
+                <tbody>
+                    <!-- Attendance records will be populated here -->
+                </tbody>
+            </table>
+            <button id="saveAttendanceBtn" class="submit-btn">Save Attendance</button>
+
+            <button id="backBtn" class="submit-btn">Back</button>
+        </section>
+        <!-- Login Section -->
+    <div id="loginSection" class="flex items-center justify-center h-screen bg-gray-100">
+        <div class="p-8 bg-white rounded-lg shadow-lg w-96">
+            <h1 class="mb-6 text-2xl font-bold text-center">Login</h1>
+            <form id="loginForm">
+                <div class="mb-4">
+                    <label for="username" class="block text-gray-700">Username:</label>
+                    <input type="text" id="username" name="username" class="w-full px-4 py-2 border border-gray-300 rounded-md" required>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block text-gray-700">Password:</label>
+                    <input type="password" id="password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-md" required>
+                </div>
+                <button type="submit" class="w-full py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">Login</button>
+                <div id="errorMessage" class="hidden mt-2 text-sm text-red-500"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Logged In Section -->
+    <div id="loggedInSection" class="flex items-center justify-center hidden h-screen bg-gray-100">
+        <div class="p-8 text-center bg-white rounded-lg shadow-lg w-96">
+            <h1 class="mb-4 text-2xl font-bold">Welcome, <span id="userName"></span>!</h1>
+            <button id="logOutBtn" class="px-6 py-2 text-white bg-red-500 rounded-md hover:bg-red-600">Log Out</button>
+        </div>
+    </div>
+        <!-- Signup page -->
+        <section id="signupSection">  
+            <h2>Signup</h2>  
+            <form id="signup-form">  
+             <label for="username">Username:</label>  
+             <input type="text" id="username" name="username" required><br><br>  
+             <label for="email">Email:</label>  
+             <input type="email" id="email" name="email" required><br><br>  
+             <label for="password">Password:</label>  
+             <input type="password" id="password" name="password" required><br><br>  
+             <label for="confirm-password">Confirm Password:</label>  
+             <input type="password" id="confirm-password" name="confirm-password" required><br><br>  
+             <button type="submit">Signup</button>  
+            </form>  
+        </section>  
+        
+             <!-- student profile page -->
+             <section id="studentProfileSection">  
+               <header>  
+                   <h1>Student Profile</h1>  
+                  </header>  
+            <div class="student-profile-container">  
+             <div class="student-image-container">  
+                <img src="images/student.jpg" alt="Student Profile Picture" id="StudentImage" >
+              
+
+             </div>  
+             <div class="student-info-container">  
+               <h2>Student Information</h2>  
+               <p>Name: <span id="StudentName"></span></p>
+               <p>Age: <span id="StudentAge"></span></p>
+               <p>Class: <span id="StudentClass"></span></p>
+               <p>Roll Number: <span id="StudentRoll"></span></p>
+               <p>Subject: <span id="StudentSubject"></span></p>
+               <p>Address: <span id="StudentAddress"></span></p>
+               <p>Phone: <span id="StudentPhone"></span></p>
+               <p>Email: <span id="StudentEmail"></span></p>
+               
+             </div>  
+            </div>  
+            <button class="back-btn" id="BtnBack" onclick="goBack()">Back</button>  
+             </section>  
+    </main>
+      <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2024 College Management System | Contact: admin@college.com</p>
+    <div class="social-links">
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+    </div>
+  </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
