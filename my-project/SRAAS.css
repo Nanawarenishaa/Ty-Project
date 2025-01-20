@@ -9,9 +9,17 @@
     background-color: #f0f4f7;  
     color: #333;  
   }  
+  header{
+    position: relative;
+
+  }
     
   /* Navbar Styles */  
   .navbar {  
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
     display: flex;  
     justify-content: space-between;  
     align-items: center;  
@@ -46,6 +54,11 @@
     background-color: #1a426b;  
     border-radius: 4px;  
   }  
+  .nav-links a:focus,
+.recordnavbar_item a:focus,
+button:focus {
+  outline: 2px solid #9b82e0; /* Highlight for focus */
+}
     
   .hero {
     display: flex;
@@ -161,6 +174,12 @@
     
   #fillRecordsSection{
     min-height: 100vh;
+    padding: 1rem;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 6rem auto;
   }
   /* Form Section */  
   #studentForm,#teacherForm {  
@@ -175,16 +194,19 @@
   #fillRecordsSection h2 {  
     text-align: center;  
     margin-bottom: 1.5rem;  
-    margin-top: 2rem;  
+    
     color: rgba(0, 0, 0, 0.808);  
   }  
   /* Navbar Container */
 .record_navbar {
-    background-color: #13093f96; /* Dark background */
+  width: 80%;
+  margin: auto;
+    background-color: #1b0b64a4; /* Dark background */
     padding: 10px 20px; /* Padding for the navbar */
     display: flex;
     justify-content: center;
- 
+    border-radius:1.5rem ;
+   
 }
 
 /* Navbar List */
@@ -276,7 +298,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 900px;
-    margin: 2rem auto;
+    margin: 6rem auto;
   }
   
 /* Navbar Styling */
@@ -295,7 +317,7 @@
 
 
 .recordnavbar_item a:hover {
-  background-color: #004d99;
+  background-color: #360099;
   color: white;
 }
 
@@ -312,8 +334,8 @@
 
 .search-bar:focus {
   outline: none;
-  border-color: #004d99;
-  box-shadow: 0 0 4px rgba(0, 77, 153, 0.5);
+  border-color: #470099;
+  box-shadow: 0 0 4px rgba(84, 0, 153, 0.5);
 }
 
 /* List Styling */
@@ -350,7 +372,7 @@
 
 /* Buttons Styling */
 .student-list button, .teacher-list button {
-  background-color: #004d99;
+  background-color: #420099;
   color: white;
   border: none;
   border-radius: 4px;
@@ -362,7 +384,7 @@
 }
 
 .student-list button:hover, .teacher-list button:hover {
-  background-color: #003366;
+  background-color: #1f0066;
 }
     
   /* Attendance Section Styles */  
@@ -392,7 +414,7 @@
     width: 50px;  
     height: 50px;  
     border-radius: 50%;  
-    background-color: #2b348b;  
+    background-color: #3d2b8b;  
     color: white;  
     font-size: 30px;  
     border: none;  
@@ -400,7 +422,7 @@
   }  
     
   .add-attendance-btn:hover {  
-    background-color: #201e8b;  
+    background-color: #361e8b;  
   }  
     
   /* Add Attendance Modal Styles */  
@@ -437,7 +459,7 @@
   }  
     
   .submit-btn {  
-    background-color: #4c56af;  
+    background-color: #614caf;  
     color: white;  
     padding: 10px;  
     border: none;  
@@ -446,56 +468,9 @@
   }  
     
   .submit-btn:hover {  
-    background-color: #323ead;  
+    background-color: #5d32ad;  
   }  
-    
-  /* Attendance Table Styles */  
-  #attendanceTable {  
-    border-collapse: collapse;  
-    width: 100%;  
-    margin-top: 20px;  
-  }  
-    
-  #attendanceTable th, #attendanceTable td {  
-    border: 1px solid #ddd;  
-    padding: 8px;  
-    text-align: left;  
-  }  
-    
-  #attendanceTable th {  
-    background-color: #f0f0f0;  
-    border-bottom: 2px solid #ccc;  
-  }  
-    
-  #attendanceTable td {  
-    background-color: #fff;  
-    padding: 0px 10px;  
-  }  
-    
-  #attendanceTable tr:nth-child(even) {  
-    background-color: #f9f9f9;  
-  }  
-    
-  #attendanceTable tr:hover {  
-    background-color: #f2f2f2;  
-  }  
-    
-  .attendance-checkbox {  
-    margin: 0;  
-    padding: 0;  
-    width: 20px;  
-    height: 20px;  
-    border: 1px solid #000000;  
-    border-radius: 4px;  
-    cursor: pointer;  
-  }  
-    
-  .attendance-checkbox:checked {  
-    background-color: #4CAF50 !important;  
-    border-color: #4CAF50 !important;  
-    accent-color: #4CAF50 !important;  
-  }  
-    
+  
   /* Login and Signup Styles */  
   #loginSection, #signupSection {  
     width: 450px;  
@@ -578,79 +553,131 @@
   #loggedInSection button:hover {
     background-color: #3945aa;
   }
-  /* student-profile page */
-  #studentProfileSection {
-    width: 100%;
-    height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  
-  }
-  #studentProfileSection h1{
-    margin: auto;
-    width: fit-content;
-     margin-top: 2rem;
-  
-  }
-  .student-profile-container {
-    width: 70%;
-    min-height: 60vh;
+ /* Profile Section - General Styles */
+#studentProfileSection,
+#teacherProfileSection {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin: 20px auto;
+  max-width: 700px;
+  width: 90%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: none;
+}
+
+#studentProfileSection:hover,
+#teacherProfileSection:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Profile Details */
+#studentProfileSection p,
+#teacherProfileSection p {
+  font-size: 1.2rem;
+  color: #fff;
+  margin: 15px 0;
+  line-height: 1.6;
+}
+#studentProfileSection h2,
+#teacherProfileSection h2 {
+  color: #ffffff;
+}
+#studentProfileSection strong,
+#teacherProfileSection strong {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Specific Section Backgrounds */
+#studentProfileSection {
+  background: linear-gradient(135deg, #553869, #c3aee4); /* Soft teal gradient */
+}
+
+
+#teacherProfileSection {
+  background: linear-gradient(135deg, #386965, #aee4e1);
+}
+
+
+/* Profile Header */
+.profile-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+/* Avatar (optional) */
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: block;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styles */
+.profile-buttons {
   display: flex;
-  flex-direction: row;
-  gap: 4rem;
-  align-items: center;
-  padding: 0 2rem ;
-  margin: 0 4rem;
-  
-  }
-  .student-image-container {
-    width: 250px; /* Fixed width */
-    height: 250px; /* Fixed height */
-    border-radius: 50%; /* Keep it circular */
-    overflow: hidden;
-    margin-right: 2rem;
-    border: 1px solid rgb(49, 45, 45);
-  
-  }
-  
-  .student-image-container img {
-    width: 100%; /* Make the image fit the container */
-    height: 100%; /* Maintain the aspect ratio */
-    object-fit: cover; 
-  
-    
-  }
-  .student-info-container{
-    display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.profile-buttons button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #150a53;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.profile-buttons button:hover {
+  background-color: #0e0742;
+}
+/* Responsive layout */
+@media (max-width: 768px) {
+  #profileDetails {
     flex-direction: column;
-    gap: 1rem;
-  
   }
-  
-  .student-info-container h2 {
-  margin-bottom: 1rem;
+
+  .profileDetailsItem {
+    flex: 1 1 100%;
   }
-  
-  .student-info-container p {
-    font-size: 1rem;
-    font-weight: 500;
-  
+
+  #profileContent {
+    width: 90%;
+    padding: 20px;
   }
-  .back-btn {
-    background-color: #4c56af;
-    color: #fff;
-    padding: 13px 2rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 1rem 4rem;
-    }
-    
-    .back-btn:hover {
-    background-color: #455aa0;
-    }
-  
+
+  #profileContent h2 {
+    font-size: 1.8rem;
+ 
+  }
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-container {
+      width: 90%;
+  }
+
+  .profile-item {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .profile-item span {
+      margin-top: 5px;
+  }
+}
+
   
   /* Responsive Design */  
   @media (max-width: 1200px) {  
@@ -689,140 +716,5 @@
      text-align: left;  
     }  
   }  
-    
-  @media (max-width: 768px) {  
-    #studentForm {  
-     width: 60%;  
-    }  
-    .student-records {  
-     max-width: 500px;  
-    }  
-    #attendanceTable {  
-     width: 70%;  
-    }  
-    .navbar {  
-     flex-direction: column;  
-     align-items: flex-start;  
-    }  
-    .nav-links {  
-     flex-direction: column;  
-     width: 100%;  
-    }  
-    .nav-links li {  
-     margin: 0.5rem 0;  
-    }  
-    .nav-links a {  
-     font-size: 1.2rem;  
-     padding: 1rem;  
-     width: 100%;  
-     text-align: left;  
-    }
-    .student-profile-container {
-      flex-direction: column;
-      align-items: center;
-      }
-      
-      .student-image-container {
-      width: 50%;
-      height: 50%;
-      margin-bottom: 2rem;
-      }
-      
-      .student-info-container {
-      width: 100%;
-      }  
-  }  
-    
-  @media (max-width: 576px) {  
-    #studentForm {  
-     width: 50%;  
-    }  
-    .student-records {  
-     max-width: 400px;  
-    }  
-    #attendanceTable {  
-     width: 60%;  
-    }  
-    .navbar {  
-     flex-direction: column;  
-     align-items: flex-start;  
-    }  
-    .nav-links {  
-     flex-direction: column;  
-     width: 100%;  
-    }  
-    .nav-links li {  
-     margin: 0.5rem 0;  
-    }  
-    .nav-links a {  
-     font-size: 1.2rem;  
-     padding: 1rem;  
-     width: 100%;  
-     text-align: left;  
-    }  
-  }  
-    
-  @media (max-width: 480px) {  
-    #studentForm {  
-     width: 50%;  
-    }  
-    .student-records {  
-     max-width: 300px;  
-    }  
-    #attendanceTable {  
-     width: 50%;  
-    }  
-    .navbar {  
-     flex-direction: column;  
-     align-items: flex-start;  
-    }  
-    .nav-links {  
-     flex-direction: column;  
-     width: 100%;  
-    }  
-    .nav-links li {  
-     margin: 0.5rem 0;  
-    }  
-    .nav-links a {  
-     font-size: 1.2rem;  
-     padding: 1rem;  
-     width: 100%;  
-     text-align: left;  
-    }  
-  }  
-    
-  @media (max-width: 320px) {  
-    #studentForm {  
-     width: 70%;  
-    }  
-    #teacherForm {  
-      width: 70%;  
-     }
-    .student-records {  
-     max-width: 200px;  
-    }  
-    #attendanceTable {  
-     width: 40%;  
-    }  
-    .navbar {  
-     flex-direction: column;  
-     align-items: flex-start;  
-    }  
-    .nav-links {  
-     flex-direction: column;  
-     width: 100%;  
-    }  
-    .nav-links li {  
-     margin: 0.5rem 0;  
-    }  
-    .nav-links a {  
-     font-size: 1.2rem;  
-     padding: 1rem;  
-     width: 100%;  
-     text-align: left;  
-    }  
-  }
-  
-    
     
   

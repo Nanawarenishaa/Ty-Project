@@ -171,39 +171,6 @@
             <button id="addAttendanceBtn" class="add-attendance-btn">+</button>
         </section>
 
-        <!-- Attendance Table Section -->
-        <section id="attendanceTableSection" style="display: none;">
-            <header>
-                <h2>Attendance Table</h2>
-            </header>
-
-            <div class="form-group">
-                <label for="attendanceName">Attendance Name:</label>
-                <input type="text" id="attendanceName" required>
-            </div>
-            <div class="form-group">
-                <label for="attendanceDate">Date:</label>
-                <input type="date" id="attendanceDate" required>
-            </div>
-           
-                <div class="month-year-display">
-                    <button id="prevMonthBtn">Previous</button>
-                    <span id="currentMonthYear"></span>
-                    <button id="nextMonthBtn">Next</button>
-                </div>
-           
-            <table id="attendanceTable">
-                <thead>
-                    <tr></tr>
-                </thead>
-                <tbody>
-                    <!-- Attendance records will be populated here -->
-                </tbody>
-            </table>
-            <button id="saveAttendanceBtn" class="submit-btn">Save Attendance</button>
-
-            <button id="backBtn" class="submit-btn">Back</button>
-        </section>
         <!-- Login Section -->
     <div id="loginSection" class="flex items-center justify-center h-screen bg-gray-100">
         <div class="p-8 bg-white rounded-lg shadow-lg w-96">
@@ -246,32 +213,38 @@
             </form>  
         </section>  
         
-             <!-- student profile page -->
-             <section id="studentProfileSection">  
-               <header>  
-                   <h1>Student Profile</h1>  
-                  </header>  
-            <div class="student-profile-container">  
-             <div class="student-image-container">  
-                <img src="images/student.jpg" alt="Student Profile Picture" id="StudentImage" >
-              
+            <!-- Student Profile Section -->
+             <section id="profileSection" >
 
-             </div>  
-             <div class="student-info-container">  
-               <h2>Student profile</h2>  
-               <p>Name: <span id="StudentName"></span></p>
-               <p>Age: <span id="StudentAge"></span></p>
-               <p>Class: <span id="StudentClass"></span></p>
-               <p>Roll Number: <span id="StudentRoll"></span></p>
-               <p>Subject: <span id="StudentSubject"></span></p>
-               <p>Address: <span id="StudentAddress"></span></p>
-               <p>Phone: <span id="StudentPhone"></span></p>
-               <p>Email: <span id="StudentEmail"></span></p>
-               
-             </div>  
-            </div>  
-            <button class="back-btn" id="BtnBack" onclick="goBack()">Back</button>  
-             </section>  
+                 <div id="studentProfileSection">
+                     <h2>Student Profile</h2>
+                     <p><strong>Name:</strong> <span id="StudentName"></span></p>
+                     <p><strong>Age:</strong> <span id="StudentAge"></span></p>
+                     <p><strong>Class:</strong> <span id="StudentClass"></span></p>
+                     <p><strong>Roll No:</strong> <span id="StudentRoll"></span></p>
+                     <p><strong>Subject:</strong> <span id="StudentSubject"></span></p>
+                     <p><strong>Address:</strong> <span id="StudentAddress"></span></p>
+                     <p><strong>Phone:</strong> <span id="StudentPhone"></span></p>
+                     <p><strong>Email:</strong> <span id="StudentEmail"></span></p>
+                     <button class="backBtn" id="studentBackBtn"> Back </button>
+                 </div>
+                 
+                 <!-- Teacher Profile Section -->
+                 <div id="teacherProfileSection" >
+                     <h2>Teacher Profile</h2>
+                     <p><strong>Name:</strong> <span id="TeacherName"></span></p>
+                     <p><strong>Age:</strong> <span id="TeacherAge"></span></p>
+                     <p><strong>Class:</strong> <span id="TeacherClass"></span></p>
+                     <p><strong>Roll No:</strong> <span id="TeacherRoll"></span></p>
+                     <p><strong>Subject:</strong> <span id="TeacherSubject"></span></p>
+                     <p><strong>Address:</strong> <span id="TeacherAddress"></span></p>
+                     <p><strong>Phone:</strong> <span id="TeacherPhone"></span></p>
+                     <p><strong>Email:</strong> <span id="TeacherEmail"></span></p>
+                     <button class="backBtn" id="teacherBackBtn"> Back </button>
+                 </div>
+             </section>
+
+        
     </main>
       <!-- Footer Section -->
   <footer>
