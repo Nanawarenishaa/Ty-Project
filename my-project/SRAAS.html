@@ -157,11 +157,7 @@
               <ul id="teacherList" class="teacher-list"></ul>
             </div>
           </section>
-          
-         
-         
-       
-
+        
 
         <!-- Attendance Section -->
         <section id="attendanceSection" style="display: none;">
@@ -170,7 +166,88 @@
             <ul id="attendanceList" class="attendance-list"></ul>
             <button id="addAttendanceBtn" class="add-attendance-btn">+</button>
         </section>
+        <section id="attendanceTableSection" style="display: none;">
+                <div class="attendance-container">
+                  <header class="attendance-header">
+                    <h1>Attendance System</h1>
+                    <!-- Attendance Name -->
+                     <div id="attendanceInputSection">
 
+
+                         <div class="form-group">
+                             <label for="attendanceName">Attendance Name:</label>
+                             <input
+                               type="text"
+                               id="attendanceName"
+                               name="attendanceName"
+                               placeholder="Enter Attendance Name"
+                               required
+                             />
+                           </div>
+                       
+                           <!-- Date -->
+                           <div class="form-group">
+                             <label for="attendanceDate">Date:</label>
+                             <input
+                               type="date"
+                               id="attendanceDate"
+                               name="attendanceDate"
+                               required
+                             />
+                           </div>
+                       
+                           <!-- Day -->
+                           <div class="form-group">
+                             <label for="attendanceDay">Day:</label>
+                             <input
+                               type="text"
+                               id="attendanceDay"
+                               name="attendanceDay"
+                               placeholder="Enter Day (e.g., Monday)"
+                               required
+                             />
+                           </div>
+                       
+                     </div>
+                  </header>
+              
+                  <div class="set-time-section">
+                    <h2>Set Attendance Time</h2>
+                    <div class="time-inputs">
+                      <label for="checkInTime">Check-In:</label>
+                      <input type="time" id="checkInTime" required />
+                      <label for="checkOutTime">Check-Out:</label>
+                      <input type="time" id="checkOutTime" required />
+                    </div>
+                  </div>
+              
+                  <div class="id-scan-section">
+                    <h2>Scan Attendance</h2>
+                    <div class="user-id">
+                      <input type="text" id="userId" placeholder="Enter ID" required />
+                      <button class="btn userId">Check</button>   
+                    </div>
+                    <div class="scanner-div">
+                      <p>Place your finger on the scanner below:</p>
+                      <div class="scanner"></div>
+                      <button class="btn scan-btn">Scan Fingerprint</button>
+                    </div>
+                  </div>
+              
+                  <div class="attendance-options">
+                    <button class="btn check-in-btn">Check In</button>
+                    <button class="btn check-out-btn">Check Out</button>
+                  </div>
+              
+                  <div class="action-buttons">
+                    <button class="btn save-btn">Save</button>
+                    
+                  <button class="btn attendanceBackBtn" id="attendanceBackBtn">Back</button>
+                  
+                  </div>
+                </div>
+              </section>
+        
         <!-- Login Section -->
     <div id="loginSection" class="flex items-center justify-center h-screen bg-gray-100">
         <div class="p-8 bg-white rounded-lg shadow-lg w-96">

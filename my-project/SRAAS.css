@@ -24,7 +24,7 @@
     justify-content: space-between;  
     align-items: center;  
     padding: 1rem 2rem;  
-    background-color: #150a53;  
+    background-color: #2b2068;  
   }  
     
   .logo {  
@@ -65,12 +65,12 @@ button:focus {
     justify-content: center;
     align-items: center;
     text-align: center;
-    height: 100vh;  
+    min-height:92vh;
     background-color: #3333331c;
     background-image: url(''); 
     background-size: cover;
     background-position: center;
-    margin: 0;
+    padding-top: 6rem;
   }
   
   .hero-content {
@@ -93,14 +93,14 @@ button:focus {
   .hero button {
     margin-top: 4rem;
     padding: 1rem 2rem;
-    background-color: #07486d; /* accent color */
+    background-color: #151479; /* accent color */
     color: white;
     border: none;
     cursor: pointer;
     font-size: 1rem;
   }
   .hero button:hover{
-    background-color: #002244;
+    background-color: #0c0b5c;
   }
   
   
@@ -108,7 +108,7 @@ button:focus {
     bottom: 0;
     width: 100%;
   
-    background-color: #002244; 
+    background-color: #150a53; 
     color: white;
     padding: 1rem;
     text-align: center;
@@ -179,6 +179,7 @@ button:focus {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 900px;
+    max-height: 100vh;
     margin: 6rem auto;
   }
   /* Form Section */  
@@ -388,6 +389,17 @@ button:focus {
 }
     
   /* Attendance Section Styles */  
+  #attendanceTableSection{
+      margin: 6rem auto;
+      min-height: 100vh;
+  }
+  #attendanceSection{
+    margin-top: 6rem;
+    max-height:100vh;
+  }
+  #attendanceSection h2{
+    margin-bottom: 2rem;
+  }
   .attendance-list {  
     list-style-type: none;  
     padding: 0;  
@@ -425,6 +437,177 @@ button:focus {
     background-color: #361e8b;  
   }  
     
+/* Attendance Table Section */
+.attendance-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+#attendanceInputSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+}
+
+.attendance-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.attendance-header h1 {
+  font-size: 24px;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.attendance-header p {
+  font-size: 16px;
+  color: #555;
+}
+
+.set-time-section {
+  margin-bottom: 20px;
+}
+
+.set-time-section h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.time-inputs {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.time-inputs label {
+  font-size: 14px;
+  color: #555;
+}
+
+.time-inputs input {
+  padding: 5px;
+  font-size: 14px;
+}
+
+.id-scan-section {
+  margin-bottom: 20px;
+}
+
+.id-scan-section h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.id-scan-section label {
+  font-size: 14px;
+  color: #555;
+}
+
+.id-scan-section input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.scanner-div {
+  text-align: center;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.scanner-div p {
+  font-size: 14px;
+  color: #555;
+}
+
+.scanner {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  background-color: #eaeaea;
+  border: 2px dashed #aaa;
+  border-radius: 50%;
+}
+
+.attendance-options {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px auto;
+ padding-top: 1rem;
+  border-top: 1px solid black;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn.scan-btn {
+  background-color: #061281;
+  margin: auto;
+ 
+}
+
+.btn.check-in-btn {
+  background-color: rgba(38, 39, 43, 0.979);
+}
+
+.btn.check-out-btn {
+  background-color: rgba(38, 39, 43, 0.979);
+}
+
+.btn.save-btn {
+  background-color: #337780;
+}
+.btn.attendanceBackBtn{
+ background-color:#337780;
+ color: white;
+}
+.btn.userId{
+  background-color: #061281;
+}
+.btn:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.user-id{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 10px;
+  
+}
+#userId{
+  margin: 0;
+}
+
+
+
   /* Add Attendance Modal Styles */  
   .modal {  
     position: fixed;  
@@ -554,6 +737,9 @@ button:focus {
     background-color: #3945aa;
   }
  /* Profile Section - General Styles */
+ #profileSection{
+  max-height: 100vh;
+ }
 #studentProfileSection,
 #teacherProfileSection {
   background-color: #fff;
@@ -563,6 +749,7 @@ button:focus {
   margin: 20px auto;
   max-width: 700px;
   width: 90%;
+  margin-top: 6rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: none;
 }

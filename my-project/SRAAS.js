@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
         attendanceLink: 'attendanceSection',
         loginLink: 'loginSection',
         signupLink: 'signupSection',
+
     };
 
     // Sections and Forms
@@ -24,10 +25,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const teacherListElement = document.getElementById('teacherList');
     const studentSearchBar = document.getElementById('studentSearchBar');
     const teacherSearchBar = document.getElementById('teacherSearchBar');
-   
+   const attendanceSection= document.getElementById('attendanceSection');
+    const attendanceTableSection= document.getElementById('attendanceTableSection');
+    const attendanceNameInput = document.getElementById("attendanceName");
+    const attendanceDateInput = document.getElementById("attendanceDate");
+    const attendanceDayInput = document.getElementById("attendanceDay");
+    const saveBtn = document.querySelector(".save-btn");
+    const attendanceList = document.getElementById("attendanceList");
     // Records Storage
     const studentRecords = [];
     const teacherRecords = [];
+    let attendanceRecords = [];
 
     // Utility: Show Specific Section
     const showSection = (sectionId) => {
@@ -249,6 +257,113 @@ document.addEventListener('click', (e) => {
         filterList(teacherRecords, e.target.value, teacherListElement, 'teacher');
     });
 
+ // Show attendance table section when the "+" button is clicked
+ document.getElementById('addAttendanceBtn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    attendanceSection.style.display = 'none'; // Hide attendance page
+    attendanceTableSection.style.display = 'block'; // Show attendance table page
+});
+
+// Back button on the attendance table section
+document.getElementById('attendanceBackBtn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    attendanceTableSection.style.display = 'none'; // Hide attendance table page
+    attendanceSection.style.display = 'block'; // Show attendance page
+});
+
+const saveAttendance = () => {
+    const attendanceName = attendanceNameInput.value.trim();
+    const attendanceDate = attendanceDateInput.value;
+    const attendanceDay = attendanceDayInput.value.trim();
+
+    if (!attendanceName || !attendanceDate || !attendanceDay) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    // Create a new attendance record
+    const newAttendance = {
+      name: attendanceName,
+      date: attendanceDate,
+      day: attendanceDay,
+    };
+
+    // Add to the records array
+    attendanceRecords.push(newAttendance);
+
+    // Clear inputs
+    attendanceNameInput.value = "";
+    attendanceDateInput.value = "";
+    attendanceDayInput.value = "";
+
+    // Refresh the list
+    renderAttendanceList();
+
+    // Go back to attendance list section
+    attendanceTableSection.style.display = "none";
+    attendanceSection.style.display = "block";
+  };
+
+  // Function to render attendance list
+  const renderAttendanceList = () => {
+    attendanceList.innerHTML = ""; // Clear existing list
+    attendanceRecords.forEach((record, index) => {
+      const listItem = document.createElement("li");
+      listItem.className = "attendance-item";
+      listItem.innerHTML = `
+        <div>
+          <strong>${record.name}</strong> 
+          <p>Date: ${record.date}</p>
+          <p>Day: ${record.day}</p>
+        </div>
+        <div>
+          <button class="view-btn" data-index="${index}">View</button>
+           <button class="edit-btn" data-index="${index}">Edit</button>
+          <button class="delete-btn" data-index="${index}">Delete</button>
+        </div>
+      `;
+      attendanceList.appendChild(listItem);
+    });
+
+    // Attach event listeners for view and delete buttons
+    document.querySelectorAll(".view-btn").forEach(button =>
+      button.addEventListener("click", (e) => viewAttendance(e.target.dataset.index))
+    );
+
+    document.querySelectorAll(".delete-btn").forEach(button =>
+      button.addEventListener("click", (e) => deleteAttendance(e.target.dataset.index))
+    );
+  };
+
+  // Function to view attendance details
+  const viewAttendance = (index) => {
+    const record = attendanceRecords[index];
+    alert(`Attendance Name: ${record.name}\nDate: ${record.date}\nDay: ${record.day}`);
+  };
+
+  // Function to delete an attendance record
+  const deleteAttendance = (index) => {
+    if (confirm("Are you sure you want to delete this record?")) {
+      attendanceRecords.splice(index, 1); // Remove the record
+      renderAttendanceList(); // Refresh the list
+    }
+  };
+
+  // Save button event listener
+  saveBtn.addEventListener("click", saveAttendance);
+
+  // Back button event listener
+  document.getElementById("attendanceBackBtn").addEventListener("click", () => {
+    attendanceTableSection.style.display = "none";
+    attendanceSection.style.display = "block";
+  });
+
+  // Add Attendance button event listener
+  document.getElementById("addAttendanceBtn").addEventListener("click", () => {
+    attendanceSection.style.display = "none";
+    attendanceTableSection.style.display = "block";
+  });
+ 
     // Show Home Section by Default
     showSection('homeSection');
 });
