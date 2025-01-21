@@ -6,9 +6,10 @@ document.addEventListener('DOMContentLoaded', function () {
         studentRecordsLink: 'studentRecordsSection',
         teacherRecordsLink: 'teacherRecordsSection',
         attendanceLink: 'attendanceSection',
-        loginLink: 'loginSection',
+        logInLink : 'logInSection',
         signupLink: 'signupSection',
-
+        logOutLink:'loggedInSection',
+        loggedInLink:'logOutSection',
     };
 
     // Sections and Forms
@@ -27,15 +28,26 @@ document.addEventListener('DOMContentLoaded', function () {
     const teacherSearchBar = document.getElementById('teacherSearchBar');
    const attendanceSection= document.getElementById('attendanceSection');
     const attendanceTableSection= document.getElementById('attendanceTableSection');
+    const checkInTimeInput = document.getElementById('checkInTime');
+    const checkOutTimeInput = document.getElementById('checkOutTime');
+    const timeUpMessage = document.getElementById('timeUpMessage');
     const attendanceNameInput = document.getElementById("attendanceName");
     const attendanceDateInput = document.getElementById("attendanceDate");
     const attendanceDayInput = document.getElementById("attendanceDay");
-    const saveBtn = document.querySelector(".save-btn");
+    const saveAttendanceButton = document.querySelector(".save-btn");
     const attendanceList = document.getElementById("attendanceList");
+    const signupForm = document.getElementById('signup-form');
+    const loginForm = document.getElementById('loginForm');
+    const errorMessage = document.getElementById('errorMessage');
+    const loginSection = document.getElementById('loginSection');
+    const loggedInSection = document.getElementById('loggedInSection');
+    const userNameDisplay = document.getElementById('userName');
+    const logOutBtn = document.getElementById('logOutBtn');
     // Records Storage
     const studentRecords = [];
     const teacherRecords = [];
     let attendanceRecords = [];
+    let attendanceActive = false;
 
     // Utility: Show Specific Section
     const showSection = (sectionId) => {
@@ -303,6 +315,7 @@ const saveAttendance = () => {
     attendanceTableSection.style.display = "none";
     attendanceSection.style.display = "block";
   };
+  saveAttendanceButton.addEventListener('click', saveAttendance);
 
   // Function to render attendance list
   const renderAttendanceList = () => {
@@ -349,9 +362,34 @@ const saveAttendance = () => {
     }
   };
 
-  // Save button event listener
-  saveBtn.addEventListener("click", saveAttendance);
+   // Check if it's time to start or stop the attendance
+const checkAttendanceTime = () => {
+    const currentTime = new Date();
+    const checkInTime = new Date();
+    const checkOutTime = new Date();
 
+    const [checkInHours, checkInMinutes] = checkInTimeInput.value.split(':').map(Number);
+    const [checkOutHours, checkOutMinutes] = checkOutTimeInput.value.split(':').map(Number);
+
+    // Set check-in and check-out times
+    checkInTime.setHours(checkInHours, checkInMinutes, 0);
+    checkOutTime.setHours(checkOutHours, checkOutMinutes, 0);
+
+    if (currentTime >= checkInTime && currentTime <= checkOutTime) {
+        if (!attendanceActive) {
+            attendanceActive = true;
+            alert("Attendance process started!");
+        }
+    } else if (currentTime > checkOutTime && attendanceActive) {
+        attendanceActive = false;
+        timeUpMessage.textContent = "Time's up!";
+        alert("Attendance process stopped!");
+    }
+};
+
+// Set up a periodic check every minute
+setInterval(checkAttendanceTime, 60000);
+    
   // Back button event listener
   document.getElementById("attendanceBackBtn").addEventListener("click", () => {
     attendanceTableSection.style.display = "none";
@@ -363,7 +401,104 @@ const saveAttendance = () => {
     attendanceSection.style.display = "none";
     attendanceTableSection.style.display = "block";
   });
+  
+ 
+
+  // Check if the user is already logged in
+  const loggedInUser  = JSON.parse(localStorage.getItem('loggedInUser '));
+  if (loggedInUser ) {
+      // User is logged in, show the logged-in section
+      loginSection.style.display = 'none';
+      loggedInSection.style.display = 'block';
+      userNameDisplay.textContent = loggedInUser .username; // Display the username
+  } else {
+      // User is not logged in, show the login section
+      loginSection.style.display = 'block';
+      loggedInSection.style.display = 'none';
+  }
+
+  // Signup functionality
+  signupForm.addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent form submission
+
+      const username = document.getElementById('signup-username').value;
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+
+      // Validate password match
+      if (password !== confirmPassword) {
+          alert('Passwords do not match');
+          return;
+      }
+
+      // Check if the username is already taken
+      const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+      const userExists = storedUsers.find(user => user.username === username);
+
+      if (userExists) {
+          alert('Username is already taken');
+          return;
+      }
+
+      // Create a new user object
+      const newUser  = {
+          username: username,
+          email: email,
+          password: password
+      };
+
+      // Add the new user to the stored users
+      storedUsers.push(newUser );
+      localStorage.setItem('users', JSON.stringify(storedUsers));
+
+      // Display success message and reset the form
+      alert('Signup successful! You can now log in.');
+      signupForm.reset();
+  });
+
+  // Handle login form submission
+  loginForm.addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent form submission
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Validate input
+      if (!username || !password) {
+          errorMessage.textContent = "Please fill out both fields.";
+          errorMessage.classList.remove('hidden');
+          return;
+      }
+
+      // Check for user in localStorage
+      const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+      const user = storedUsers.find(user => user.username === username && user.password === password);
+
+      if (user) {
+          // Log the user in and show the logged-in section
+          localStorage.setItem('loggedInUser ', JSON.stringify(user));
+          loginSection.style.display = 'none';
+          loggedInSection.style.display = 'block';
+          userNameDisplay.textContent = username; // Display the username
+      } else {
+          errorMessage.textContent = 'Invalid username or password';
+          errorMessage.classList.remove('hidden');
+      }
+  });
+
+  // Handle logout button click
+  logOutBtn.addEventListener('click', function () {
+      // Remove the logged-in user data from localStorage
+      localStorage.removeItem('loggedInUser ');
+      // Show the login section
+      loggedInSection.style.display = 'none';
+      loginSection.style.display = 'block';
+  });
+
  
     // Show Home Section by Default
     showSection('homeSection');
 });
+
+

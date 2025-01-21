@@ -15,7 +15,7 @@
     <li><a href="#" id="fillRecordsLink">Fill Records</a></li>  
     <li><a href="#" id="studentRecordsLink">Records list</a></li>  
     <li><a href="#" id="attendanceLink">Attendance</a></li>  
-    <li><a href="#" id="loginLink">Login</a></li>  
+    <li><a href="#" id="logInLink">Login</a></li>  
     <li><a href="#" id="signupLink">Signup</a></li>  
     <li><a href="#" id="logOutLink">LogOut</a></li>  
             </ul>
@@ -214,10 +214,15 @@
                   <div class="set-time-section">
                     <h2>Set Attendance Time</h2>
                     <div class="time-inputs">
-                      <label for="checkInTime">Check-In:</label>
-                      <input type="time" id="checkInTime" required />
-                      <label for="checkOutTime">Check-Out:</label>
-                      <input type="time" id="checkOutTime" required />
+                      <label for="checkInTime">Check-in Time:</label>
+                      <input type="time" id="checkInTime">
+                      
+                      <!-- Check-out Time Input -->
+                      <label for="checkOutTime">Check-out Time:</label>
+                      <input type="time" id="checkOutTime">
+                      
+                      <!-- Display Time's Up Message -->
+                      <p id="timeUpMessage"></p>
                     </div>
                   </div>
               
@@ -248,48 +253,55 @@
                 </div>
               </section>
         
-        <!-- Login Section -->
-    <div id="loginSection" class="flex items-center justify-center h-screen bg-gray-100">
-        <div class="p-8 bg-white rounded-lg shadow-lg w-96">
-            <h1 class="mb-6 text-2xl font-bold text-center">Login</h1>
-            <form id="loginForm">
-                <div class="mb-4">
-                    <label for="username" class="block text-gray-700">Username:</label>
-                    <input type="text" id="username" name="username" class="w-full px-4 py-2 border border-gray-300 rounded-md" required>
-                </div>
-                <div class="mb-4">
-                    <label for="password" class="block text-gray-700">Password:</label>
-                    <input type="password" id="password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-md" required>
-                </div>
-                <button type="submit" class="w-full py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">Login</button>
-                <div id="errorMessage" class="hidden mt-2 text-sm text-red-500"></div>
-            </form>
-        </div>
-    </div>
+       <!-- Signup Section -->
+<section id="signupSection" style="display: none;">  
+  <h2>Signup</h2>  
+  <form id="signup-form">  
+      <label for="signup-username">Username:</label>  
+      <input type="text" id="signup-username" name="username" required><br><br>  
+      <label for="signup-email">Email:</label>  
+      <input type="email" id="signup-email" name="email" required><br><br>  
+      <label for="signup-password">Password:</label>  
+      <input type="password" id="signup-password" name="password" required><br><br>  
+      <label for="confirm-password">Confirm Password:</label>  
+      <input type="password" id="confirm-password" name="confirm-password" required><br><br>  
+      <button type="submit">Signup</button>  
+  </form>  
+</section>  
 
-    <!-- Logged In Section -->
-    <div id="loggedInSection" class="flex items-center justify-center hidden h-screen bg-gray-100">
-        <div class="p-8 text-center bg-white rounded-lg shadow-lg w-96">
-            <h1 class="mb-4 text-2xl font-bold">Welcome, <span id="userName"></span>!</h1>
-            <button id="logOutBtn" class="px-6 py-2 text-white bg-red-500 rounded-md hover:bg-red-600">Log Out</button>
-        </div>
-    </div>
-        <!-- Signup page -->
-        <section id="signupSection">  
-            <h2>Signup</h2>  
-            <form id="signup-form">  
-             <label for="username">Username:</label>  
-             <input type="text" id="username" name="username" required><br><br>  
-             <label for="email">Email:</label>  
-             <input type="email" id="email" name="email" required><br><br>  
-             <label for="password">Password:</label>  
-             <input type="password" id="password" name="password" required><br><br>  
-             <label for="confirm-password">Confirm Password:</label>  
-             <input type="password" id="confirm-password" name="confirm-password" required><br><br>  
-             <button type="submit">Signup</button>  
-            </form>  
-        </section>  
-        
+<!-- Login Section -->
+ 
+<div id="logInSection" style="display: none;">
+  <div>
+      <h1>Login</h1>
+      <form id="loginForm">
+          <div class="mb-4">
+              <label for="username">Username:</label>
+              <input type="text" id="username" name="username" required>
+          </div>
+          <div class="mb-4">
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password" required>
+          </div>
+          <button type="submit">Login</button>
+          <div id="errorMessage"></div>
+      </form>
+  </div>
+</div>
+<!-- Logged In Section -->
+<div id="loggedInSection" style="display: none;" >
+  <div>
+      <h1>Welcome, <span id="userName"></span>!</h1>
+      <a href="#" id="loggedInLink" class="btn">Log Out</a>
+  </div>
+</div>
+<!-- LogOut In Section -->
+<div id="logOutSection" style="display: none;">
+<div class="logout-container">
+  <h1>You have been logged out!</h1>
+  <p>Click below to log in again.</p>
+  <a href="#" id="logInLink" class="btn">login</a>
+</div>
             <!-- Student Profile Section -->
              <section id="profileSection" >
 

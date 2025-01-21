@@ -3,7 +3,6 @@
     padding: 0;  
     box-sizing: border-box;  
   }  
-    
   body {  
     font-family: Arial, sans-serif;  
     background-color: #f0f4f7;  
@@ -173,13 +172,12 @@ button:focus {
   }  
     
   #fillRecordsSection{
-    min-height: 100vh;
     padding: 1rem;
     background-color: #f5f5f5;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 900px;
-    max-height: 100vh;
+    min-height: 100vh;
     margin: 6rem auto;
   }
   /* Form Section */  
@@ -655,30 +653,30 @@ button:focus {
   }  
   
   /* Login and Signup Styles */  
-  #loginSection, #signupSection {  
+  #logInSection, #signupSection {  
     width: 450px;  
-    margin: 50px auto;  
+    margin: 6rem auto;  
     padding: 20px;  
     border: 1px solid #ccc;  
     border-radius: 10px;  
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
   }  
     
-  #loginSection h2, #signupSection h2 {  
+  #logInSection h2, #signupSection h2 {  
     text-align: center;  
     margin-bottom: 20px;  
   }  
     
-  #loginSection form, #signupSection form {  
+  #logInSection form, #signupSection form {  
     margin-top: 20px;  
   }  
     
-  #loginSection label, #signupSection label {  
+  #logInSection label, #signupSection label {  
     display: block;  
     margin-bottom: 10px;  
   }  
     
-  #loginSection input, #signupSection input {  
+  #logInSection input, #signupSection input {  
     width: 100%;  
     height: 40px;  
     margin-bottom: 20px;  
@@ -687,10 +685,10 @@ button:focus {
     border-radius: 10px;  
   }  
     
-  #loginSection button, #signupSection button {  
+  #logInSection button, #signupSection button {  
     width: 100%;  
     height: 40px;  
-    background-color: #4c56af;  
+    background-color: #614caf;  
     color: #fff;  
     padding: 10px;  
     border: none;  
@@ -698,44 +696,105 @@ button:focus {
     cursor: pointer;  
   }  
     
-  #loginSection button:hover, #signupSection button:hover {  
-    background-color: #3945aa;  
+  #logInSection button:hover, #signupSection button:hover {  
+    background-color: #5d32ad;  
   }  
-  /* Logout Page Container */
-  #loggedInSection {
+ /* Logged In Section */
+#loggedInSection {
     width: 450px;  
-    margin: 50px auto;  
+    margin: 6rem auto;  
     padding: 20px;  
     border: 1px solid #ccc;  
     border-radius: 10px;  
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  #loggedInSection h1 {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
+    background-color: #ffffff; /* White background for readability */
+}
+
+#loggedInSection h1 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-  }
-  
-  #loggedInSection p {
+    color: #333; /* Dark text for contrast */
+}
+
+#loggedInSection p {
     margin-bottom: 2rem;
     font-size: 1rem;
-    color: #555;
-  }
-  
-  #loggedInSection button {
+    color: #555; /* Slightly lighter text for readability */
+}
+
+#loggedInSection a {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #614caf; /* Consistent button color */
+  color: #fff;
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make it behave like a button */
+  transition: background-color 0.3s ease;
+}
+
+#loggedInSection a:hover {
+  background-color: #3945aa; /* Darker shade on hover */
+}
+#loggedInSection button {
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #4c63af;
+    background-color: #614caf; /* Consistent button color */
     color: #fff;
     transition: background-color 0.3s ease;
-  }
-  
-  #loggedInSection button:hover {
-    background-color: #3945aa;
-  }
+}
+
+#loggedInSection button:hover {
+    background-color: #5d32ad; /* Darker shade on hover */
+}
+
+/* Log Out Section */
+#logOutSection {
+    width: 450px;  
+    margin: 6rem auto;  
+    padding: 20px;  
+    border: 1px solid #ccc;  
+    border-radius: 10px;  
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
+    background-color: #ffffff; /* White background for readability */
+}
+
+#logOutSection h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #2c2a2a; /* Dark text for contrast */
+}
+
+#logOutSection p {
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    color: #555; /* Slightly lighter text for readability */
+}
+
+#logOutSection a {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #614caf; /* Consistent button color */
+    color: #fff;
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make it behave like a button */
+    transition: background-color 0.3s ease;
+}
+
+#logOutSection a:hover {
+    background-color: #3945aa; /* Darker shade on hover */
+}
+
+
+
  /* Profile Section - General Styles */
  #profileSection{
   max-height: 100vh;
@@ -829,79 +888,6 @@ button:focus {
 .profile-buttons button:hover {
   background-color: #0e0742;
 }
-/* Responsive layout */
-@media (max-width: 768px) {
-  #profileDetails {
-    flex-direction: column;
-  }
 
-  .profileDetailsItem {
-    flex: 1 1 100%;
-  }
-
-  #profileContent {
-    width: 90%;
-    padding: 20px;
-  }
-
-  #profileContent h2 {
-    font-size: 1.8rem;
- 
-  }
-}
-/* Responsive Design */
-@media (max-width: 768px) {
-  .profile-container {
-      width: 90%;
-  }
-
-  .profile-item {
-      flex-direction: column;
-      align-items: flex-start;
-  }
-
-  .profile-item span {
-      margin-top: 5px;
-  }
-}
-
-  
-  /* Responsive Design */  
-  @media (max-width: 1200px) {  
-    #studentForm {  
-     width: 60%;  
-    }  
-    .student-records {  
-     max-width: 700px;  
-    }  
-    #attendanceTable {  
-     width: 90%;  
-    }  
-  }  
-    
-  @media (max-width: 992px) {  
-    #studentForm {  
-     width: 90%;  
-    }  
-    .student-records {  
-     max-width: 600px;  
-    }  
-    #attendanceTable {  
-     width: 80%;  
-    }  
-    .nav-links {  
-     flex-direction: column;  
-     width: 100%;  
-    }  
-    .nav-links li {  
-     margin: 0.5rem 0;  
-    }  
-    .nav-links a {  
-     font-size: 1.2rem;  
-     padding: 1rem;  
-     width: 100%;  
-     text-align: left;  
-    }  
-  }  
     
   
