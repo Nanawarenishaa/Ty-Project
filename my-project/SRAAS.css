@@ -653,7 +653,7 @@ button:focus {
   }  
   
   /* Login and Signup Styles */  
-  #logInSection, #signupSection {  
+  #loginSection, #signupSection {  
     width: 450px;  
     margin: 6rem auto;  
     padding: 20px;  
@@ -662,21 +662,21 @@ button:focus {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
   }  
     
-  #logInSection h2, #signupSection h2 {  
+  #loginSection h2, #signupSection h2 {  
     text-align: center;  
     margin-bottom: 20px;  
   }  
     
-  #logInSection form, #signupSection form {  
+  #loginSection form, #signupSection form {  
     margin-top: 20px;  
   }  
     
-  #logInSection label, #signupSection label {  
+  #loginSection label, #signupSection label {  
     display: block;  
     margin-bottom: 10px;  
   }  
     
-  #logInSection input, #signupSection input {  
+  #loginSection input, #signupSection input {  
     width: 100%;  
     height: 40px;  
     margin-bottom: 20px;  
@@ -685,7 +685,7 @@ button:focus {
     border-radius: 10px;  
   }  
     
-  #logInSection button, #signupSection button {  
+  #loginSection button, #signupSection button {  
     width: 100%;  
     height: 40px;  
     background-color: #614caf;  
@@ -696,7 +696,7 @@ button:focus {
     cursor: pointer;  
   }  
     
-  #logInSection button:hover, #signupSection button:hover {  
+  #loginSection button:hover, #signupSection button:hover {  
     background-color: #5d32ad;  
   }  
  /* Logged In Section */
@@ -755,7 +755,7 @@ button:focus {
 
 /* Log Out Section */
 #logOutSection {
-    width: 450px;  
+    width: 450px; 
     margin: 6rem auto;  
     padding: 20px;  
     border: 1px solid #ccc;  
