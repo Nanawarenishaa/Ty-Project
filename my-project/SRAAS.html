@@ -278,11 +278,11 @@
   <form id="loginForm">
       <div class="mb-4">
           <label for="username">Username:</label>
-          <input type="text" id="username" name="username" required>
+          <input type="text" id="login-username" name="username" required>
       </div>
       <div class="mb-4">
           <label for="password">Password:</label>
-          <input type="password" id="password" name="password" required>
+          <input type="password" id="login-password" name="password" required>
       </div>
       <button type="submit">Login</button>
       <div id="errorMessage"></div>
@@ -292,7 +292,7 @@
 <!-- Logged In Section -->
 <div id="loggedInSection" style="display: none;">
   <h1>Welcome, <span id="userName"></span>!</h1>
-  <a class="btn" id="logOutBtn">Log Out</a>
+  <a href="#" id="loggedInLink">Logout</a>
 </div>
 
 
@@ -301,7 +301,7 @@
           <div class="logout-container">
               <h1>You have been logged out!</h1>
               <p>Click below to log in again.</p>
-              <a class="btn" href="#" id="loginAgainBtn">Login Again</a>
+              <a class="btn" href="#" id="logInLink">Login Again</a>
           </div>
       </div>
             <!-- Student Profile Section -->

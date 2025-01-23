@@ -36,11 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const attendanceDayInput = document.getElementById("attendanceDay");
     const saveAttendanceButton = document.querySelector(".save-btn");
     const attendanceList = document.getElementById("attendanceList");
-    const signupForm = document.getElementById('signupForm');
-    const signupUsername = document.getElementById('signup-username');
-    const signupPassword = document.getElementById('signup-password');
-    const signupEmail = document.getElementById('signup-email');
-    const signupErrorMessage = document.getElementById('signupErrorMessage');
+   
     // Records Storage
     const studentRecords = [];
     const teacherRecords = [];
@@ -400,9 +396,20 @@ setInterval(checkAttendanceTime, 60000);
     attendanceTableSection.style.display = "block";
   });
   
-  const handleSignup = (e) => {
+   const signupForm = document.getElementById('signupForm');
+    const loginForm = document.getElementById('loginForm');
+    const signupUsername = document.getElementById('signup-username');
+    const signupPassword = document.getElementById('signup-password');
+    const signupEmail = document.getElementById('signup-email');
+    const signupErrorMessage = document.getElementById('signupErrorMessage');
+    const loginUsername = document.getElementById('login-username');
+    const loginPassword = document.getElementById('login-password');
+    const loginErrorMessage = document.getElementById('errorMessage');
+
+  // Handle Signup Functionality
+const handleSignup = (e) => {
     e.preventDefault();
-    
+
     const username = signupUsername.value.trim();
     const password = signupPassword.value.trim();
     const email = signupEmail.value.trim();
@@ -412,54 +419,101 @@ setInterval(checkAttendanceTime, 60000);
         return;
     }
 
-    // Check if the username already exists in localStorage
+    // Retrieve existing users from localStorage
     const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
 
-    const userExists = existingUsers.some(user => user.username === username);
+    // Check if the username already exists
+    const userExists = existingUsers.some((user) => user.username === username);
 
     if (userExists) {
         signupErrorMessage.style.display = 'block';
+        signupErrorMessage.textContent = "Username already exists. Please choose a different username.";
         return;
     }
 
-    // Create a new user object
+    // Save new user to localStorage
     const newUser = { username, password, email };
-
-    // Save the new user to localStorage
     existingUsers.push(newUser);
     localStorage.setItem('users', JSON.stringify(existingUsers));
 
-    // Clear form fields
-    signupUsername.value = '';
-    signupPassword.value = '';
-    signupEmail.value = '';
-
     alert("Signup successful! Please log in.");
-    console.log("hello");
-    // Show login page after successful signup
-    showSection('loginSection');
+    showSection('loginSection'); // Redirect to the login section
 };
 
-// Submit button event listener for signup form
+// Attach event listener to the signup form
 signupForm.addEventListener('submit', handleSignup);
 
-// Show Signup Section when needed
-document.getElementById('signupLink')?.addEventListener('click', (e) => {
+// Handle Login Functionality
+const handleLogin = (e) => {
     e.preventDefault();
+
+    const username = loginUsername.value.trim();
+    const password = loginPassword.value.trim();
+
+    // Check if the username and password are entered
+    if (!username || !password) {
+        alert("Please enter both username and password.");
+        return;
+    }
+
+    // Retrieve registered users from localStorage
+    const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+
+    // Find a matching user
+    const loggedInUser = existingUsers.find(
+        (user) => user.username === username && user.password === password
+    );
+
+    if (loggedInUser) {
+        // Save the logged-in user to localStorage
+        localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+
+        // Redirect to the logged-in section
+        alert("Login successful!");
+        showSection('loggedInSection');
+    } else {
+        // Show an error message for invalid credentials
+        loginErrorMessage.textContent = "Invalid username or password. Please try again.";
+        loginErrorMessage.style.display = 'block';
+    }
+};
+
+// Attach event listener to the login form
+loginForm.addEventListener('submit', handleLogin);
+    // Logout Functionality
+    // Check if there are registered users
+const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+if (existingUsers.length === 0) {
+    // If no users exist, redirect to the signup section
     showSection('signupSection');
-});
-
-
-// If a user is already logged in, redirect to the logged-in section
-const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-if (loggedInUser) {
-    showSection('loggedInSection');
 } else {
-    showSection('loginSection');
+    // If users exist, check if a user is logged in
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (loggedInUser) {
+        showSection('loggedInSection'); // Redirect to the logged-in section
+    } else {
+        showSection('loginSection'); // Redirect to the login section
+    }
 }
+    const handleLogout = () => {
+        localStorage.removeItem('loggedInUser');
+        alert("You have been logged out successfully!");
+        showSection('loginSection'); // Redirect to login section
+    };
 
+    // Attach the logout functionality to the Logout link/button
+    document.getElementById('logOutLink')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        handleLogout();
+    });
 
-
+    // Show login or signup section based on user status
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (loggedInUser) {
+        showSection('loggedInSection');
+    } else {
+        showSection('loginSection');
+    }
  
     // Show Home Section by Default
     showSection('homeSection');
