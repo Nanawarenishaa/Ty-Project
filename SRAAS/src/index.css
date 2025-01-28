@@ -108,13 +108,13 @@ code {
   text-decoration: none;
   color: #333;
   font-size: 0.95rem;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.2s, color 0.2s;
   
 }
 
 .menu-link:hover {
-  background-color: #bbb;
-  color: #000; /* Keep it readable */
+  background-color: #c6c3eb;
+  color: #2412eb; /* Keep it readable */
 }
 
 /* Card Styles */
@@ -176,6 +176,314 @@ code {
   color: #333;
   margin-bottom: 20px;
 }
+
+/* Centering Containers */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f3f4f6;
+}
+
+/* Form Styling */
+.form {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 520px;
+}
+
+.form h1 {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #333333;
+  margin-bottom: 16px;
+}
+
+.form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 4px rgba(74, 144, 226, 0.5);
+}
+
+.form button {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #4a90e2;
+  color: white;
+  cursor: pointer;
+}
+
+.form button:hover {
+  background-color: #357ab7;
+}
+
+/* Secondary Button */
+.button-secondary {
+  background-color: #cccccc;
+  color: #333333;
+}
+
+.button-secondary:hover {
+  background-color: #aaaaaa;
+}
+
+/* Danger Button */
+.button-danger {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.button-danger:hover {
+  background-color: #c0392b;
+}
+/* Input Field Styles */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.input-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.input-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 4px rgba(74, 144, 226, 0.5);
+}
+
+.table-container {
+  overflow-x: auto;
+  margin: 20px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+td {
+  background-color: #fafafa;
+}
+
+.flex {
+  display: flex;
+}
+
+.gap-2 {
+  gap: 10px;
+}
+
+/* Button Styles */
+.button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.button-primary {
+  background-color: #2563eb;
+  color: white;
+}
+
+.button-primary:hover {
+  background-color: #1e4fbd;
+}
+
+.button-primary:focus {
+  box-shadow: 0 0 4px rgba(37, 99, 235, 0.5);
+}
+
+.button-secondary {
+  background-color: #6b7280;
+  color: white;
+}
+
+.button-secondary:hover {
+  background-color: #4b5563;
+}
+
+.button-secondary:focus {
+  box-shadow: 0 0 4px rgba(107, 114, 128, 0.5);
+}
+
+.button-danger {
+  background-color: #dc2626;
+  color: white;
+}
+
+.button-danger:hover {
+  background-color: #b91c1c;
+}
+
+.button-danger:focus {
+  box-shadow: 0 0 4px rgba(220, 38, 38, 0.5);
+}
+/* General Page Styles */
+.page-container {
+  padding: 24px;
+  min-height: 100vh;
+  background-color: #f3f4f6; /* Light gray */
+}
+
+.dark .page-container {
+  background-color: #111827; /* Dark gray for dark mode */
+}
+
+/* Heading Styles */
+.page-heading {
+  font-size: 1.875rem; /* 3xl */
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #1f2937; /* Dark gray */
+}
+
+.dark .page-heading {
+  color: #f3f4f6; /* Light gray for dark mode */
+}
+/* Form Styles */
+.form-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff; /* White background for the form */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.form-header {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+.AddRecordform {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 8px;
+ 
+  width: 520px;
+}
+.form-label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  border-color: #007bff; /* Blue outline */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.4); /* Subtle blue shadow */
+  outline: none;
+}
+
+.form-textarea {
+  resize: none;
+}
+
+
+/* Button Styles */
+.submit-button {
+  background-color: #007bff; /* Primary blue */
+  color: white;
+  border: none;
+  padding: 0.9rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.submit-button:hover {
+  background-color: #0056b3; /* Darker blue for hover */
+}
+
+.dark .table th,
+.dark .table td {
+  border-color: #4b5563; /* Darker gray */
+  color: #f3f4f6; /* Light gray */
+}
+
+
+
+.dark .table th {
+  background-color: #374151; /* Dark gray */
+}
+
+.table tr:nth-child(even) {
+  background-color: #f3f4f6; /* Light gray for striped rows */
+}
+
+.dark .table tr:nth-child(even) {
+  background-color: #1f2937; /* Darker gray for striped rows */
+}
+
+
+
 @media (max-width: 768px) {
   .sidebar {
     position: fixed;
@@ -184,5 +492,14 @@ code {
   }
   .sidebar.open {
     left: 0; /* Slide sidebar into view */
+  }
+  
+
+  .form-header {
+    font-size: 1.5rem;
+  }
+
+  .submit-button {
+    font-size: 0.9rem;
   }
 }
