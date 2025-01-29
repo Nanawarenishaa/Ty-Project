@@ -1,7 +1,7 @@
 let records = [
-  { id: 1, name: "John Doe", role: "student", rollNumber: "S001" },
-  { id: 2, name: "Jane Smith", role: "teacher", qualification: "MSc", joiningDate: "2022-01-10" },
-  { id: 3, name: "Nisha", role: "student", rollNumber: "38" },
+  { id: 1, name: "John Doe", role: "student", rollNumber: "S001" ,Attendance_Status: "Present/Absent" },
+  { id: 2, name: "Jane Smith", role: "teacher", qualification: "MSc", joiningDate: "2022-01-10",Attendance_Status: "Present/Absent" },
+  { id: 3, name: "Nisha", role: "student", rollNumber: "38",Attendance_Status: "Present/Absent" },
 ];
 
 // Function to get initial data

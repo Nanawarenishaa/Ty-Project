@@ -8,6 +8,7 @@ import Login from "./Auth/Login";
 import LogOut from "./Auth/LogOUt";
 import AddStudentTeacher from "./Management/AddStudentTeacher";
 import StudentTeacherList from "./Management/StudenteacherList";
+import AttendancePage from "./Management/AttendancePage";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -44,6 +45,7 @@ function App() {
           path="/student-teacher-list"
           element={isAuthenticated ? <StudentTeacherList /> : <Navigate to="/login" />}
         />
+      <Route path="/attendance" element={<AttendancePage />} />
       </Routes>
     </div>
   );
