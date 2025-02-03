@@ -11,7 +11,7 @@ const Login = ({ onLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitting", username, password);
+    alert("Successfully Login!", username, password);
     // Call onLogin passed from parent
     if (onLogin) {
       onLogin(username, password); // Call onLogin with username and password

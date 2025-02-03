@@ -4,8 +4,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+  background-color: rgba(36, 35, 35, 0.918);
  
-  background-color: rgba(0, 0, 0, 0.918);
 }
 
 code {
@@ -31,7 +31,7 @@ code {
   font-size: 1.25rem;
   margin-left: 3rem;
   font-weight: bold;
-  color: #1d1b1b;
+  color: #000000;
 
 }
 
@@ -382,7 +382,7 @@ td {
   font-size: 1.875rem; /* 3xl */
   font-weight: 700;
   margin-bottom: 24px;
-  color: #1f2937; /* Dark gray */
+  color: #f7f9fc; /* Dark gray */
 }
 
 .dark .page-heading {
@@ -488,11 +488,12 @@ td {
 .attendance-container {
   max-width: 600px;
   font-family: 'Arial', sans-serif;
-  margin: 0 auto;
+  margin: 2rem auto;
   padding: 2rem;
-  background-color: #1e1e2e;
+  background-color: #fafaff;
   border-radius: 10px;
-  color: white;
+  color: rgb(0, 0, 0);
+  
 }
 
 .title {
@@ -507,7 +508,7 @@ td {
 }
 
 .card {
-  background-color: #2c2c3e;
+  background-color: #ffffff;
   padding: 1.5rem;
   border-radius: 10px;
   margin-bottom: 1.5rem;
@@ -518,17 +519,19 @@ td {
 }
 
 .input-field {
-  width: 100%;
+  width: 90%;
   padding: 0.8rem;
-  background-color: #33334c;
+  margin: 1rem 0;
+  background-color: #eeeeee;
   border: none;
   border-radius: 6px;
-  color: white;
+  color: rgb(0, 0, 0);
+ 
 }
 
 .input-field:focus {
   outline: none;
-  background-color: #44445e;
+ 
 }
 
 .button-group {
@@ -547,53 +550,66 @@ td {
 }
 
 .primary-button {
-  background-color: #28a745;
-  color: white;
+border:1px solid #06575a;
+  color: #06575a;
+  background-color: white;
+  font-weight: 600;
 }
 
 .secondary-button {
-  background-color: #6c757d;
+  border:1px solid black;
+  color: black;
+  background-color: white;
+  font-weight: 600;
+}
+.secondary-button:hover{
+  background-color: black;
   color: white;
 }
-
 .primary-button:hover {
-  background-color: #35c754;
+  background-color: #06575a;
+  color: white;
+
 }
 
-.secondary-button:hover {
-  background-color: #5a6268;
-}
 
 .keypad {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   margin-top: 1rem;
+  
 }
 
 .keypad-button {
-  background-color: #bdb1f3;
-  color: rgb(58, 10, 189);
+  border: 1px solid rgb(42, 20, 104);
+  color: rgb(42, 20, 104);
   padding: 15px;
-  border-radius: 6px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 1.2rem;
+  background-color: white;
 }
 
 .keypad-button:hover {
-  background-color: #b4a2f5;
+  background-color: rgb(42, 20, 104);
+  color: white;
 }
 
 .clear-button {
   grid-column: span 3;
-  background-color: #10043a;
-  color: white;
-  padding: 15px;
-  margin-bottom: 1rem;
+  border: 1px solid rgb(42, 20, 104);
+  color: rgb(42, 20, 104);
+  padding: 15px 3rem;
+  margin: 1rem auto;
+  border-radius: 10px;
+  font-weight: 600;
+  background-color: white;
 }
 
 .clear-button:hover {
-  background-color: #5535ad;
+  background-color: rgb(46, 25, 105);
+  color: white;
 }
 
 .time-settings {
@@ -614,6 +630,368 @@ td {
   border-radius: 6px;
   margin-top: 1rem;
 }
+/* Container for Attendance List */
+.attendance-list-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.attendance-list-container h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.no-data {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+/* Table Styling */
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.attendance-table th, .attendance-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.attendance-table th {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: bold;
+}
+
+.attendance-table tr:hover {
+  background-color: #f1f5f9;
+}
+
+.attendance-table .actions {
+  display: flex;
+  gap: 10px;
+}
+.edit-btn, .delete-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background-color: #22c55e;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #16a34a;
+}
+
+.delete-btn {
+  background-color: #ef4444;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #dc2626;
+}
+
+/* General Styles */
+.view-attendance-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  color: #333;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.secondary-button {
+  background-color: #f2f2f2;
+  color: #333;
+  padding: 10px 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.secondary-button:hover {
+  background-color: #e6e6e6;
+}
+
+/* Table Styles */
+.students-section, .teachers-section {
+  margin-bottom: 40px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Button Styles for Edit and Delete */
+button.edit-btn, button.delete-btn {
+  padding: 6px 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+button.edit-btn {
+  background-color: #4c7aaf; /* Green for Edit */
+  color: white;
+}
+
+button.edit-btn:hover {
+  background-color: #456fa0;
+}
+
+button.delete-btn {
+  background-color: #f44336; /* Red for Delete */
+  color: white;
+}
+
+button.delete-btn:hover {
+  background-color: #e53935;
+}
+
+
+/* General Styles */
+.Records_container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+.heading {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #fffefe;
+}
+
+/* Button Styles */
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.button-group button {
+  background-color: rgb(71, 10, 240);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 0 10px;
+  transition: background-color 0.3s;
+}
+
+.button-group button:hover {
+  background-color: rgb(71, 22, 204);
+}
+
+/* Table Styles */
+.table-container {
+  margin: 0 auto;
+  width: 80%;
+  padding: 20px;
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.table-container th,
+.table-container td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.table-container th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.table-container tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table-container tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Section Specific Styles */
+.students-section,
+.teachers-section {
+  display: block;
+}
+
+.students-section h2,
+.teachers-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #ffffff;
+  text-align: center;
+}
+/* Overall container for attendance list */
+.attendance-list-container {
+  padding: 20px;
+  margin: 4rem auto;
+  background-color: #f4f7fa;
+  font-family: Arial, sans-serif;
+}
+
+/* Title styling */
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Table styling */
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.attendance-table th, .attendance-table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.attendance-table th {
+  background-color: #007bff;
+  color: white;
+}
+
+.attendance-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Button group for actions */
+.Att-List-Btn {
+  margin: 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+ 
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Button group for 'Back' button */
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.secondary-button {
+  background-color: #6c757d;
+}
+
+.secondary-button:hover {
+  background-color: #5a6268;
+}
+
+.container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.button-primary,
+.button-danger,
+.button-secondary {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.button-primary {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.button-danger {
+  background-color: #f44336;
+  color: white;
+}
+
+.button-secondary {
+  background-color: #e7e7e7;
+  color: black;
+}
+
+.logout-confirmation {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 20px;
+  margin-left: 2rem;
+}
 
 
 /* Responsive Design */
@@ -622,11 +1000,11 @@ td {
 @media (max-width: 768px) {
   .sidebar {
     position: fixed;
-    left: -250px; /* Hide sidebar off-screen */
+    left: -250px; 
     transition: left 0.3s ease;
   }
   .sidebar.open {
-    left: 0; /* Slide sidebar into view */
+    left: 0; 
   }
   
 
@@ -654,5 +1032,16 @@ td {
   .keypad button {
     padding: 12px;
     font-size: 1rem;
+  }
+  .attendance-table {
+    font-size: 12px;
+  }
+
+  .attendance-table th, .attendance-table td {
+    padding: 8px;
+  }
+
+  button {
+    font-size: 12px;
   }
 }

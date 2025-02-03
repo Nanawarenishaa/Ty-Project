@@ -9,6 +9,8 @@ import LogOut from "./Auth/LogOUt";
 import AddStudentTeacher from "./Management/AddStudentTeacher";
 import StudentTeacherList from "./Management/StudenteacherList";
 import AttendancePage from "./Management/AttendancePage";
+import AttendanceList from "./Management/AttendaceList";
+import ViewAttendance from "./Management/ViewAttendance";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,6 +48,8 @@ function App() {
           element={isAuthenticated ? <StudentTeacherList /> : <Navigate to="/login" />}
         />
       <Route path="/attendance" element={<AttendancePage />} />
+      <Route path="/attendance-list" element={<AttendanceList />} />
+      <Route path="/view-attendance" element={<ViewAttendance />} />
       </Routes>
     </div>
   );

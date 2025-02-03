@@ -1,22 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { getInitialData, updateRecord } from "../Data/Data";
 import { useNavigate } from "react-router-dom";
 
-const AttendancePage = ({ saveAttendance }) => {
-  const [attendanceData, setAttendanceData] = useState({
-    id: "",
-    date: "",
-    day: "",
-  });
-
+const AttendancePage = () => {
+  const navigate = useNavigate();
   const [timeSettings, setTimeSettings] = useState({
     checkIn: "",
     checkOut: "",
   });
 
   const [isTimeUp, setIsTimeUp] = useState(false);
-  const [fingerprintStatus, setFingerprintStatus] = useState("");
-  const navigate = useNavigate();
+  const [userId, setUserId] = useState(""); // To handle user ID input
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -38,41 +31,11 @@ const AttendancePage = ({ saveAttendance }) => {
   };
 
   const handleNumberInput = (num) => {
-    setAttendanceData((prev) => ({ ...prev, id: prev.id + num }));
+    setUserId((prevUserId) => prevUserId + num);
   };
 
   const handleClearInput = () => {
-    setAttendanceData({ ...attendanceData, id: "" });
-  };
-
-  const handleFingerprintScan = () => {
-    const records = getInitialData();
-    const record = records.find((rec) => rec.id === parseInt(attendanceData.id));
-
-    if (!record) {
-      alert("Invalid ID. Record not found.");
-      return;
-    }
-
-    const isFingerprintValid = Math.random() > 0.3;
-    if (isFingerprintValid) {
-      const updatedRecord = { ...record, Attendance_Status: "Present" };
-      updateRecord(updatedRecord);
-      setFingerprintStatus("Attendance recorded successfully!");
-      setAttendanceData({ id: "", date: "", day: "" });
-    } else {
-      setFingerprintStatus("Biometric mismatch. Try again.");
-    }
-  };
-
-  const handleSave = () => {
-    if (!attendanceData.id || !attendanceData.date) {
-      alert("Please fill in all required fields.");
-      return;
-    }
-    saveAttendance(attendanceData);
-    alert("Attendance saved successfully!");
-    navigate("/attendance-list");
+    setUserId("");
   };
 
   return (
@@ -102,11 +65,38 @@ const AttendancePage = ({ saveAttendance }) => {
               className="input-field"
             />
           </div>
-          
         </div>
-        
       </div>
-        
+
+      <div className="card">
+        <div>
+          <label>Name</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter Name"
+            className="input-field"
+          />
+        </div>
+        <div>
+          <label>Role (Student/Teacher)</label>
+          <input
+            type="text"
+            name="role"
+            placeholder="Enter Role"
+            className="input-field"
+          />
+        </div>
+        <div>
+          <label>Date</label>
+          <input
+            type="date"
+            name="date"
+            className="input-field"
+          />
+        </div>
+      </div>
+
       {isTimeUp ? (
         <div className="time-up-alert">
           <strong>Times Up! Attendance period is over.</strong>
@@ -118,7 +108,7 @@ const AttendancePage = ({ saveAttendance }) => {
             <label>User ID</label>
             <input
               type="text"
-              value={attendanceData.id}
+              value={userId} // Displaying the user input
               readOnly
               className="input-field"
             />
@@ -134,38 +124,23 @@ const AttendancePage = ({ saveAttendance }) => {
                 {num}
               </button>
             ))}
-            <button
-              onClick={handleClearInput}
-              className="clear-button"
-            >
+            <button onClick={handleClearInput} className="clear-button">
               Clear
             </button>
           </div>
 
           <div>
-            <button
-              onClick={handleFingerprintScan}
-              className="primary-button"
-            >
+            <button className="primary-button">
               Scan Fingerprint
             </button>
           </div>
 
-          {fingerprintStatus && (
-            <div className="fingerprint-status">
-              {fingerprintStatus}
-            </div>
-          )}
+          <div className="fingerprint-status"></div>
         </div>
       )}
-      
+
       <div className="button-group">
-        <button
-          onClick={handleSave}
-          className="primary-button"
-        >
-          Save Attendance
-        </button>
+        <button className="primary-button">Save Attendance</button>
         <button
           onClick={() => navigate("/attendance-list")}
           className="secondary-button"
