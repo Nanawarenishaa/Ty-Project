@@ -9,10 +9,233 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  overflow: hidden; /* Prevent body overflow */
+}
+
+/* Layout */
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  overflow: hidden; /* Prevent horizontal scroll */
+}
+
+.dashboard-content {
+  flex: 1;
+  padding: 2rem;
+  margin-left: 250px; /* Adjust for sidebar */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+/* Header */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #4e2288;
+  color: white;
+  display: flex;
+  justify-content: center; /* Centers the content inside */
+  align-items: center;
+  padding: 0 40px; /* Adds space on the left and right */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* Header container */
+.header-container {
+  width: 90%;
+  max-width: 1200px; /* Limits max width for a balanced layout */
+  display: flex;
+  justify-content: space-between; /* Space between title and actions */
+  align-items: center;
+}
+
+/* Header title */
+.header-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Actions on the right side */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Adds spacing between dark mode button & admin label */
+}
+
+/* Dark mode button */
+.dark-mode-btn {
+  background: none;
+  border: 1px solid white;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.dark-mode-btn:hover {
+  background: white;
+  color: #1b263b;
+}
+
+/* Admin label */
+.admin-label {
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+
+
+/* Ensure Sidebar Button Doesn't Interfere */
+.sidebar-toggle {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 24px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Sidebar container */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -270px; /* Initially hidden */
+  width: 270px;
+  height: 100vh;
+  background: linear-gradient(135deg, #1b263b, #324a72); /* Gradient background */
+  color: white;
+  padding-top: 60px;
+  transition: transform 0.4s ease-in-out;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Open Sidebar */
+.sidebar.open {
+  transform: translateX(270px);
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* Sidebar Menu */
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Sidebar Menu Items */
+.menu-item {
+  padding: 15px 25px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Sidebar Links */
+.menu-link {
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+  display: block;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Hover Animation */
+.menu-item::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: -100%;
+  top: 0;
+  background: rgba(255, 255, 255, 0.2);
+  transition: left 0.3s ease-in-out;
+}
+
+.menu-item:hover::before {
+  left: 0;
+}
+
+/* Active Link */
+.menu-link:active,
+.menu-link:focus {
+  color: #ffcc00;
+}
+
+/* Cards Section */
+.card-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  text-align: center;
+}
+
+.card-title {
+  font-weight: bold;
+}
+
+.card-value {
+  font-size: 1.5rem;
+  color: #4f46e5;
+}
+
+/* Chart Section */
+.chart-container {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 /* Form Containers */
-.login-container, .signup-container, .logout-container, .dashboard-container {
+.login-container,
+.signup-container,
+.logout-container,
+.dashboard-container {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   padding: 30px;
@@ -50,123 +273,21 @@ body {
   background: #00a8e8;
 }
 
-/* Dashboard Styles */
-.chart-container {
-  width: 100%;
-  height: 300px;
-}
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-content {
+    margin-left: 0; /* Adjust margin for smaller screens */
+  }
 
-.dashboard-container {
-  width: 600px;
-}
-/* 🟢 Header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  background-color: #0077b6;
-  color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+  .sidebar {
+    width: 200px; /* Adjust sidebar width for smaller screens */
+  }
 
-.header-title {
-  font-size: 22px;
-}
+  .card-container {
+    flex-direction: column; /* Stack cards vertically on small screens */
+  }
 
-.header-user {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 16px;
-}
-
-.user-icon {
-  font-size: 24px;
-}
-
-/* 🟡 Sidebar */
-.sidebar {
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 100vh;
-  width: 250px;
-  background-color: #1b263b;
-  color: white;
-  padding-top: 60px;
-  transition: 0.3s ease;
-}
-
-.sidebar.closed {
-  width: 80px;
-}
-
-.toggle-btn {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-.sidebar-menu {
-  list-style: none;
-  padding: 0;
-  margin-top: 20px;
-}
-
-.sidebar-menu li {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 15px 20px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.sidebar-menu li:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.logout {
-  color: #e63946;
-  margin-top: 20px;
-}
-
-/* 📊 Dashboard Content */
-.dashboard-container {
-  display: flex;
-}
-
-.dashboard-content {
-  flex-grow: 1;
-  margin-left: 250px;
-  padding: 20px;
-  transition: margin-left 0.3s ease;
-}
-
-.sidebar.closed + .dashboard-content {
-  margin-left: 80px;
-}
-
-.chart-container {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto;
-}
-/* Logout Page */
-.button-danger {
-  background: red;
-}
-
-.button-danger:hover {
-  background: darkred;
+  .card {
+    width: 100%; /* Ensure cards take full width */
+  }
 }

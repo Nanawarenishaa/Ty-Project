@@ -1,29 +1,27 @@
-import React, { useState } from "react";
-import Button from "../components/Button";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const LogOut = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+const Logout = () => {
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
-    alert("Logged out successfully!");
+    axios.post("http://localhost:5003/logout") // Backend call
+      .then(() => {
+        localStorage.removeItem("token"); // Remove JWT token
+        navigate("/login"); // Redirect to login page
+      })
+      .catch((err) => {
+        console.error("Logout failed", err);
+      });
   };
 
   return (
     <div className="logout-container">
-      {isLoggedIn ? (
-        <div>
-          <h1>Welcome</h1>
-          <Button text="Log Out" onClick={handleLogout} className="danger" />
-        </div>
-      ) : (
-        <div>
-          <h1>You have been logged out</h1>
-          <Button text="Log In Again" onClick={() => setIsLoggedIn(true)} />
-        </div>
-      )}
+      <h2>Are you sure you want to log out?</h2>
+      <button className="logout-btn" onClick={handleLogout}>Logout</button>
     </div>
   );
 };
 
-export default LogOut;
+export default Logout;
