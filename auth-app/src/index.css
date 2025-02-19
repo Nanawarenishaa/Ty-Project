@@ -1,0 +1,322 @@
+/* Global Styles */
+:root {
+  --primary-color: #7A33C9;
+  --secondary-color: #450f64;
+  --background-dark: #090014;
+  --text-light: #666666;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: var(--background-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}  
+
+.page-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* Container */
+.container {
+  background-color: #FFFFFF; /* White Background */
+  padding: 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+.logout-container{
+  background-color: #FFFFFF; /* White Background */
+  padding: 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  margin-top: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 3rem 3rem;
+}
+/* Heading */
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+/* Subtext */
+p {
+  color: #666666;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* Input Fields */
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  background-color: #F9F9F9;
+  color: #000000;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 6px;
+  background: #450f64; /* Lavender Button */
+  color: #fffafa;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  background: #793fa1; /* Darker Violet on Hover */
+  transform: scale(1.05);
+}
+
+/* Social Login Buttons */
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #F0F0F0;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Divider */
+.divider {
+  margin: 15px 0;
+  font-size: 14px;
+  color: #666666;
+}
+
+/* Register Link */
+.register {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.register a {
+  color: #7A33C9; /* Violet Link */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register a:hover {
+  text-decoration: underline;
+}
+
+
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 15px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Sidebar Toggle Icon */
+.menu-icon {
+  font-size: 24px;
+  cursor: pointer;
+  color: black;
+  transition: 0.3s;
+}
+
+.menu-icon:hover {
+  color: purple;
+}
+
+/* Right-side Icons */
+.right-icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: #450f64;
+}
+
+.icon {
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.icon:hover {
+  color: purple;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 60px; /* Initially Closed */
+  height: 100vh;
+  background: white;
+  padding: 15px;
+  position: fixed;
+  left: 0;
+  top: 60px; /* Prevents overlap with header */
+  transition: width 0.3s ease-in-out;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* Sidebar Open */
+.sidebar.open {
+  width: 250px;
+}
+
+/* Sidebar List */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 50px;
+}
+
+.sidebar ul li {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+}
+
+.sidebar ul li a {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  text-decoration: none;
+  color: black;
+  
+
+}
+
+.sidebar ul li a .icon {
+  font-size: 20px;
+  margin-right: 1rem;
+ 
+
+}
+
+.sidebar ul li:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Hide text when sidebar is closed */
+.sidebar:not(.open) ul li a span {
+  display: none;
+}
+
+/* Adjust main content when sidebar is toggled */
+.main-content {
+  flex-grow: 1;
+  margin-left: 60px; /* Same as sidebar closed width */
+  padding: 20px;
+  transition: margin-left 0.3s;
+  margin-top: 60px; /* Prevents overlap with header */
+}
+
+.sidebar.open + .main-content {
+  margin-left: 250px;
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh; /* Changed from height: 100vh to min-height */
+  background-color: #f8f8f8;
+  color: white;
+  margin-top: 6rem;
+}
+.dashboard-container h2{
+  text-align: center;
+  width: full;
+  font-size: 2rem;
+}
+/* Dashboard Cards */
+.dashboard-cards {
+  display: flex;
+  flex-wrap: wrap; /* Allows responsiveness */
+  justify-content: center; /* Centers the cards */
+  gap: 20px; /* Adds spacing between cards */
+  margin-top: 20px;
+}
+
+.card {
+  flex: 1 1 300px; /* Adjusts width dynamically */
+  max-width: 350px; /* Prevents too-wide cards */
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card .highlight {
+  color: red;
+  font-weight: bold;
+}
+
+/* Chart */
+.chart-container {
+  margin-top: 30px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Use full width */
+  max-width: 1200px; /* Increase max width */
+  height: 400px; /* Set a fixed height */
+  margin: 30px auto; /* Center the chart */
+}
