@@ -320,3 +320,107 @@ button:hover {
   height: 400px; /* Set a fixed height */
   margin: 30px auto; /* Center the chart */
 }
+.add-record-container {
+  max-width: 600px;
+  width: 100%;
+  margin: 40px auto;
+  margin-top: 16rem;
+  padding: 40px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.add-record-container h2 {
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 28px;
+  text-align: center;
+}
+
+/* Align form elements to the left */
+.add-record-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align everything to the left */
+}
+
+.add-record-container label {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  text-align: left;
+  color: #333;
+  display: block; /* Ensures labels appear above inputs */
+}
+
+.add-record-container input {
+  width: 100%;
+  max-width: 500px;
+  padding: 14px;
+  margin: 5px 0 15px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.add-record-container input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Style the radio buttons and labels */
+.add-record-container div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+.add-record-container div label {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.add-record-container input[type="radio"] {
+  margin-right: 8px;
+}
+
+.add-record-container button {
+  width: 60%;
+  background: #007bff;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background 0.3s ease, transform 0.2s;
+  align-self: center; /* Center button while keeping text aligned left */
+}
+
+.add-record-container button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+@media (max-width: 800px) {
+  .add-record-container {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .add-record-container input {
+    width: 95%;
+  }
+
+  .add-record-container button {
+    width: 80%;
+  }
+}
+
