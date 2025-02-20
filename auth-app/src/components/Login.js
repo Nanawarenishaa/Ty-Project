@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -12,7 +12,12 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post("http://localhost:5000/login", { username, password });
+
+      // ✅ Store token and update authentication state
       localStorage.setItem("token", res.data.token);
+      setIsAuthenticated(true);
+
+      // ✅ Redirect to dashboard immediately
       navigate("/dashboard");
     } catch (err) {
       setMessage(err.response?.data?.message || "User not found. Please sign up.");
@@ -20,7 +25,7 @@ const Login = () => {
   };
 
   return (
-    <div className="container ">
+    <div className="container">
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required />
@@ -29,10 +34,9 @@ const Login = () => {
       </form>
       <p className="error-message">{message}</p>
 
-{/* Signup link instead of a button */}
-<p className="signup-text">
-  New to our platform? <a href="/signup">Sign up here</a>
-</p>
+      <p className="signup-text">
+        New to our platform? <a href="/signup">Sign up here</a>
+      </p>
     </div>
   );
 };

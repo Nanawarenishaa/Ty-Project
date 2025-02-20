@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Logout = () => {
+const Logout = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      navigate("/login"); // Redirect to login if already logged out
+      setIsAuthenticated(false); // ✅ Update authentication state
+      navigate("/login"); // ✅ Redirect to login if already logged out
     }
-  }, [navigate]);
+  }, [navigate, setIsAuthenticated]);
 
   const handleLogout = () => {
     localStorage.removeItem("token"); // ✅ Clear authentication token
-    navigate("/login"); // ✅ Redirect to login page
+    setIsAuthenticated(false); // ✅ Update state so React re-renders
+    navigate("/login"); // ✅ Redirect immediately
   };
 
   return (
