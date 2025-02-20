@@ -82,7 +82,33 @@ app.post("/login", (req, res) => {
         res.json({ message: "Login successful", token });
     });
 });
+// ✅ Insert Student Record
+app.post("/add-student", (req, res) => {
+    const { studentID, name, email, phone, course, image, fingerprint_template } = req.body;
 
+    const sql = "INSERT INTO students (studentID, name, email, phone, course, image, fingerprint_template) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    db.query(sql, [studentID, name, email, phone, course, image, fingerprint_template], (err, result) => {
+        if (err) {
+            console.error("❌ Error inserting student:", err);
+            return res.status(500).json({ message: "Server error" });
+        }
+        res.status(201).json({ message: "✅ Student added successfully!" });
+    });
+});
+
+// ✅ Insert Teacher Record
+app.post("/add-teacher", (req, res) => {
+    const { teacherID, name, email, phone, subject, image, joining_date, fingerprint_template } = req.body;
+
+    const sql = "INSERT INTO teachers (teacherID, name, email, phone, subject, image, joining_date, fingerprint_template) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    db.query(sql, [teacherID, name, email, phone, subject, image, joining_date, fingerprint_template], (err, result) => {
+        if (err) {
+            console.error("❌ Error inserting teacher:", err);
+            return res.status(500).json({ message: "Server error" });
+        }
+        res.status(201).json({ message: "✅ Teacher added successfully!" });
+    });
+});
 // ✅ Start Server
 const PORT = 5000;
 app.listen(PORT, () => {
