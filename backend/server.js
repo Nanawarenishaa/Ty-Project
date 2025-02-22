@@ -109,6 +109,69 @@ app.post("/add-teacher", (req, res) => {
         res.status(201).json({ message: "✅ Teacher added successfully!" });
     });
 });
+app.get("/api/students", (_, res) => {
+    db.query("SELECT studentID AS id, name, email, phone, course FROM students", (err, results) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json(results);
+    });
+});
+  
+app.get("/api/teachers", (_, res) => {
+    db.query("SELECT teacherID AS id, name, email, phone, subject, joining_date FROM teachers", (err, results) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json(results);
+    });
+});
+const deleteStudentFromDB = (id) => {
+    return new Promise((resolve, reject) => {
+        db.query("DELETE FROM students WHERE studentID = ?", [id], (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+        });
+    });
+};
+
+// Usage in DELETE request:
+app.delete('/students/:id', async (req, res) => {
+    const studentId = req.params.id;
+    console.log("Received DELETE request for student ID:", req.params.id);
+    try {
+        const result = await deleteStudentFromDB(studentId);
+
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: "Student deleted successfully." });
+        } else {
+            res.status(404).json({ message: "Student not found." });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting student", error });
+    }
+});
+const deleteTeacherFromDB = (id) => {
+    return new Promise((resolve, reject) => {
+        db.query("DELETE FROM teachers WHERE teacherID = ?", [id], (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+        });
+    });
+};
+  
+// Usage in DELETE request:
+app.delete('/teachers/:id', async (req, res) => {
+    const teacherId = req.params.id;
+    console.log("Received DELETE request for teacher ID:", req.params.id);
+    try {
+        const result = await deleteTeacherFromDB(teacherId);
+
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: "teacher deleted successfully." });
+        } else {
+            res.status(404).json({ message: "teacher not found." });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting teacher", error });
+    }
+});
 // ✅ Start Server
 const PORT = 5000;
 app.listen(PORT, () => {
