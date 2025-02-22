@@ -3,14 +3,15 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
-import AddRecord from "./components/AddRecords"; // Add Record Page
+import AddRecord from "./components/AddRecords"; 
 import Sidebar from "./components/sidebar";
 import Header from "./components/Header";
 import Logout from "./components/Logout";
+import StudentTeacherList from "./components/StudentTeacherList";
 
 const App = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const isAuthenticated = !!localStorage.getItem("token"); // Check login
+  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token")); 
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
@@ -20,11 +21,11 @@ const App = () => {
     <Router>
       <Routes>
         {/* Show Login/Signup First */}
-        <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
+        <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/signup" element={<Signup />} />
 
-        {/* Layout Wrapper (Header + Sidebar) */}
-        {isAuthenticated && (
+        {/* Authenticated Routes */}
+        {isAuthenticated ? (
           <Route
             path="/*"
             element={
@@ -32,16 +33,19 @@ const App = () => {
                 <Sidebar isSidebarOpen={isSidebarOpen} />
                 <div className={`main-content ${isSidebarOpen ? "sidebar-open" : ""}`}>
                   <Header toggleSidebar={toggleSidebar} />
-                  <Routes>
+                  <Routes> {/* ❌ REMOVE THIS EXTRA <Routes> */}
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/add-record" element={<AddRecord />} />
-                    <Route path="/logout" element={<Logout />} />
+                    <Route path="/students-teachers" element={<StudentTeacherList />} />
+                    <Route path="/logout" element={<Logout setIsAuthenticated={setIsAuthenticated} />} />
                     <Route path="*" element={<Navigate to="/dashboard" />} /> {/* Redirect unknown routes */}
                   </Routes>
                 </div>
               </div>
             }
           />
+        ) : (
+          <Route path="*" element={<Navigate to="/" />} /> // Redirect unauthenticated users
         )}
       </Routes>
     </Router>

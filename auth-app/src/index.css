@@ -357,8 +357,8 @@ button:hover {
 .add-record-container input {
   width: 100%;
   max-width: 500px;
-  padding: 14px;
-  margin: 5px 0 15px 0;
+  padding: 10px;
+  margin: 5px 0 10px 0;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 16px;
@@ -408,6 +408,189 @@ button:hover {
   background: #0056b3;
   transform: scale(1.05);
 }
+/* General Container */
+.Records_container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  text-align: center;
+  overflow: hidden;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Heading */
+.heading {
+  font-size: 26px;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  animation: slideDown 0.5s ease-in-out;
+}
+
+/* Button Group */
+.button-group {
+  margin-bottom: 20px;
+}
+
+.button-group button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  width: auto;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.button-group button:first-child {
+  background: #2980b9;
+  color: white;
+}
+
+.button-group button:last-child {
+  background: #27aeae;
+  color: white;
+}
+
+.button-group button:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+/* Edit & Delete Buttons */
+.editDeleteBtn{
+display: flex;
+flex-direction: row;
+}
+.edit-btn, .delete-btn {
+  padding: 6px 12px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-btn {
+  background: #f39c12;
+  color: white;
+}
+
+.edit-btn:hover {
+  background: #e67e22;
+  transform: scale(1.05);
+}
+
+.delete-btn {
+  background: #c0392b;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #e74c3c;
+  transform: scale(1.05);
+}
+
+/* Table Row Hover Effect */
+tbody tr:hover {
+  background: #ecf0f1;
+  transform: scale(1.02);
+  transition: all 0.3s ease;
+}
+/* Table Styles */
+.table-container {
+  overflow-x: auto;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table-container thead {
+  background: #34495e;
+  color: white;
+}
+
+.table-container thead th {
+  padding: 12px;
+  text-align: left;
+}
+
+.table-container tbody tr {
+  transition: all 0.3s ease;
+}
+
+.table-container tbody tr:nth-child(even) {
+  background: #f8f9fa;
+}
+
+.table-container tbody tr:hover {
+  background: #dff9fb;
+  transform: scale(1.02);
+}
+
+.table-container tbody td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+      opacity: 0;
+      transform: translateY(-30px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .Records_container {
+      width: 95%;
+      padding: 15px;
+  }
+
+  .heading {
+      font-size: 22px;
+  }
+
+  .button-group button {
+      font-size: 14px;
+      padding: 8px 15px;
+  }
+
+  thead th, tbody td {
+      font-size: 14px;
+      padding: 10px;
+  }
+}
+
 
 @media (max-width: 800px) {
   .add-record-container {
