@@ -3,67 +3,66 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom"; // For redirection
 
 const StudentTeacherList = () => {
-  const [view, setView] = useState("students");
+  const [view, setView] = useState("student");
   const [students, setStudents] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const navigate = useNavigate(); // For navigation
 
-
   // Fetch Students
   useEffect(() => {
-    axios.get("http://localhost:5000/api/students")
+    axios.get("http://localhost:5000/api/student")
       .then((response) => setStudents(response.data))
       .catch((error) => console.error("Error fetching students:", error));
   }, []);
 
   // Fetch Teachers
   useEffect(() => {
-    axios.get("http://localhost:5000/api/teachers")
+    axios.get("http://localhost:5000/api/teacher")
       .then((response) => setTeachers(response.data))
       .catch((error) => console.error("Error fetching teachers:", error));
   }, []);
-  
-  const deleteStudent = async (id) => {
-    if (!id) {
-        console.error("Student ID is missing!");
-        return;
+
+  // Delete Student
+  const deleteStudent = async (studentID) => {
+    if (!studentID) {
+      console.error("❌ Student ID is missing!");
+      return;
     }
 
     try {
-        const response = await axios.delete(`http://localhost:5000/students/${id}`); // Adjust the URL based on your backend
+      const response = await axios.delete(`http://localhost:5000/student/${studentID}`);
 
-        if (response.status === 200) {
-            setStudents((prevStudents) => prevStudents.filter(student => student.id !== id));
-            console.log("Student deleted successfully.");
-        } else {
-            console.error("Failed to delete student.");
-        }
+      if (response.status === 200) {
+        setStudents((prevStudents) => prevStudents.filter(student => student.studentID !== studentID));
+        console.log("✅ Student deleted successfully.");
+      } else {
+        console.error("❌ Failed to delete student.");
+      }
     } catch (error) {
-        console.error("Error deleting student:", error);
+      console.error("❌ Error deleting student:", error);
     }
-};
+  };
 
-    
-const deleteTeacher = async (id) => {
-    if (!id) {
-        console.error("Teacher ID is missing!");
-        return;
+  // Delete Teacher
+  const deleteTeacher = async (teacherID) => {
+    if (!teacherID) {
+      console.error("❌ Teacher ID is missing!");
+      return;
     }
 
     try {
-        const response = await axios.delete(`http://localhost:5000/teachers/${id}`); // Adjust the URL based on your backend
+      const response = await axios.delete(`http://localhost:5000/teacher/${teacherID}`);
 
-        if (response.status === 200) {
-            setTeachers((prevTeachers) => prevTeachers.filter(teacher => teacher.id !== id));
-            console.log("Teacher deleted successfully.");
-        } else {
-            console.error("Failed to delete teacher.");
-        }
+      if (response.status === 200) {
+        setTeachers((prevTeachers) => prevTeachers.filter(teacher => teacher.ID !== teacherID));
+        console.log("✅ Teacher deleted successfully.");
+      } else {
+        console.error("❌ Failed to delete teacher.");
+      }
     } catch (error) {
-        console.error("Error deleting teacher:", error);
+      console.error("❌ Error deleting teacher:", error);
     }
-};
-
+  };
 
   // Edit Record (Redirect to "Add Record" page with data)
   const handleEdit = (data, type) => {
@@ -74,23 +73,23 @@ const deleteTeacher = async (id) => {
     <div className="Records_container">
       <h1 className="heading">School Record and Attendance System</h1>
       <div className="button-group">
-        <button onClick={() => setView("students")}>View Students</button>
-        <button onClick={() => setView("teachers")}>View Teachers</button>
+        <button onClick={() => setView("student")}>View Students</button>
+        <button onClick={() => setView("teacher")}>View Teachers</button>
       </div>
 
       {/* Students Table */}
-      {view === "students" && (
-        <div className="students-section">
+      {view === "student" && (
+        <div className="student-section">
           <h2>Students</h2>
           <div className="table-container">
             <table>
               <thead>
                 <tr>
-                  <th>StudentID</th>
+                  <th>Student ID</th>
                   <th>Name</th>
                   <th>Email</th>
                   <th>Phone</th>
-                  <th>Address</th>
+                  <th>Subject</th>
                   <th>Course</th>
                   <th>Actions</th>
                 </tr>
@@ -98,17 +97,23 @@ const deleteTeacher = async (id) => {
               <tbody>
                 {students.length > 0 ? (
                   students.map((student) => (
-                    <tr key={student.id}>
-                      <td>{student.id}</td>
+                    <tr key={student.studentID}>
+                      <td>{student.studentID}</td>
                       <td>{student.name}</td>
                       <td>{student.email}</td>
                       <td>{student.phone}</td>
-                      <td>{student.address}</td>
+                      <td>{student.subject || "N/A"}</td>
+                      <td>
+                           {student.image ? (
+                            <img src={student.image} alt={student.name} style={{ width: "50px", height: "50px", borderRadius: "50%" }} />
+                             ) : (
+                             "No Image"
+                              )}
+                        </td>
                       <td>{student.course}</td>
                       <td className="editDeleteBtn">
-                        <button className="edit-btn" onClick={() => handleEdit(student, "students")}>Edit</button>
-                        <button className="delete-btn" onClick={() => deleteStudent(student.id)}>Delete</button>
-
+                        <button className="edit-btn" onClick={() => handleEdit(student, "student")}>Edit</button>
+                        <button className="delete-btn" onClick={() => deleteStudent(student.studentID)}>Delete</button>
                       </td>
                     </tr>
                   ))
@@ -124,43 +129,41 @@ const deleteTeacher = async (id) => {
       )}
 
       {/* Teachers Table */}
-      {view === "teachers" && (
-        <div className="teachers-section">
+      {view === "teacher" && (
+        <div className="teacher-section">
           <h2>Teachers</h2>
           <div className="table-container">
             <table>
               <thead>
                 <tr>
-                  <th>TeacherID</th>
+                  <th>Teacher ID</th>
                   <th>Name</th>
                   <th>Email</th>
                   <th>Phone</th>
                   <th>Joining Date</th>
-                  <th>Address</th>
-                  <th>Subject</th>
+                  <th>Course</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {teachers.length > 0 ? (
                   teachers.map((teacher) => (
-                    <tr key={teacher.id}>
-                      <td>{teacher.id}</td>
+                    <tr key={teacher.ID}>
+                      <td>{teacher.ID}</td>
                       <td>{teacher.name}</td>
                       <td>{teacher.email}</td>
                       <td>{teacher.phone}</td>
                       <td>{teacher.joining_date}</td>
-                      <td>{teacher.address}</td>
-                      <td>{teacher.subject}</td>
+                      <td>{teacher.course}</td>
                       <td className="editDeleteBtn">
-                        <button className="edit-btn" onClick={() => handleEdit(teacher, "teachers")}>Edit</button>
-                        <button className="delete-btn" onClick={() => deleteTeacher(teacher.id, "teachers")}>Delete</button>
+                        <button className="edit-btn" onClick={() => handleEdit(teacher, "teacher")}>Edit</button>
+                        <button className="delete-btn" onClick={() => deleteTeacher(teacher.ID)}>Delete</button>
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="8">No teachers found</td>
+                    <td colSpan="7">No teachers found</td>
                   </tr>
                 )}
               </tbody>
