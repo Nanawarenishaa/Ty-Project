@@ -22,7 +22,7 @@ db.connect((err) => {
     else console.log("✅ Connected to MySQL database");
 });
 
-// ✅ Signup Route (Allow Only New Users)
+// ✅ Signup Route (No Password Hashing)
 app.post("/signup", (req, res) => {
     const { username, password } = req.body;
 
@@ -67,39 +67,47 @@ app.post("/login", (req, res) => {
 
 // ✅ Add Student
 app.post("/add-student", (req, res) => {
-    const { name, email, phone, course, image, fingerprint_template } = req.body;
-
-    const sql = "INSERT INTO student (name, email, phone, course, image, fingerprint_template) VALUES (?, ?, ?, ?, ?, ?)";
-    db.query(sql, [name, email, phone, course, image, fingerprint_template], (err) => {
-        if (err) return res.status(500).json({ message: "Server error" });
+    const { name, email, phone, subject, course, image, fingerprint_template } = req.body;
+    
+    const sql = "INSERT INTO student (name, email, phone, subject, course, image, fingerprint_template) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    db.query(sql, [name, email, phone, subject, course, image, fingerprint_template], (err) => {
+        if (err) return res.status(500).json({ message: "Server error", error: err.message });
 
         res.status(201).json({ message: "✅ Student added successfully!" });
     });
 });
 
 // ✅ Add Teacher
-app.post("/add-teacher", (req, res) => {
-    const { name, email, phone, subject, image, joining_date, fingerprint_template } = req.body;
+app.post('/add-teacher', (req, res) => {
+    const { name, email, phone, teachersubject, joining_date, course, image, fingerprint_template } = req.body;
 
-    const sql = "INSERT INTO teacher (name, email, phone, subject, image, joining_date, fingerprint_template) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    db.query(sql, [name, email, phone, subject, image, joining_date, fingerprint_template], (err) => {
-        if (err) return res.status(500).json({ message: "Server error" });
+    if (!name || !email || !phone || !teachersubject || !joining_date || !course) {
+        return res.status(400).json({ message: "❌ Missing required fields." });
+    }
 
-        res.status(201).json({ message: "✅ Teacher added successfully!" });
+    const sql = "INSERT INTO teacher (name, email, phone, teachersubject, joining_date, course, image, fingerprint_template) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    const values = [name, email, phone, teachersubject, joining_date, course, image, fingerprint_template];
+
+    db.query(sql, values, (err, result) => {
+        if (err) {
+            console.error("❌ Error adding teacher:", err);
+            return res.status(500).json({ message: "❌ Error adding teacher." });
+        }
+        res.status(201).json({ message: "✅ Teacher added successfully." });
     });
 });
 
-// ✅ Get Students
+// ✅ Get All Students
 app.get("/api/student", (_, res) => {
-    db.query("SELECT studentID AS id, name, email, phone, course FROM students", (err, results) => {
+    db.query("SELECT studentID, name, email, phone, subject, course FROM student", (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(results);
     });
 });
 
-// ✅ Get Teachers
+// ✅ Get All Teachers
 app.get("/api/teacher", (_, res) => {
-    db.query("SELECT teacherID AS id, name, email, phone, subject, joining_date FROM teachers", (err, results) => {
+    db.query("SELECT ID, name, email, phone, joining_date, course, teachersubject FROM teacher", (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(results);
     });
@@ -108,10 +116,9 @@ app.get("/api/teacher", (_, res) => {
 // ✅ Delete Student
 app.delete('/student/:id', (req, res) => {
     const studentId = req.params.id;
-
-    db.query("DELETE FROM student WHERE studentID = ?", [studentId], (err, result) => {
-        if (err) return res.status(500).json({ message: "Error deleting student" });
-
+    const sql = "DELETE FROM student WHERE studentID = ?";
+    db.query(sql, [studentId], (err, result) => {
+        if (err) return res.status(500).json({ message: "Error deleting student", error: err.message });
         if (result.affectedRows > 0) {
             res.status(200).json({ message: "✅ Student deleted successfully." });
         } else {
@@ -123,10 +130,8 @@ app.delete('/student/:id', (req, res) => {
 // ✅ Delete Teacher
 app.delete('/teacher/:id', (req, res) => {
     const teacherId = req.params.id;
-
-    db.query("DELETE FROM teacher WHERE teacherID = ?", [teacherId], (err, result) => {
+    db.query("DELETE FROM teacher WHERE ID = ?", [teacherId], (err, result) => {
         if (err) return res.status(500).json({ message: "Error deleting teacher" });
-
         if (result.affectedRows > 0) {
             res.status(200).json({ message: "✅ Teacher deleted successfully." });
         } else {
