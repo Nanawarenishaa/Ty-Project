@@ -22,7 +22,7 @@ const AddRecords = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const url =
       recordType === "student"
         ? "http://localhost:5000/add-student"
@@ -45,6 +45,7 @@ const AddRecords = () => {
             phone: formData.phone,
             teachersubject: formData.teachersubject,
             joining_date: formData.joining_date,
+            course: formData.course, // ✅ Added course field for teachers
             image: formData.image,
             fingerprint_template: formData.fingerprint_template,
           };
@@ -122,6 +123,16 @@ const AddRecords = () => {
               onChange={handleChange}
               required
             />
+
+            <label htmlFor="course">Course:</label>
+            <input
+              type="text"
+              id="course"
+              name="course"
+              value={formData.course}
+              onChange={handleChange}
+              required
+            />
           </>
         )}
 
@@ -185,7 +196,6 @@ const AddRecords = () => {
           name="fingerprint_template"
           value={formData.fingerprint_template}
           onChange={handleChange}
-          required
         />
 
         <button type="submit">Add {recordType === "student" ? "Student" : "Teacher"}</button>

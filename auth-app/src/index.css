@@ -568,6 +568,168 @@ tbody tr:hover {
       transform: translateY(0);
   }
 }
+/* Container Styling */
+.attendance-container {
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Drop-down Selection */
+.session-selection {
+  margin-bottom: 20px;
+  animation: slideIn 0.5s ease-in-out;
+}
+
+.session-selection select {
+  padding: 8px;
+  font-size: 16px;
+  border: 2px solid #3498db;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+}
+
+.session-selection select:hover {
+  background-color: #ecf0f1;
+}
+
+/* Attendance List */
+.attendance-list {
+  margin-bottom: 20px;
+  animation: fadeInUp 0.7s ease-in-out;
+}
+
+/* Attendance Item */
+.attendance-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 10px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.attendance-item:hover {
+  transform: scale(1.03);
+}
+
+/* Button Styles */
+button {
+  margin: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Present Button */
+.present {
+  background-color: green;
+  color: white;
+  animation: pulseGreen 0.5s ease-in-out;
+}
+
+.present:hover {
+  background-color: #27ae60;
+}
+
+/* Absent Button */
+.absent {
+  background-color: red;
+  color: white;
+  animation: pulseRed 0.5s ease-in-out;
+}
+
+.absent:hover {
+  background-color: #c0392b;
+}
+
+/* Submit Button */
+.submit-btn {
+  padding: 12px 20px;
+  background-color: #3498db;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.submit-btn:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
+}
+
+/* --- ANIMATIONS --- */
+
+/* Fade In */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide In */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade In Up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pulse Animation for Present Button */
+@keyframes pulseGreen {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Pulse Animation for Absent Button */
+@keyframes pulseRed {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -590,6 +752,10 @@ tbody tr:hover {
       padding: 10px;
   }
 }
+
+
+
+
 
 
 @media (max-width: 800px) {

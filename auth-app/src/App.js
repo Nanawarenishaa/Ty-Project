@@ -8,10 +8,11 @@ import Sidebar from "./components/sidebar";
 import Header from "./components/Header";
 import Logout from "./components/Logout";
 import StudentTeacherList from "./components/StudentTeacherList";
+import ManageAttendance from "./components/ManageAttendance";
 
 const App = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token")); 
+  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token"));
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
@@ -20,11 +21,11 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Show Login/Signup First */}
+        {/* Public Routes (Login & Signup) */}
         <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/signup" element={<Signup />} />
 
-        {/* Authenticated Routes */}
+        {/* Protected Routes */}
         {isAuthenticated ? (
           <Route
             path="/*"
@@ -33,7 +34,8 @@ const App = () => {
                 <Sidebar isSidebarOpen={isSidebarOpen} />
                 <div className={`main-content ${isSidebarOpen ? "sidebar-open" : ""}`}>
                   <Header toggleSidebar={toggleSidebar} />
-                  <Routes> {/* ❌ REMOVE THIS EXTRA <Routes> */}
+                  <Routes> 
+                    <Route path="/attendanceTable" element={<ManageAttendance />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/add-record" element={<AddRecord />} />
                     <Route path="/students-teachers" element={<StudentTeacherList />} />

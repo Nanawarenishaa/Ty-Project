@@ -22,7 +22,7 @@ const Sidebar = ({ isSidebarOpen }) => {
           </Link>
         </li>
         <li>
-          <Link to="/manage-attendance">
+          <Link to="/attendaceTable">
             <FaClipboardCheck className="icon" /> <span>Manage Attendance</span>
           </Link>
         </li>

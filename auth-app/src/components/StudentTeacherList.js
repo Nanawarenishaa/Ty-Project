@@ -90,6 +90,7 @@ const StudentTeacherList = () => {
                   <th>Email</th>
                   <th>Phone</th>
                   <th>Subject</th>
+                  <th>Image</th>
                   <th>Course</th>
                   <th>Actions</th>
                 </tr>
