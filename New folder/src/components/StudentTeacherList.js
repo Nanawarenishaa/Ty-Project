@@ -28,8 +28,7 @@ const StudentTeacherList = () => {
   
 
 
-  console.log("Selected Class:", selectedClass);
-  console.log("Filtered Students:", filteredStudents);
+
 
   return (
     <div className="Records_container">
