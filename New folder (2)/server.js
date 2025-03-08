@@ -180,108 +180,33 @@ app.delete('/teacher/:id', (req, res) => {
   });
 });
 
+app.post("/api/valid-ids", (req, res) => {
+  const { id } = req.body;
 
+  if (!id) {
+    return res.status(400).json({ message: "❌ Attendance ID is required" });
+  }
 
-app.post("/api/setup-attendance", (req, res) => {
-  const { attendanceName, date, startingPoint, timeUp, attendees } = req.body;
+  const query = `
+    SELECT 'Student' AS userType, name, custom_studentID AS id FROM student WHERE custom_studentID = ?
+    UNION
+    SELECT 'Teacher' AS userType, name, custom_teacherID AS id FROM teacher WHERE custom_teacherID = ?
+  `;
 
-  db.query(
-    "INSERT INTO attendance (attendance_name, date, starting_point, time_up) VALUES (?, ?, ?, ?)",
-    [attendanceName, date, startingPoint, timeUp],
-    (error, attendanceResult) => {
-      if (error) {
-        console.error("❌ Error saving attendance:", error);
-        return res.status(500).json({ message: "Internal Server Error" });
-      }
-
-      const attendanceId = attendanceResult.insertId;
-
-      const attendanceRecords = attendees
-        .filter((attendee) => attendee.isValid)
-        .map((attendee) => [
-          attendanceId,
-          attendee.userType,
-          attendee.userType === "Student" ? attendee.id : null,
-          attendee.userType === "Teacher" ? attendee.id : null,
-          "Present",
-        ]);
-
-      if (attendanceRecords.length > 0) {
-        db.query(
-          "INSERT INTO attendance_records (attendance_id, user_type, student_id, teacher_id, status) VALUES ?",
-          [attendanceRecords],
-          (err) => {
-            if (err) console.error("❌ Error inserting present attendees:", err);
-          }
-        );
-      }
-
-      db.query(
-        `INSERT INTO attendance_records (attendance_id, user_type, student_id, teacher_id, status)
-         SELECT ?, 'Student', s.custom_studentID, NULL, 'Absent'
-         FROM student s
-         LEFT JOIN attendance_records ar ON s.custom_studentID = ar.student_id AND ar.attendance_id = ?
-         WHERE ar.student_id IS NULL
-         UNION
-         SELECT ?, 'Teacher', NULL, t.custom_teacherID, 'Absent'
-         FROM teacher t
-         LEFT JOIN attendance_records ar ON t.custom_teacherID = ar.teacher_id AND ar.attendance_id = ?
-         WHERE ar.teacher_id IS NULL`,
-        [attendanceId, attendanceId, attendanceId, attendanceId],
-        (absentError) => {
-          if (absentError) {
-            console.error("❌ Error marking absent:", absentError);
-            return res.status(500).json({ message: "Error marking absentees" });
-          }
-
-          // 🔴 UPDATE attendance_id for records that contain NULL and have status 'Present'
-          db.query(
-            `UPDATE attendance_records 
-             SET attendance_id = ? 
-             WHERE attendance_id IS NULL AND status = 'Present'`,
-            [attendanceId],
-            (updateError) => {
-              if (updateError) {
-                console.error("❌ Error updating NULL attendance_id:", updateError);
-                return res.status(500).json({ message: "Error updating attendance records" });
-              }
-
-              res.json({ message: "✅ Attendance Saved Successfully!", attendanceId });
-            }
-          );
-        }
-      );
-    }
-  );
-});
-
-  
-  app.post("/api/valid-ids", (req, res) => {
-    const { id } = req.body;  // Change "userId" to "id"
-
-    if (!id) {
-      return res.status(400).json({ message: "❌ Attendance ID is required" });
+  db.query(query, [id, id], (error, results) => {
+    if (error) {
+      console.error("❌ Error checking user ID:", error);
+      return res.status(500).json({ message: "Internal Server Error" });
     }
 
-    const query = `
-      SELECT 'Student' AS userType, name, custom_studentID AS id FROM student WHERE custom_studentID = ?
-      UNION
-      SELECT 'Teacher' AS userType, name, custom_teacherID AS id FROM teacher WHERE custom_teacherID = ?
-    `;
-
-    db.query(query, [id, id], (error, results) => {
-      if (error) {
-        console.error("❌ Error checking user ID:", error);
-        return res.status(500).json({ message: "Internal Server Error" });
-      }
-
-      if (results.length > 0) {
-        return res.json({ valid: true, user: results[0] });
-      } else {
-        return res.json({ valid: false, message: "❌ ID not found" });
-      }
-    });
+    if (results.length > 0) {
+      return res.json({ valid: true, user: results[0] });
+    } else {
+      return res.json({ valid: false, message: "❌ ID not found" });
+    }
+  });
 });
+// ✅ API to mark attendance (Insert custom_studentID where present, keep absent by default)
 app.post("/api/mark-attendance", (req, res) => {
   const { id } = req.body;
 
@@ -289,54 +214,143 @@ app.post("/api/mark-attendance", (req, res) => {
     return res.status(400).json({ error: "ID is required" });
   }
 
-  let userType, column, table, idColumn;
+  let table, idColumn;
   if (id.startsWith("S")) {
-    userType = "Student";
-    column = "student_id";
-    table = "student";
-    idColumn = "custom_studentID";  // ✅ Correct column
+    table = "student_attendance";
+    idColumn = "custom_studentID";
   } else if (id.startsWith("T")) {
-    userType = "Teacher";
-    column = "teacher_id";
-    table = "teacher";
-    idColumn = "custom_teacherID";  // ✅ Correct column
+    table = "teacher_attendance";
+    idColumn = "custom_teacherID";
   } else {
     return res.status(400).json({ error: "Invalid ID format" });
   }
 
-  // 🔍 Debugging - Check if ID exists in the database
-  let checkQuery = `SELECT * FROM ${table} WHERE ${idColumn} = ? LIMIT 1`;
-  console.log("🔎 Checking ID:", checkQuery, [id]);
+  // ✅ Insert or Update Attendance for "Present" with NULL attendanceID
+  const insertOrUpdateQuery = `
+    INSERT INTO ${table} (${idColumn}, attendanceID, status)
+    VALUES (?, NULL, 'Present')
+    ON DUPLICATE KEY UPDATE status = 'Present'
+  `;
 
-  db.query(checkQuery, [id], (err, result) => {
+  db.query(insertOrUpdateQuery, [id], (err, result) => {
     if (err) {
-      console.error("❌ Database query error:", err);
-      return res.status(500).json({ error: "Database query failed" });
+      console.error("❌ Error inserting/updating attendance:", err);
+      return res.status(500).json({ error: "Database operation failed" });
     }
 
-    console.log("🟢 Query Result:", result);
+    res.json({ success: true, message: "✅ Attendance marked successfully!" });
+  });
+});
 
-    if (result.length === 0) {
-      return res.status(404).json({ error: `User ID ${id} not found in database` });
-    }
 
-    // 🔹 Debug: Ensure correct ID is being inserted
-    console.log("✅ User Found:", result[0]);
 
-    // Insert attendance record
-    let insertQuery = `INSERT INTO attendance_records (attendance_id, user_type, ${column}, status)
-                       VALUES (NULL, ?, ?, 'Present')`;
+// ✅ API to setup attendance (Update NULL attendanceID)
+app.post("/api/setup-attendance", (req, res) => {
+  const { attendanceName, date, startTime, timeUp } = req.body;
 
-    db.query(insertQuery, [userType, id], (err, result) => {
-      if (err) {
-        console.error("❌ Database insert error:", err);
-        return res.status(500).json({ error: "Failed to insert attendance record" });
+  db.query(
+    "INSERT INTO attendanceTable (attendanceName, date, startTime, timeUp) VALUES (?, ?, ?, ?)",
+    [attendanceName, date, startTime, timeUp],
+    (error, attendanceResult) => {
+      if (error) {
+        console.error("❌ Error saving attendance:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
       }
 
-      console.log("✅ Attendance marked successfully:", result);
-      res.json({ success: true, message: "Attendance marked successfully!" });
-    });
-  });
+      const attendanceID = attendanceResult.insertId;
+
+      // ✅ Step 1: Assign correct attendanceID to existing "Present" records for Students
+      db.query(
+        `UPDATE student_attendance 
+         SET attendanceID = ? 
+         WHERE attendanceID IS NULL AND status = 'Present'`,
+        [attendanceID],
+        (updateStudentError) => {
+          if (updateStudentError) {
+            console.error("❌ Error updating student attendance:", updateStudentError);
+            return res.status(500).json({ message: "Error updating student attendance" });
+          }
+
+          // ✅ Step 1.2: Assign correct attendanceID to existing "Present" records for Teachers
+          db.query(
+            `UPDATE teacher_attendance 
+             SET attendanceID = ? 
+             WHERE attendanceID IS NULL AND status = 'Present'`,
+            [attendanceID],
+            (updateTeacherError) => {
+              if (updateTeacherError) {
+                console.error("❌ Error updating teacher attendance:", updateTeacherError);
+                return res.status(500).json({ message: "Error updating teacher attendance" });
+              }
+
+              // ✅ Step 2: Insert missing students as "Absent"
+              db.query(
+                `INSERT INTO student_attendance (custom_studentID, attendanceID, status)
+                 SELECT s.custom_studentID, ?, 'Absent'
+                 FROM student s
+                 WHERE NOT EXISTS (
+                   SELECT 1 FROM student_attendance sa 
+                   WHERE sa.custom_studentID = s.custom_studentID 
+                   AND sa.attendanceID = ?
+                 )
+                 ORDER BY s.custom_studentID ASC`,
+                [attendanceID, attendanceID],
+                (insertAbsentStudentsError) => {
+                  if (insertAbsentStudentsError) {
+                    console.error("❌ Error inserting absent students:", insertAbsentStudentsError);
+                    return res.status(500).json({ message: "Error inserting absent students" });
+                  }
+
+                  // ✅ Step 3: Insert missing teachers as "Absent"
+                  db.query(
+                    `INSERT INTO teacher_attendance (custom_teacherID, attendanceID, status)
+                     SELECT t.custom_teacherID, ?, 'Absent'
+                     FROM teacher t
+                     WHERE NOT EXISTS (
+                       SELECT 1 FROM teacher_attendance ta 
+                       WHERE ta.custom_teacherID = t.custom_teacherID 
+                       AND ta.attendanceID = ?
+                     )
+                     ORDER BY t.custom_teacherID ASC`,
+                    [attendanceID, attendanceID],
+                    (insertAbsentTeachersError) => {
+                      if (insertAbsentTeachersError) {
+                        console.error("❌ Error inserting absent teachers:", insertAbsentTeachersError);
+                        return res.status(500).json({ message: "Error inserting absent teachers" });
+                      }
+
+                      // ✅ Step 4: Remove leftover NULL records (No duplicates)
+                      db.query(
+                        `DELETE FROM student_attendance WHERE attendanceID IS NULL`,
+                        (deleteStudentNullError) => {
+                          if (deleteStudentNullError) {
+                            console.error("❌ Error deleting NULL student records:", deleteStudentNullError);
+                            return res.status(500).json({ message: "Error deleting NULL student records" });
+                          }
+
+                          db.query(
+                            `DELETE FROM teacher_attendance WHERE attendanceID IS NULL`,
+                            (deleteTeacherNullError) => {
+                              if (deleteTeacherNullError) {
+                                console.error("❌ Error deleting NULL teacher records:", deleteTeacherNullError);
+                                return res.status(500).json({ message: "Error deleting NULL teacher records" });
+                              }
+
+                              res.json({ message: "✅ Attendance Setup Successful!", attendanceID });
+                            }
+                          );
+                        }
+                      );
+                    }
+                  );
+                }
+              );
+            }
+          );
+        }
+      );
+    }
+  );
 });
 
 
