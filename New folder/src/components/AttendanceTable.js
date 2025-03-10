@@ -8,20 +8,18 @@ const AttendanceTable = () => {
   const [startingPoint, setStartingPoint] = useState("");
   const [timeUp, setTimeUp] = useState("");
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [attendanceType, setAttendanceType] = useState("Student"); // Default to Student
   const [attendees, setAttendees] = useState([]);
   const [attendanceClosed, setAttendanceClosed] = useState(false);
   const [attendanceId, setAttendanceId] = useState(null);
 
   useEffect(() => {
     const checkAttendanceStatus = () => {
-      if (!timeUp) return; // Ensure timeUp is set before checking
-  
+      if (!timeUp) return;
       const now = new Date();
       const [hours, minutes] = timeUp.split(":").map(Number);
-  
       const closingTime = new Date();
-      closingTime.setHours(hours, minutes, 0, 0); // Set hours & minutes
-  
+      closingTime.setHours(hours, minutes, 0, 0);
       if (now >= closingTime) {
         setAttendanceClosed(true);
         console.log("⏳ Attendance is now closed!");
@@ -29,30 +27,23 @@ const AttendanceTable = () => {
         setAttendanceClosed(false);
       }
     };
-  
+
     checkAttendanceStatus();
-    const interval = setInterval(checkAttendanceStatus, 10000); // Check every 10 sec
-  
+    const interval = setInterval(checkAttendanceStatus, 10000);
     return () => clearInterval(interval);
   }, [timeUp]);
-  
+
   useEffect(() => {
     console.log("Attendance Closed:", attendanceClosed);
   }, [attendanceClosed]);
 
   const handleAddAttendee = () => {
     if (attendanceClosed) return;
-
-    // Prevent adding multiple empty entries
     if (attendees.length > 0 && attendees[attendees.length - 1].id === "") {
       alert("⚠️ Please complete the current entry before adding a new one.");
       return;
     }
-
-    setAttendees((prev) => [
-      ...prev,
-      { id: "", userType: "", status: "Absent", isValid: null },
-    ]);
+    setAttendees((prev) => [...prev, { id: "", userType: "", status: "Absent", isValid: null }]);
   };
 
   const handleIdChange = (index, value) => {
@@ -66,29 +57,17 @@ const AttendanceTable = () => {
 
   const checkIdValidity = async (index) => {
     const idToCheck = attendees[index].id.trim();
-
     if (!idToCheck) {
       console.error("❌ Error: Attendance ID is required.");
       return;
     }
-
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/valid-ids",
-        { id: idToCheck },
-        { headers: { "Content-Type": "application/json" } }
-      );
-
+      const response = await axios.post("http://localhost:5000/api/valid-ids", { id: idToCheck }, { headers: { "Content-Type": "application/json" } });
       setAttendees((prev) => {
         const updated = [...prev];
-        updated[index] = {
-          ...updated[index],
-          isValid: response.data.valid,
-          userType: response.data.user ? response.data.user.userType : "",
-        };
+        updated[index] = { ...updated[index], isValid: response.data.valid, userType: response.data.user ? response.data.user.userType : "" };
         return updated;
       });
-
       console.log("✅ Response received:", response.data);
     } catch (error) {
       console.error("❌ Error checking ID:", error.response?.data || error.message);
@@ -97,112 +76,81 @@ const AttendanceTable = () => {
 
   const markPresent = async (index) => {
     const attendee = attendees[index];
-  
     if (!attendee.id) {
       alert("Please enter an ID before marking attendance.");
       return;
     }
-  
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/mark-attendance",
-        {
-          id: attendee.id,
-          userType: attendee.userType,
-          status: "Present",
-          attendanceId: attendanceId || null, // Set null if attendance is not yet set up
-        },
-        { headers: { "Content-Type": "application/json" } }
-      );
-  
+      const response = await axios.post("http://localhost:5000/api/mark-attendance", {
+        id: attendee.id,
+        userType: attendee.userType,
+        status: "Present",
+        attendanceId: attendanceId || null,
+      }, { headers: { "Content-Type": "application/json" } });
+
       if (response.status === 200) {
         console.log(`✅ Attendance marked for ID: ${attendee.id}`);
-  
         setAttendees((prev) => {
           const updated = [...prev];
           updated[index] = { ...updated[index], status: "Present" };
           return updated;
         });
-  
-        // If attendanceId was null, update it from response
         if (!attendanceId && response.data.attendanceId) {
           setAttendanceId(response.data.attendanceId);
           console.log("📌 Attendance ID updated:", response.data.attendanceId);
         }
-      } else {
-        console.error("❌ Error updating attendance:", response.data);
       }
     } catch (error) {
       console.error("❌ Network error:", error);
     }
   };
-  
+
   const handleSubmit = async () => {
-    console.log("📌 Submitted start time:", startingPoint); // Debug log
-
+    console.log("📌 Submitted start time:", startingPoint);
     if (!attendanceName || !startingPoint || !timeUp) {
-        alert("⚠️ Please fill in all fields before setting up attendance.");
-        return;
+      alert("⚠️ Please fill in all fields before setting up attendance.");
+      return;
     }
-    
     try {
-        const { data } = await axios.post("http://localhost:5000/api/setup-attendance", {
-            attendanceName,
-            date,
-            startTime: startingPoint, 
-            timeUp,
-            attendees,
-        });
-
-        console.log("✅ Attendance Setup Successful!", data);
-        setAttendanceId(data.attendanceId);
-        setAttendanceClosed(false);
+      const { data } = await axios.post("http://localhost:5000/api/setup-attendance", {
+        attendanceName,
+        date,
+        startTime: startingPoint,
+        timeUp,
+        attendanceType, // Include selected type
+      });
+      console.log("✅ Attendance Setup Successful!", data);
+      setAttendanceId(data.attendanceId);
+      setAttendanceClosed(false);
     } catch (error) {
-        console.error("❌ API Error:", error);
-        alert("❌ Failed to setup attendance.");
+      console.error("❌ API Error:", error);
+      alert("❌ Failed to setup attendance.");
     }
-};
-
-
+  };
 
   return (
     <div className="attendance-container">
       <motion.h2 initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         📋 Attendance Form
       </motion.h2>
-      <input
-        type="text"
-        placeholder="Attendance Name"
-        value={attendanceName}
-        onChange={(e) => setAttendanceName(e.target.value)}
-      />
+      <input type="text" placeholder="Attendance Name" value={attendanceName} onChange={(e) => setAttendanceName(e.target.value)} />
       <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
       <input type="time" value={startingPoint} onChange={(e) => setStartingPoint(e.target.value)} />
       <input type="time" value={timeUp} onChange={(e) => setTimeUp(e.target.value)} />
-      <button onClick={handleAddAttendee} disabled={attendanceClosed}>
-        ➕ Add Attendee
-      </button>
-
+      <select value={attendanceType} onChange={(e) => setAttendanceType(e.target.value)}>
+        <option value="Student">Student</option>
+        <option value="Teacher">Teacher</option>
+      </select>
+      <button onClick={handleAddAttendee} disabled={attendanceClosed}>➕ Add Attendee</button>
       {attendees.map((attendee, index) => (
         <div key={index} className="attendee-row">
-          <input
-            type="text"
-            value={attendee.id}
-            onChange={(e) => handleIdChange(index, e.target.value)}
-            disabled={attendanceClosed}
-          />
-          <button onClick={() => checkIdValidity(index)}>
-            <FaSearch />
-          </button>
+          <input type="text" value={attendee.id} onChange={(e) => handleIdChange(index, e.target.value)} disabled={attendanceClosed} />
+          <button onClick={() => checkIdValidity(index)}><FaSearch /></button>
           {attendee.isValid === true ? <FaCheck color="green" /> : attendee.isValid === false ? <FaTimes color="red" /> : null}
-          <button onClick={() => markPresent(index)} disabled={attendanceClosed}>
-            {attendee.status === "Present" ? "✅ Present" : "Mark Present"}
-          </button>
+          <button onClick={() => markPresent(index)} disabled={attendanceClosed}>{attendee.status === "Present" ? "✅ Present" : "Mark Present"}</button>
         </div>
       ))}
-      <button onClick={handleSubmit} disabled={attendanceClosed}>
-        Submit Attendance ✅
-      </button>
+      <button onClick={handleSubmit} disabled={attendanceClosed}>Submit Attendance ✅</button>
     </div>
   );
 };

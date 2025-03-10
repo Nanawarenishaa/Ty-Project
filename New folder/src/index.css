@@ -784,7 +784,186 @@ h2 {
 
 
 
+.attendance-container {
+  padding: 2rem;
+  background-color: #f8fafc; /* Light background */
+  min-height: 100vh;
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  font-family: "Arial", sans-serif;
+  overflow-x: auto; /* Ensures table responsiveness */
+}
 
+/* ====== Table Styles ====== */
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.attendance-table th {
+  background: #1e3a8a; /* Dark blue header */
+  color: white;
+  padding: 14px;
+  text-align: left;
+  font-size: 16px;
+  white-space: nowrap; /* Prevents text wrapping */
+}
+
+.attendance-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+/* Alternate row styling for readability */
+.attendance-table tr:nth-child(even) {
+  background-color: #f1f5f9;
+}
+
+.attendance-table tr:hover {
+  background: #e2e8f0;
+}
+
+/* ====== Container Styles ====== */
+.attendance-container {
+  padding: 2rem;
+  background-color: #f8fafc; /* Light background */
+  min-height: 100vh;
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  font-family: "Arial", sans-serif;
+  overflow-x: auto; /* Ensures table responsiveness */
+}
+
+/* ====== Table Styles ====== */
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: left;
+}
+
+.attendance-table th {
+  background: #1e3a8a; /* Dark blue header */
+  color: white;
+  padding: 14px;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.attendance-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+/* ====== Alternate Row Styling ====== */
+.attendance-table tr:nth-child(even) {
+  background-color: #f1f5f9;
+}
+
+.attendance-table tr:hover {
+  background: #e2e8f0;
+}
+
+/* ====== Select Class Dropdown ====== */
+.select-class-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.select-class-label {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.select-class {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #1e3a8a;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* ====== Button Styles (View, Edit, Delete) ====== */
+.attendance-actions {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+}
+
+.attendance-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* View Button */
+.view-btn {
+  background: #3b82f6;
+  color: white;
+}
+
+.view-btn:hover {
+  background: #2563eb;
+}
+
+/* Edit Button */
+.edit-btn {
+  background: #10b981;
+  color: white;
+}
+
+.edit-btn:hover {
+  background: #059669;
+}
+
+/* Delete Button */
+.delete-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+}
+
+/* ====== Responsive Design ====== */
+@media screen and (max-width: 768px) {
+  .attendance-container {
+    width: 95%;
+    padding: 1rem;
+  }
+  
+  .attendance-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .attendance-table th,
+  .attendance-table td {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
 
 
 @media (max-width: 800px) {

@@ -17,7 +17,7 @@ const Sidebar = ({ isSidebarOpen }) => {
           </Link>
         </li>
         <li>
-          <Link to="/attendance-list">
+          <Link to="/attendancelist">
             <FaList className="icon" /> <span>Attendance List</span>
           </Link>
         </li>
@@ -26,6 +26,7 @@ const Sidebar = ({ isSidebarOpen }) => {
             <FaClipboardCheck className="icon" /> <span>Manage Attendance</span>
           </Link>
         </li>
+       
         <li>
           <Link to="/students-teachers">
             <FaUserFriends className="icon" /> <span>Student/Teacher List</span>
