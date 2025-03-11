@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Eye, Edit, Trash2 } from "lucide-react";
+import { Eye, Trash2 } from "lucide-react";
 
 const AttendanceList = () => {
   const [studentAttendance, setStudentAttendance] = useState([]);
@@ -63,9 +63,6 @@ const AttendanceList = () => {
                   <div className="attendance-actions">
                     <button className="attendance-btn view-btn" onClick={() => navigate(`/view-attendance/${item.attendanceID}`)}>
                       <Eye size={16} />
-                    </button>
-                    <button className="attendance-btn edit-btn" onClick={() => navigate(`/edit-attendance/${item.attendanceID}`)}>
-                      <Edit size={16} />
                     </button>
                     <button className="attendance-btn delete-btn" onClick={() => deleteAttendance(item.attendanceID)}>
                       <Trash2 size={16} />

@@ -10,6 +10,7 @@ import Logout from "./components/Logout";
 import StudentTeacherList from "./components/StudentTeacherList";
 import AttendanceTable from "./components/AttendanceTable";
 import AttendanceList from "./components/AttendanceList";
+import ViewAttendance from "./components/ViewAttendance";
 
 const App = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -47,6 +48,8 @@ const App = () => {
                     <Route path="/add-record" element={<AddRecord />} />
                     <Route path="/attendanceTable" element={<AttendanceTable />} />
                     <Route path="/attendancelist" element={<AttendanceList />} />
+                    <Route path="/view-attendance/:id" element={<ViewAttendance />} />
+
                     <Route path="/students-teachers" element={<StudentTeacherList />} />
                     <Route path="/logout" element={<Logout setIsAuthenticated={setIsAuthenticated} />} />
                     <Route path="*" element={<Navigate to="/dashboard" />} /> {/* Redirect unknown routes */}

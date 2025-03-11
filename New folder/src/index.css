@@ -945,6 +945,102 @@ h2 {
 .delete-btn:hover {
   background: #dc2626;
 }
+/* ViewAttendance.css */
+
+/* Page Container */
+.viewAttendance-container {
+  width: 100%;
+  margin: 20px auto;
+  margin-top: 14rem;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+/* Title */
+.viewAttendance-title {
+  text-align: center;
+  color: #333;
+}
+
+/* Table */
+.viewAttendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+/* Table Head */
+.viewAttendance-thead {
+  background-color: #007bff;
+  color: white;
+}
+
+.viewAttendance-headerRow {
+  text-align: left;
+}
+
+.viewAttendance-header {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+/* Table Body */
+.viewAttendance-tbody {
+  background-color: #f9f9f9;
+}
+
+.viewAttendance-row:nth-child(even) {
+  background-color: #f1f1f1;
+}
+
+.viewAttendance-cell {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+/* Button */
+.viewAttendance-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.viewAttendance-button:hover {
+  background-color: #218838;
+}
+/* Back Button */
+.viewAttendance-backButton {
+  display: flex;
+  align-items: center;
+  
+  gap: 8px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+  margin-bottom: 15px;
+}
+
+.viewAttendance-backButton:hover {
+  background-color: #0056b3;
+}
+
+.viewAttendance-backIcon {
+  font-size: 18px;
+}
 
 /* ====== Responsive Design ====== */
 @media screen and (max-width: 768px) {

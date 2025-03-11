@@ -27,9 +27,6 @@ const StudentTeacherList = () => {
   );
   
 
-
-
-
   return (
     <div className="Records_container">
       <h1 className="heading">School Record and Attendance System</h1>
