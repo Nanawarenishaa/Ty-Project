@@ -348,13 +348,6 @@ function commitTransaction(res, attendanceID) {
   });
 }
 
-// 🔄 Utility function to rollback transaction
-function rollbackTransaction(res, errorMessage, error) {
-  console.error(`❌ ${errorMessage}:`, error);
-  db.rollback(() => {
-    res.status(500).json({ message: errorMessage });
-  });
-}
 
 app.get("/api/attendance", (req, res) => {
   const query = "SELECT * FROM attendanceTable";
@@ -421,27 +414,208 @@ app.get("/api/attendance/:id", (req, res) => {
     });
   });
 });
-app.put("/api/attendance/update", (req, res) => {
-  const { attendanceID, customID, status, type } = req.body;
+app.put("/api/update-attendance", (req, res) => {
+  const { id, status, attendanceId, attendanceType } = req.body;
 
-  let updateQuery = "";
-  if (type === "student") {
-    updateQuery = "UPDATE student_attendance SET status = ? WHERE attendanceID = ? AND custom_studentID = ?";
-  } else {
-    updateQuery = "UPDATE teacher_attendance SET status = ? WHERE attendanceID = ? AND custom_teacherID = ?";
+  console.log("🔍 Received Data:", req.body);
+
+  if (!id || !status || !attendanceId || !attendanceType) {
+      return res.status(400).json({ error: "Missing required fields!" });
   }
 
-  db.query(updateQuery, [status, attendanceID, customID], (err, result) => {
-    if (err) return res.status(500).json({ error: err.message });
+  const parsedAttendanceId = parseInt(attendanceId, 10);
+  if (isNaN(parsedAttendanceId)) {
+      return res.status(400).json({ error: "Invalid attendanceId format" });
+  }
 
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "Record not found" });
-    }
+  const tableName = attendanceType === "student" ? "student_attendance" : "teacher_attendance";
+  const idColumn = attendanceType === "student" ? "custom_studentID" : "custom_teacherID";
 
-    res.json({ message: "Attendance status updated successfully" });
+  const query = `UPDATE ${tableName} SET status = ? WHERE ${idColumn} = ? AND attendanceID = ?`;
+
+  db.query(query, [status, id, parsedAttendanceId], (err, result) => {
+      if (err) {
+          console.error("❌ MySQL Error:", err);
+          return res.status(500).json({ error: "Database error" });
+      }
+      res.json({ message: "✅ Attendance updated successfully!" });
   });
 });
-                      
+
+app.get("/attendanceDetails/:id", (req, res) => {
+  const { id } = req.params;
+  console.log(`Fetching attendance details for ID: ${id}`); // Debug log
+
+  // First, fetch the attendanceType
+  db.query(
+      "SELECT attendanceType FROM attendanceTable WHERE attendanceID = ?", 
+      [id],
+      (err, attendanceRecord) => {
+          if (err) {
+              console.error("Error fetching attendance type:", err);
+              return res.status(500).json({ message: "Internal server error" });
+          }
+
+          if (attendanceRecord.length === 0) {
+              console.log(`Attendance record not found for ID: ${id}`); // Debug log
+              return res.status(404).json({ message: "Attendance record not found" });
+          }
+
+          const attendanceType = attendanceRecord[0].attendanceType;
+          console.log("Attendance Type:", attendanceType); // Debug log
+
+          let query = "";
+          if (attendanceType === "student") {
+              query = `
+                  SELECT sa.custom_studentID, sa.attendanceID, s.name, sa.status
+                  FROM student_attendance sa
+                  JOIN student s ON sa.custom_studentID = s.custom_studentID
+                  WHERE sa.attendanceID = ?`;
+          } else {
+              query = `
+                  SELECT ta.custom_teacherID, ta.attendanceID, t.name, ta.status
+                  FROM teacher_attendance ta
+                  JOIN teacher t ON ta.custom_teacherID = t.custom_teacherID
+                  WHERE ta.attendanceID = ?`;
+          }
+
+          // Fetch attendance details
+          db.query(query, [id], (err, attendanceData) => {
+              if (err) {
+                  console.error("Error fetching attendance details:", err);
+                  return res.status(500).json({ message: "Internal server error" });
+              }
+
+            
+              res.json({ attendanceType, attendanceData });
+          });
+      }
+  );
+});
+
+// Nodemailer Configuration
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "nanawarenisha909@gmail.com", // Your email
+    pass: "nisha@317", // Your email password or app password
+  },
+});
+
+// Function to Calculate Attendance and Send Warnings
+const checkAndNotifyAttendance = () => {
+  const attendanceThreshold = 75; // Set threshold (e.g., 75%)
+
+  // Query for students
+  db.query("SELECT studentID, custom_studentID, email FROM student", (err, students) => {
+    if (err) throw err;
+
+    students.forEach((student) => {
+      db.query(
+        `SELECT COUNT(*) AS total, 
+         SUM(CASE WHEN status = 'Present' THEN 1 ELSE 0 END) AS present
+         FROM student_attendance WHERE custom_studentID = ?`,
+        [student.custom_studentID],
+        (err, result) => {
+          if (err) throw err;
+
+          const totalSessions = result[0].total || 1; // Prevent division by zero
+          const presentSessions = result[0].present || 0;
+          const attendancePercentage = (presentSessions / totalSessions) * 100;
+
+          if (attendancePercentage < attendanceThreshold) {
+            sendEmail(student.email, student.custom_studentID, attendancePercentage);
+          }
+        }
+      );
+    });
+  });
+
+  // Query for teachers
+  db.query("SELECT ID, custom_teacherID, email FROM teacher", (err, teachers) => {
+    if (err) throw err;
+
+    teachers.forEach((teacher) => {
+      db.query(
+        `SELECT COUNT(*) AS total, 
+         SUM(CASE WHEN status = 'Present' THEN 1 ELSE 0 END) AS present
+         FROM teacher_attendance WHERE custom_teacherID = ?`,
+        [teacher.custom_teacherID],
+        (err, result) => {
+          if (err) throw err;
+
+          const totalSessions = result[0].total || 1;
+          const presentSessions = result[0].present || 0;
+          const attendancePercentage = (presentSessions / totalSessions) * 100;
+
+          if (attendancePercentage < attendanceThreshold) {
+            sendEmail(teacher.email, teacher.custom_teacherID, attendancePercentage);
+          }
+        }
+      );
+    });
+  });
+};
+
+// Function to Send Email
+const sendEmail = (email, userID, percentage) => {
+  const mailOptions = {
+    from: "nanawarenisha909@gmail.com",
+    to: email,
+    subject: "Attendance Warning",
+    text: `Dear ${userID},\n\nYour attendance is currently at ${percentage.toFixed(2)}%, which is below the required threshold. Please ensure regular attendance to avoid consequences.\n\nBest regards,\nAdmin`,
+  };
+
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.error("Error sending email:", err);
+    } else {
+      console.log(`Warning email sent to ${email}`);
+    }
+  });
+};
+
+// Run Attendance Check Periodically (e.g., Every Day at 8 AM)
+setInterval(checkAndNotifyAttendance, 24 * 60 * 60 * 1000); // Run every 24 hours
+// API to get total student and teacher count
+app.get("/api/totalCounts", (req, res) => {
+  const studentQuery = "SELECT COUNT(*) AS totalStudents FROM student";
+  const teacherQuery = "SELECT COUNT(*) AS totalTeachers FROM teacher";
+
+  db.query(studentQuery, (err, studentResult) => {
+    if (err) return res.status(500).send(err);
+    db.query(teacherQuery, (err, teacherResult) => {
+      if (err) return res.status(500).send(err);
+      res.json({
+        totalStudents: studentResult[0].totalStudents,
+        totalTeachers: teacherResult[0].totalTeachers,
+      });
+    });
+  });
+});
+
+// API to get student or teacher details with attendance percentage
+app.get("/api/getDetails/:type/:months", (req, res) => {
+  const { type, months } = req.params;
+  const table = type === "student" ? "student_attendance" : "teacher_attendance";
+  const idField = type === "student" ? "custom_studentID" : "custom_teacherID";
+  const nameTable = type === "student" ? "student" : "teacher";
+  
+  const query = `
+  SELECT s.${idField} AS id, s.name, 
+    ROUND((SUM(CASE WHEN a.status='Present' THEN 1 ELSE 0 END) / COUNT(a.status)) * 100, 2) AS attendancePercentage
+  FROM ${nameTable} s
+  JOIN ${table} a ON s.${idField} = a.${idField}
+  JOIN attendanceTable at ON a.attendanceID = at.attendanceID
+  WHERE STR_TO_DATE(at.date, '%Y-%m-%d') >= DATE_SUB(NOW(), INTERVAL ? MONTH)
+  GROUP BY s.${idField}, s.name
+`;
+
+db.query(query, [months], (err, results) => {
+  if (err) return res.status(500).send(err);
+  res.json(results);
+});
+});
 
 // ✅ Start Server
 const PORT = 5000;

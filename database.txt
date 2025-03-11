@@ -1,0 +1,97 @@
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use sraasdb;
+Database changed
+mysql> select from user;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from user' at line 1
+mysql> select * from user;
+ERROR 1146 (42S02): Table 'sraasdb.user' doesn't exist
+mysql> select * from users;
++--------+-----------+-------------+-----------------------+---------+---------------------+
+| userID | username  | password    | email                 | role    | created_at          |
++--------+-----------+-------------+-----------------------+---------+---------------------+
+|      1 | admin123  | adminpass   | admin@example.com     | admin   | 2025-02-25 08:38:46 |
+|      2 | student01 | studentpass | student01@example.com | student | 2025-02-25 08:38:46 |
+|      3 | teacher01 | teacherpass | teacher01@example.com | teacher | 2025-02-25 08:38:46 |
++--------+-----------+-------------+-----------------------+---------+---------------------+
+3 rows in set (0.09 sec)
+
+mysql> select * from student;
++-----------+------------------+----------------+----------------------------+------------+-------+--------+-------+----------------------+---------------------+
+| studentID | custom_studentID | name           | email                      | phone      | class | course | image | fingerprint_template | created_at          |
++-----------+------------------+----------------+----------------------------+------------+-------+--------+-------+----------------------+---------------------+
+|         1 | S1               | nishaa         | nanawarenisha0@gmail.com   | 8766543433 | tybca | bbaca  | NULL  | dasd                 | 2025-03-07 01:24:20 |
+|         2 | S2               | Aarav Sharma   | aarav.sharma@email.com     | 9876543210 | fybca | bbaca  | NULL  | fp_data_1            | 2025-03-07 01:27:29 |
+|         3 | S3               | Ishita Verma   | ishita.verma@email.com     | 8765432109 | sybca | bbaca  | NULL  | fp_data_2            | 2025-03-07 01:27:29 |
+|         4 | S4               | Rohan Patil    | rohan.patil@email.com      | 7654321098 | tybca | bbaca  | NULL  | fp_data_3            | 2025-03-07 01:27:29 |
+|         5 | S5               | Sneha Desai    | sneha.desai@email.com      | 6543210987 | fybca | bbaca  | NULL  | fp_data_4            | 2025-03-07 01:27:29 |
+|         6 | S6               | Vikram Rao     | vikram.rao@email.com       | 5432109876 | sybca | bbaca  | NULL  | fp_data_5            | 2025-03-07 01:27:29 |
+|         7 | S7               | Nisha Nanaware | nanawarenisha909@gmail.com | 7646354342 | tybca | bbaca  | NULL  | ffhf                 | 2025-03-07 06:55:08 |
++-----------+------------------+----------------+----------------------------+------------+-------+--------+-------+----------------------+---------------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from teacher;
++----+------------------+---------------+-------------------------+------------+--------+--------------+-------+----------------------+---------------------+
+| ID | custom_teacherID | name          | email                   | phone      | course | joining_date | image | fingerprint_template | created_at          |
++----+------------------+---------------+-------------------------+------------+--------+--------------+-------+----------------------+---------------------+
+|  1 | T1               | jay gokhale   | jay23@gmail.com         | 8766543433 | bbaca  | 2022-05-18   | NULL  | wwqd                 | 2025-03-07 01:26:01 |
+|  2 | T2               | Anjali Mehta  | anjali.mehta@email.com  | 7890123456 | bbaca  | 2021-08-10   | NULL  | fp_data_6            | 2025-03-07 01:27:35 |
+|  3 | T3               | Ravi Kumar    | ravi.kumar@email.com    | 8901234567 | bbaca  | 2020-07-05   | NULL  | fp_data_7            | 2025-03-07 01:27:35 |
+|  4 | T4               | Priya Singh   | priya.singh@email.com   | 9012345678 | bbaca  | 2019-06-15   | NULL  | fp_data_8            | 2025-03-07 01:27:35 |
+|  5 | T5               | Rajesh Pillai | rajesh.pillai@email.com | 6789012345 | bbaca  | 2023-02-20   | NULL  | fp_data_9            | 2025-03-07 01:27:35 |
+|  6 | T6               | Sanya Kapoor  | sanya.kapoor@email.com  | 5678901234 | bbaca  | 2024-01-25   | NULL  | fp_data_10           | 2025-03-07 01:27:35 |
++----+------------------+---------------+-------------------------+------------+--------+--------------+-------+----------------------+---------------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from attendance;
+ERROR 1146 (42S02): Table 'sraasdb.attendance' doesn't exist
+mysql> select * from attendanceTable;
++--------------+-------------------------+------------+-----------+----------+----------------+
+| attendanceID | attendanceName          | date       | startTime | timeUp   | attendanceType |
++--------------+-------------------------+------------+-----------+----------+----------------+
+|            1 | Morning attendance      | 2025-03-09 | 08:00:00  | 12:00:00 | teacher        |
+|            2 | TYBCA class-A           | 2025-03-09 | 08:00:00  | 12:15:00 | student        |
+|            3 | Morning attendance      | 2025-03-10 | 07:45:00  | 09:45:00 | teacher        |
+|            4 | TYBCA practical class-A | 2025-03-10 | 10:30:00  | 12:30:00 | student        |
++--------------+-------------------------+------------+-----------+----------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student_attendance;
++----+------------------+--------------+---------+
+| id | custom_studentID | attendanceID | status  |
++----+------------------+--------------+---------+
+|  1 | S1               |            2 | Present |
+|  2 | S2               |            2 | Present |
+|  3 | S4               |            2 | Present |
+|  4 | S6               |            2 | Present |
+|  5 | S3               |            2 | Absent  |
+|  6 | S5               |            2 | Present |
+|  7 | S7               |            2 | Absent  |
+|  8 | S1               |            4 | Present |
+|  9 | S2               |            4 | Present |
+| 10 | S3               |            4 | Present |
+| 11 | S5               |            4 | Present |
+| 12 | S7               |            4 | Present |
+| 13 | S4               |            4 | Absent  |
+| 14 | S6               |            4 | Absent  |
++----+------------------+--------------+---------+
+14 rows in set (0.00 sec)
+
+mysql> select * from teacher_attendance;
++----+------------------+--------------+---------+
+| id | custom_teacherID | attendanceID | status  |
++----+------------------+--------------+---------+
+|  1 | T1               |            1 | Present |
+|  2 | T2               |            1 | Present |
+|  3 | T4               |            1 | Present |
+|  4 | T5               |            1 | Present |
+|  5 | T6               |            1 | Present |
+|  6 | T3               |            1 | Absent  |
+|  7 | T1               |            3 | Present |
+|  8 | T2               |            3 | Present |
+|  9 | T3               |            3 | Present |
+| 10 | T5               |            3 | Present |
+| 11 | T6               |            3 | Present |
+| 12 | T4               |            3 | Present |
++----+------------------+--------------+---------+
+12 rows in set (0.00 sec)
