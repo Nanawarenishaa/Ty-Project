@@ -1,5 +1,5 @@
 import React from "react";
-import { FaUserCircle, FaMoon, FaBars } from "react-icons/fa";
+import { FaUserCircle, FaMoon, FaBars ,FaBell} from "react-icons/fa";
 
 const Header = ({ toggleSidebar }) => {
   return (
@@ -9,6 +9,7 @@ const Header = ({ toggleSidebar }) => {
       <h2>School Attendance System</h2>
 
       <div className="right-icons">
+      <FaBell className="icon" title="Notifications" />
         <FaMoon className="icon" title="Dark Mode" />
         <FaUserCircle className="icon" title="Admin" />
       </div>

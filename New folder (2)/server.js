@@ -492,22 +492,24 @@ app.get("/attendanceDetails/:id", (req, res) => {
       }
   );
 });
+const nodemailer = require('nodemailer');
+
 
 // Nodemailer Configuration
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "nanawarenisha909@gmail.com", // Your email
-    pass: "nisha@317", // Your email password or app password
+    user: "admin@example.com",
+    pass: "adminpass",
   },
 });
 
-// Function to Calculate Attendance and Send Warnings
-const checkAndNotifyAttendance = () => {
-  const attendanceThreshold = 75; // Set threshold (e.g., 75%)
+// Function to Check Attendance and Send Notifications
+const checkAttendanceAndNotify = () => {
+  const attendanceThreshold = 75; // 75% minimum attendance required
 
-  // Query for students
-  db.query("SELECT studentID, custom_studentID, email FROM student", (err, students) => {
+  // Check student attendance
+  db.query("SELECT studentID, custom_studentID, name, email FROM student", (err, students) => {
     if (err) throw err;
 
     students.forEach((student) => {
@@ -519,20 +521,21 @@ const checkAndNotifyAttendance = () => {
         (err, result) => {
           if (err) throw err;
 
-          const totalSessions = result[0].total || 1; // Prevent division by zero
+          const totalSessions = result[0].total || 1;
           const presentSessions = result[0].present || 0;
           const attendancePercentage = (presentSessions / totalSessions) * 100;
 
           if (attendancePercentage < attendanceThreshold) {
-            sendEmail(student.email, student.custom_studentID, attendancePercentage);
+            sendEmail(student.email, student.name, attendancePercentage);
+            saveNotification(`Student ${student.name} (${student.custom_studentID}) has low attendance: ${attendancePercentage.toFixed(2)}%`);
           }
         }
       );
     });
   });
 
-  // Query for teachers
-  db.query("SELECT ID, custom_teacherID, email FROM teacher", (err, teachers) => {
+  // Check teacher attendance
+  db.query("SELECT ID, custom_teacherID, name, email FROM teacher", (err, teachers) => {
     if (err) throw err;
 
     teachers.forEach((teacher) => {
@@ -549,7 +552,8 @@ const checkAndNotifyAttendance = () => {
           const attendancePercentage = (presentSessions / totalSessions) * 100;
 
           if (attendancePercentage < attendanceThreshold) {
-            sendEmail(teacher.email, teacher.custom_teacherID, attendancePercentage);
+            sendEmail(teacher.email, teacher.name, attendancePercentage);
+            saveNotification(`Teacher ${teacher.name} (${teacher.custom_teacherID}) has low attendance: ${attendancePercentage.toFixed(2)}%`);
           }
         }
       );
@@ -557,13 +561,13 @@ const checkAndNotifyAttendance = () => {
   });
 };
 
-// Function to Send Email
-const sendEmail = (email, userID, percentage) => {
+// Function to Send Email Notification
+const sendEmail = (email, name, percentage) => {
   const mailOptions = {
-    from: "nanawarenisha909@gmail.com",
+    from: "your-email@gmail.com",
     to: email,
     subject: "Attendance Warning",
-    text: `Dear ${userID},\n\nYour attendance is currently at ${percentage.toFixed(2)}%, which is below the required threshold. Please ensure regular attendance to avoid consequences.\n\nBest regards,\nAdmin`,
+    text: `Dear ${name},\n\nYour attendance is at ${percentage.toFixed(2)}%, which is below the required threshold. Please improve your attendance.\n\nBest regards,\nAdmin`,
   };
 
   transporter.sendMail(mailOptions, (err, info) => {
@@ -575,47 +579,34 @@ const sendEmail = (email, userID, percentage) => {
   });
 };
 
-// Run Attendance Check Periodically (e.g., Every Day at 8 AM)
-setInterval(checkAndNotifyAttendance, 24 * 60 * 60 * 1000); // Run every 24 hours
-// API to get total student and teacher count
-app.get("/api/totalCounts", (req, res) => {
-  const studentQuery = "SELECT COUNT(*) AS totalStudents FROM student";
-  const teacherQuery = "SELECT COUNT(*) AS totalTeachers FROM teacher";
+// Function to Save Notification for Admin
+const saveNotification = (message) => {
+  const query = "INSERT INTO notifications (userID, message) VALUES (?, ?)";
+  db.query(query, [1, message], (err) => {
+    if (err) console.error("Error saving notification:", err);
+  });
+};
 
-  db.query(studentQuery, (err, studentResult) => {
+// API to Get Unread Notifications
+app.get("/api/notifications", (req, res) => {
+  db.query("SELECT * FROM notifications WHERE is_read = FALSE ORDER BY created_at DESC", (err, results) => {
     if (err) return res.status(500).send(err);
-    db.query(teacherQuery, (err, teacherResult) => {
-      if (err) return res.status(500).send(err);
-      res.json({
-        totalStudents: studentResult[0].totalStudents,
-        totalTeachers: teacherResult[0].totalTeachers,
-      });
-    });
+    res.json(results);
   });
 });
 
-// API to get student or teacher details with attendance percentage
-app.get("/api/getDetails/:type/:months", (req, res) => {
-  const { type, months } = req.params;
-  const table = type === "student" ? "student_attendance" : "teacher_attendance";
-  const idField = type === "student" ? "custom_studentID" : "custom_teacherID";
-  const nameTable = type === "student" ? "student" : "teacher";
-  
-  const query = `
-  SELECT s.${idField} AS id, s.name, 
-    ROUND((SUM(CASE WHEN a.status='Present' THEN 1 ELSE 0 END) / COUNT(a.status)) * 100, 2) AS attendancePercentage
-  FROM ${nameTable} s
-  JOIN ${table} a ON s.${idField} = a.${idField}
-  JOIN attendanceTable at ON a.attendanceID = at.attendanceID
-  WHERE STR_TO_DATE(at.date, '%Y-%m-%d') >= DATE_SUB(NOW(), INTERVAL ? MONTH)
-  GROUP BY s.${idField}, s.name
-`;
+// API to Mark Notifications as Read
+app.post("/api/notifications/mark-read", (req, res) => {
+  db.query("UPDATE notifications SET is_read = TRUE WHERE is_read = FALSE", (err) => {
+    if (err) return res.status(500).send(err);
+    res.send("Notifications marked as read");
+  });
+});
 
-db.query(query, [months], (err, results) => {
-  if (err) return res.status(500).send(err);
-  res.json(results);
-});
-});
+// Run Attendance Check Every 24 Hours (1 day)
+setInterval(checkAttendanceAndNotify, 24 * 60 * 60 * 1000);
+
+
 
 // ✅ Start Server
 const PORT = 5000;

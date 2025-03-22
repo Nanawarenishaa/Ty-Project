@@ -3,13 +3,14 @@ import axios from "axios";
 import { Bar } from "react-chartjs-2";
 import "chart.js/auto";
 
-
 const Dashboard = () => {
   const [totalStudents, setTotalStudents] = useState(0);
   const [totalTeachers, setTotalTeachers] = useState(0);
   const [details, setDetails] = useState([]);
   const [selectedType, setSelectedType] = useState("");
-  const [dateRange, setDateRange] = useState(6); // Default 6 months
+  const [dateRange, setDateRange] = useState(""); // No default value
+  const [startDate, setStartDate] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   // Fetch total students and teachers
   useEffect(() => {
@@ -21,14 +22,39 @@ const Dashboard = () => {
       .catch((err) => console.error("Error fetching totals:", err));
   }, []);
 
+  // Function to set the start date when the button is clicked
+  const handleSetDuration = () => {
+    const months = Number(dateRange); // Convert string to number
+    if (!months || months <= 0) {
+      alert("Please enter a valid duration in months.");
+      return;
+    }
+    const today = new Date();
+    today.setMonth(today.getMonth() - months);
+    setStartDate(today.toISOString().split("T")[0]); // Correct format
+  };
+  
+
   // Fetch attendance details based on selection
   const fetchDetails = (type) => {
+    if (!startDate) {
+      alert("Please set the duration first.");
+      return;
+    }
     setSelectedType(type);
-    axios.get(`http://localhost:5000/api/getDetails/${type}/${dateRange}`)
-      .then((res) => setDetails(res.data))
-      .catch((err) => console.error(`Error fetching ${type} details:`, err));
+    setLoading(true); // Show loading
+  
+    axios.get(`http://localhost:5000/api/getDetails/${type}/${startDate}`)
+      .then((res) => {
+        setDetails(res.data);
+        setLoading(false); // Hide loading
+      })
+      .catch((err) => {
+        console.error(`Error fetching ${type} details:`, err);
+        setLoading(false);
+      });
   };
-
+  
   return (
     <div className="dashboard-container">
       <h2>Dashboard</h2>
@@ -54,6 +80,7 @@ const Dashboard = () => {
           onChange={(e) => setDateRange(e.target.value)} 
           min="1"
         />
+        <button onClick={handleSetDuration}>Set Duration</button>
       </div>
 
       {/* Details Table */}

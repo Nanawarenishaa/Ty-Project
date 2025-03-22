@@ -269,10 +269,11 @@ button:hover {
 /* Dashboard Layout */
 .dashboard-container {
   display: flex;
+  flex-direction: column;
   min-height: 100vh; /* Changed from height: 100vh to min-height */
   background-color: #f8f8f8;
   color: white;
-  margin-top: 6rem;
+  margin-top: 14rem;
 }
 .dashboard-container h2{
   text-align: center;
@@ -286,6 +287,9 @@ button:hover {
   justify-content: center; /* Centers the cards */
   gap: 20px; /* Adds spacing between cards */
   margin-top: 20px;
+}
+.date-range {
+  width: fit-content;
 }
 
 .card {
@@ -1041,7 +1045,19 @@ h2 {
 .viewAttendance-backIcon {
   font-size: 18px;
 }
+.date-range button{
+  width: fit-content;
 
+}
+.date-range{
+ margin: auto;
+  width: 20%;
+  margin-top: 2rem;
+ 
+}
+.date-range label{
+  color: #000000;
+}
 /* ====== Responsive Design ====== */
 @media screen and (max-width: 768px) {
   .attendance-container {
@@ -1076,4 +1092,3 @@ h2 {
     width: 80%;
   }
 }
-
